@@ -1,16 +1,16 @@
-package ir.sharif.mobile.project.ui.notifications;
+package ir.sharif.mobile.project.ui.rewards;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class NotificationsViewModel extends ViewModel {
+public class RewardsViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public NotificationsViewModel() {
+    public RewardsViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is notifications fragment");
+        mText.setValue("This is rewards fragment");
     }
 
     public LiveData<String> getText() {

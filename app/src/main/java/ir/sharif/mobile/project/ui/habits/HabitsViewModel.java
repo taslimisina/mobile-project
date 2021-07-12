@@ -1,16 +1,16 @@
-package ir.sharif.mobile.project.ui.dashboard;
+package ir.sharif.mobile.project.ui.habits;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class DashboardViewModel extends ViewModel {
+public class HabitsViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public DashboardViewModel() {
+    public HabitsViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is dashboard fragment");
+        mText.setValue("This is habit fragment");
     }
 
     public LiveData<String> getText() {

@@ -1,4 +1,4 @@
-package ir.sharif.mobile.project.ui.notifications;
+package ir.sharif.mobile.project.ui.dailies;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,17 +13,17 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import ir.sharif.mobile.project.R;
 
-public class NotificationsFragment extends Fragment {
+public class DailiesFragment extends Fragment {
 
-    private NotificationsViewModel notificationsViewModel;
+    private DailiesViewModel dailiesViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        notificationsViewModel =
-                new ViewModelProvider(this).get(NotificationsViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_notifications, container, false);
-        final TextView textView = root.findViewById(R.id.text_notifications);
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        dailiesViewModel =
+                new ViewModelProvider(this).get(DailiesViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_dailies, container, false);
+        final TextView textView = root.findViewById(R.id.text_dashboard);
+        dailiesViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

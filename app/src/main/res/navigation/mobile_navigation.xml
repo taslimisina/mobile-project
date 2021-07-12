@@ -3,23 +3,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_habits">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="ir.sharif.mobile.project.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_habits"
+        android:name="ir.sharif.mobile.project.ui.habits.HabitsFragment"
+        android:label="@string/title_habits"
+        tools:layout="@layout/fragment_habits" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="ir.sharif.mobile.project.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_dailies"
+        android:name="ir.sharif.mobile.project.ui.dailies.DailiesFragment"
+        android:label="@string/title_dailies"
+        tools:layout="@layout/fragment_dailies" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="ir.sharif.mobile.project.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_todo"
+        android:name="ir.sharif.mobile.project.ui.todo.TodoFragment"
+        android:label="@string/title_todo"
+        tools:layout="@layout/fragment_todo" />
+
+    <fragment
+        android:id="@+id/navigation_rewards"
+        android:name="ir.sharif.mobile.project.ui.rewards.RewardsFragment"
+        android:label="@string/title_rewards"
+        tools:layout="@layout/fragment_rewards" />
+
+    <fragment
+        android:id="@+id/navigation_reports"
+        android:name="ir.sharif.mobile.project.ui.reports.ReportsFragment"
+        android:label="@string/title_reports"
+        tools:layout="@layout/fragment_reports" />
 </navigation>
