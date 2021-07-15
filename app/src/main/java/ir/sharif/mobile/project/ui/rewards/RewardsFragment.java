@@ -22,8 +22,8 @@ public class RewardsFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         rewardsViewModel =
                 new ViewModelProvider(this).get(RewardsViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_dailies, container, false);
-        final TextView textView = root.findViewById(R.id.text_dashboard);
+        View root = inflater.inflate(R.layout.fragment_rewards, container, false);
+        final TextView textView = root.findViewById(R.id.text_rewards);
         rewardsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {

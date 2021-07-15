@@ -22,7 +22,7 @@ public class TodoFragment extends Fragment {
         todoViewModel =
                 new ViewModelProvider(this).get(TodoViewModel.class);
         View root = inflater.inflate(R.layout.fragment_todo, container, false);
-        final TextView textView = root.findViewById(R.id.text_notifications);
+        final TextView textView = root.findViewById(R.id.text_todo);
         todoViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
