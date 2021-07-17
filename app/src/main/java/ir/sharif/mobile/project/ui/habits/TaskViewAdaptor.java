@@ -1,5 +1,6 @@
 package ir.sharif.mobile.project.ui.habits;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import ir.sharif.mobile.project.R;
@@ -51,6 +53,10 @@ public class TaskViewAdaptor extends RecyclerView.Adapter<TaskViewAdaptor.TaskVi
     public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.task, parent, false);
+        view.findViewById(R.id.item_background).setOnClickListener(v -> {
+            Log.d("TaskViewHolder", "OnClicked");
+            Navigation.findNavController(v.getRootView().findViewById(R.id.fragment)).navigate(R.id.action_mainFragment_to_habitEditFragment); //todo pass args
+        });
         return new TaskViewHolder(view);
     }
 
