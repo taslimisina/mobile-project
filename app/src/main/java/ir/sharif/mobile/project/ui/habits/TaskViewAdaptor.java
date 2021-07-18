@@ -1,6 +1,7 @@
 package ir.sharif.mobile.project.ui.habits;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,10 +56,6 @@ public class TaskViewAdaptor extends RecyclerView.Adapter<TaskViewAdaptor.TaskVi
     public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.layout_habits, parent, false);
-        view.findViewById(R.id.item_background).setOnClickListener(v -> {
-            Log.d("TaskViewHolder", "OnClicked");
-            Navigation.findNavController(v.getRootView().findViewById(R.id.fragment)).navigate(R.id.action_mainFragment_to_habitEditFragment); //todo pass args
-        });
         return new TaskViewHolder(view);
     }
 
@@ -68,6 +65,13 @@ public class TaskViewAdaptor extends RecyclerView.Adapter<TaskViewAdaptor.TaskVi
         holder.title.setText(task.getTitle());
         holder.description.setText(task.getDescription());
         holder.reward.setText(String.valueOf(task.getReward()));
+
+        holder.viewBackground.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("task", task);
+            Navigation.findNavController(v.getRootView().findViewById(R.id.fragment))
+                    .navigate(R.id.action_mainFragment_to_habitEditFragment, bundle);
+        });
 
         if (task.getReward() < 0) {
             holder.actionButton.setImageResource(R.drawable.ic_minus_red_48);

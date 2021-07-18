@@ -19,5 +19,9 @@
         android:id="@+id/habitEditFragment"
         android:name="ir.sharif.mobile.project.ui.habits.HabitEditFragment"
         android:label="fragment_habit_edit"
-        tools:layout="@layout/fragment_habit_edit" />
+        tools:layout="@layout/fragment_habit_edit" >
+        <argument
+            android:name="task"
+            app:argType="ir.sharif.mobile.project.ui.habits.Task" />
+    </fragment>
 </navigation>
