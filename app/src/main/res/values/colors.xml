@@ -12,4 +12,6 @@
     <color name="green_icon">#42AC47</color>
     <color name="red_back">#FFD2CF</color>
     <color name="red_icon">#F6382A</color>
+    <color name="blue_back">#BCEDF3</color>
+    <color name="blue_icon">#03A1B5</color>
 </resources>

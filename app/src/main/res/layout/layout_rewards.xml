@@ -43,14 +43,14 @@
             android:background="@android:color/white">
 
             <ImageButton
-                android:id="@+id/item_action_button"
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignBottom="@id/alignment_view"
-                android:background="@color/green_back"
-                android:src="@drawable/ic_plus_green_24" />
+            android:id="@+id/item_action_button"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignBottom="@id/alignment_view"
+            android:background="@color/blue_back"
+            android:src="@drawable/ic_reward_blue_48" />
 
             <TextView
                 android:id="@+id/item_title"

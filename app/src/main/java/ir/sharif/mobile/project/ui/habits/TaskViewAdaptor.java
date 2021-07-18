@@ -54,7 +54,7 @@ public class TaskViewAdaptor extends RecyclerView.Adapter<TaskViewAdaptor.TaskVi
     @Override
     public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.layout_habit, parent, false);
+                .inflate(R.layout.layout_habits, parent, false);
         view.findViewById(R.id.item_background).setOnClickListener(v -> {
             Log.d("TaskViewHolder", "OnClicked");
             Navigation.findNavController(v.getRootView().findViewById(R.id.fragment)).navigate(R.id.action_mainFragment_to_habitEditFragment); //todo pass args
@@ -70,10 +70,10 @@ public class TaskViewAdaptor extends RecyclerView.Adapter<TaskViewAdaptor.TaskVi
         holder.reward.setText(String.valueOf(task.getReward()));
 
         if (task.getReward() < 0) {
-            holder.actionButton.setImageResource(R.drawable.ic_minus_red_24);
+            holder.actionButton.setImageResource(R.drawable.ic_minus_red_48);
             holder.actionButton.setBackgroundColor(context.getResources().getColor(R.color.red_back));
         } else {
-            holder.actionButton.setImageResource(R.drawable.ic_plus_green_24);
+            holder.actionButton.setImageResource(R.drawable.ic_plus_green_48);
             holder.actionButton.setBackgroundColor(context.getResources().getColor(R.color.green_back));
         }
 
