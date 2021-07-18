@@ -1,10 +1,11 @@
 package ir.sharif.mobile.project.ui.habits;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -20,7 +21,7 @@ public class TaskViewAdaptor extends RecyclerView.Adapter<TaskViewAdaptor.TaskVi
 
     private List<Task> tasks;
     private final TaskViewHandler taskViewHandler;
-//    private final Context context;
+    private final Context context;
 
     public class TaskViewHolder extends RecyclerView.ViewHolder {
 
@@ -28,7 +29,7 @@ public class TaskViewAdaptor extends RecyclerView.Adapter<TaskViewAdaptor.TaskVi
         public final TextView description;
         public final TextView reward;
 //        public final View view;
-        public final Button actionButton;
+        public final ImageButton actionButton;
         public RelativeLayout viewBackground, viewForeground;
 
         public TaskViewHolder(@NonNull View itemView) {
@@ -43,16 +44,17 @@ public class TaskViewAdaptor extends RecyclerView.Adapter<TaskViewAdaptor.TaskVi
         }
     }
 
-    public TaskViewAdaptor(List<Task> tasks, TaskViewHandler taskViewHandler) {
+    public TaskViewAdaptor(List<Task> tasks, TaskViewHandler taskViewHandler, Context context) {
         this.tasks = tasks;
         this.taskViewHandler = taskViewHandler;
+        this.context = context;
     }
 
     @NonNull
     @Override
     public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.task, parent, false);
+                .inflate(R.layout.layout_habit, parent, false);
         view.findViewById(R.id.item_background).setOnClickListener(v -> {
             Log.d("TaskViewHolder", "OnClicked");
             Navigation.findNavController(v.getRootView().findViewById(R.id.fragment)).navigate(R.id.action_mainFragment_to_habitEditFragment); //todo pass args
@@ -66,7 +68,14 @@ public class TaskViewAdaptor extends RecyclerView.Adapter<TaskViewAdaptor.TaskVi
         holder.title.setText(task.getTitle());
         holder.description.setText(task.getDescription());
         holder.reward.setText(String.valueOf(task.getReward()));
-        // TODO: change button color for negative rewards
+
+        if (task.getReward() < 0) {
+            holder.actionButton.setImageResource(R.drawable.ic_minus_red_24);
+            holder.actionButton.setBackgroundColor(context.getResources().getColor(R.color.red_back));
+        } else {
+            holder.actionButton.setImageResource(R.drawable.ic_plus_green_24);
+            holder.actionButton.setBackgroundColor(context.getResources().getColor(R.color.green_back));
+        }
 
         holder.itemView.setOnClickListener(v -> {
             // TODO: go to edit fragment

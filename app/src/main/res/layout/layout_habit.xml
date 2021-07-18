@@ -42,13 +42,15 @@
             android:layout_height="wrap_content"
             android:background="@android:color/white">
 
-            <Button
+            <ImageButton
                 android:id="@+id/item_action_button"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:layout_centerVertical="true" />
+                android:layout_alignBottom="@id/alignment_view"
+                android:background="@color/green_back"
+                android:src="@drawable/ic_plus_green_24" />
 
             <TextView
                 android:id="@+id/item_title"
@@ -84,10 +86,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/item_title"
-                android:layout_marginLeft="5pt"
+                android:layout_marginHorizontal="5pt"
                 android:layout_marginBottom="5pt"
                 android:layout_toRightOf="@id/item_action_button"
                 android:text="This is a description. This is a description. This is a description.\nIt can be multi line..." />
+
+            <TextView
+                android:id="@+id/alignment_view"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_below="@id/item_description"
+                android:layout_toRightOf="@id/item_action_button"/>
 
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

@@ -41,7 +41,7 @@ public class HabitsFragment extends Fragment implements RecyclerItemTouchHelper.
 //        dbHelper.insert(new Task("Task 4", "This is a static test task!", 220));
         handler = new TaskViewHandler(dbHelper);
         habits = dbHelper.getAllMatched(null);
-        mAdapter = new TaskViewAdaptor(habits, handler);
+        mAdapter = new TaskViewAdaptor(habits, handler, getContext());
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
