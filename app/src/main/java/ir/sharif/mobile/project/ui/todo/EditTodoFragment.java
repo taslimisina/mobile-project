@@ -9,8 +9,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import ir.sharif.mobile.project.R;
+import ir.sharif.mobile.project.ui.model.Todo;
 
 public class EditTodoFragment extends Fragment {
+    private Todo todo;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            todo = (Todo)getArguments().getSerializable("todo");
+        }
+    }
 
     @Nullable
     @Override

@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_mainFragment_to_editTodoFragment"
             app:destination="@id/editTodoFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_editDailyFragment"
+            app:destination="@id/editDailyFragment" />
     </fragment>
     <fragment
         android:id="@+id/habitEditFragment"
@@ -35,5 +38,14 @@
         <argument
             android:name="todo"
             app:argType="ir.sharif.mobile.project.ui.model.Todo" />
+    </fragment>
+    <fragment
+        android:id="@+id/editDailyFragment"
+        android:name="ir.sharif.mobile.project.ui.dailies.EditDailyFragment"
+        android:label="fragment_edit_daily"
+        tools:layout="@layout/fragment_edit_daily" >
+        <argument
+            android:name="daily"
+            app:argType="ir.sharif.mobile.project.ui.model.Daily" />
     </fragment>
 </navigation>
