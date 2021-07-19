@@ -14,6 +14,9 @@
             app:destination="@id/habitEditFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
+        <action
+            android:id="@+id/action_mainFragment_to_editTodoFragment"
+            app:destination="@id/editTodoFragment" />
     </fragment>
     <fragment
         android:id="@+id/habitEditFragment"
@@ -23,5 +26,14 @@
         <argument
             android:name="task"
             app:argType="ir.sharif.mobile.project.ui.habits.Task" />
+    </fragment>
+    <fragment
+        android:id="@+id/editTodoFragment"
+        android:name="ir.sharif.mobile.project.ui.todo.EditTodoFragment"
+        android:label="fragment_edit_todo"
+        tools:layout="@layout/fragment_edit_todo" >
+        <argument
+            android:name="todo"
+            app:argType="ir.sharif.mobile.project.ui.model.Todo" />
     </fragment>
 </navigation>

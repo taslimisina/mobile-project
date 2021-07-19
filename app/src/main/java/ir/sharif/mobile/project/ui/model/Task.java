@@ -1,6 +1,8 @@
 package ir.sharif.mobile.project.ui.model;
 
-public abstract class Task {
+import java.io.Serializable;
+
+public abstract class Task implements Serializable {
     private int id;
     private String title;
     private String description;
