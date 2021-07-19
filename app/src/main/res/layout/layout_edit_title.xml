@@ -7,8 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
-    android:orientation="vertical"
-    android:padding="@dimen/pad_10">
+    android:orientation="vertical">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_title"
@@ -44,50 +43,6 @@
             android:inputType="textMultiLine" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageButton
-            android:id="@+id/inc_reward_button"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:src="@drawable/ic_minus_red_24"
-            app:layout_constraintBottom_toBottomOf="@id/input_reward"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="@id/input_reward" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/input_reward"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:inputType="numberSigned"
-            app:layout_constraintLeft_toRightOf="@id/inc_reward_button"
-            app:layout_constraintRight_toLeftOf="@id/dec_reward_button"
-            tools:ignore="MissingConstraints">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Reward"
-                android:gravity="center"
-                android:inputType="numberSigned" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <ImageButton
-            android:id="@+id/dec_reward_button"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:src="@drawable/ic_plus_green_24"
-            app:layout_constraintBottom_toBottomOf="@id/input_reward"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/input_reward" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.appcompat.widget.LinearLayoutCompat>
 

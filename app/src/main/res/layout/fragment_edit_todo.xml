@@ -1,19 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/item_foreground"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@android:color/white"
-    android:orientation="vertical"
-    android:padding="@dimen/pad_10">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
-    <include
+    <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/layout_edit_title" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/pad_10"
+        tools:context=".ui.habits.HabitEditFragment">
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+        <include
+            layout="@layout/layout_edit_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
+        <include
+            layout="@layout/layout_edit_reward"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <include
+            layout="@layout/layout_edit_checklist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <include
+            layout="@layout/layout_edit_reminders"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_due_date"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="date">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Due Date"
+                android:inputType="date" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/clear_due_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="Clear"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</ScrollView>
