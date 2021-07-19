@@ -7,8 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
-    android:orientation="vertical"
-    android:padding="@dimen/pad_10">
+    android:orientation="vertical">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_title"
@@ -45,6 +44,14 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Reward"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="18sp"/>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -59,24 +66,19 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="@id/input_reward" />
 
-        <com.google.android.material.textfield.TextInputLayout
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/input_reward"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:minHeight="50dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:inputType="numberSigned"
             app:layout_constraintLeft_toRightOf="@id/inc_reward_button"
             app:layout_constraintRight_toLeftOf="@id/dec_reward_button"
-            tools:ignore="MissingConstraints">
+            android:background="@drawable/stroke_box"
+            android:hint="Reward"
+            android:inputType="numberSigned"
+            android:gravity="center"
+            tools:ignore="MissingConstraints" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Reward"
-                android:gravity="center"
-                android:inputType="numberSigned" />
-
-        </com.google.android.material.textfield.TextInputLayout>
 
         <ImageButton
             android:id="@+id/dec_reward_button"
