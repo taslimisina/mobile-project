@@ -30,7 +30,7 @@ public class MainFragment extends Fragment {
                 .build();
 //        NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
         NavController navController = Navigation.findNavController(view.findViewById(R.id.nav_host_fragment));
-        NavigationUI.setupActionBarWithNavController((MainActivity)getActivity(), navController, appBarConfiguration);
+//        NavigationUI.setupActionBarWithNavController((MainActivity)getActivity(), navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
         return view;
