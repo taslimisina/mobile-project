@@ -21,6 +21,7 @@ import java.util.List;
 
 import ir.sharif.mobile.project.MainActivity;
 import ir.sharif.mobile.project.R;
+import ir.sharif.mobile.project.ui.utils.RecyclerItemTouchHelper;
 
 public class HabitsFragment extends Fragment implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
 

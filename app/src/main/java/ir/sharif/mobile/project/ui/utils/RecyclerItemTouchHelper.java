@@ -1,4 +1,4 @@
-package ir.sharif.mobile.project.ui.habits;
+package ir.sharif.mobile.project.ui.utils;
 
 import android.graphics.Canvas;
 import android.view.View;
@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
+
+import ir.sharif.mobile.project.ui.habits.TaskViewAdaptor;
 
 
 public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
