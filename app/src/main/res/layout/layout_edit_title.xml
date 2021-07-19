@@ -54,7 +54,7 @@
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:src="@drawable/ic_plus_green_24"
+            android:src="@drawable/ic_minus_red_24"
             app:layout_constraintBottom_toBottomOf="@id/input_reward"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="@id/input_reward" />
@@ -73,6 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Reward"
+                android:gravity="center"
                 android:inputType="numberSigned" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -82,7 +83,7 @@
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:src="@drawable/ic_minus_red_24"
+            android:src="@drawable/ic_plus_green_24"
             app:layout_constraintBottom_toBottomOf="@id/input_reward"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/input_reward" />
