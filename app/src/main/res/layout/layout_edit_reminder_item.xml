@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_marginVertical="5dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/remove_item_button"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:src="@drawable/ic_minus_red_24"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/item_title"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <TextView
+            android:id="@+id/remind_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@id/remove_item_button"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/item_title"
+            android:text="Remind me"/>
+
+        <TextClock
+            android:id="@+id/item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:inputType="time"
+            android:format24Hour="k:mm"
+            android:format12Hour="@null"
+            android:text="15:34"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

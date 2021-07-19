@@ -18,10 +18,41 @@
             android:layout_height="wrap_content" />
 
         <include
+            layout="@layout/layout_edit_reward"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <include
             layout="@layout/layout_edit_checklist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <include
+            layout="@layout/layout_edit_reminders"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_due_date"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="date">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Due Date"
+                android:inputType="date" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/clear_due_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="Clear"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </ScrollView>

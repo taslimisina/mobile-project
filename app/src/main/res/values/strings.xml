@@ -11,4 +11,7 @@
     <string name="title">Title</string>
     <string name="new_checklist_item">New checklist item</string>
     <string name="checklist">Checklist</string>
+    <string name="new_reminder">New reminder</string>
+    <string name="reminders">Reminders</string>
+    <string name="reward">Reward</string>
 </resources>
