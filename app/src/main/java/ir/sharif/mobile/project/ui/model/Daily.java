@@ -1,11 +1,11 @@
 package ir.sharif.mobile.project.ui.model;
 
-import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 public class Daily extends Task {
     private int every;
-    private Instant start;
+    private Date start;
 
     private List<Reminder> reminders;
     private List<ChecklistItem> checklistItems;
@@ -19,11 +19,11 @@ public class Daily extends Task {
         return this;
     }
 
-    public Instant getStart() {
+    public Date getStart() {
         return start;
     }
 
-    public Daily setStart(Instant start) {
+    public Daily setStart(Date start) {
         this.start = start;
         return this;
     }

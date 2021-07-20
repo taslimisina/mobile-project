@@ -1,10 +1,12 @@
 package ir.sharif.mobile.project.ui.model;
 
 public class ChecklistItem {
-    private long id;
+    private Long id;
     private String name;
+    // Don't set this in code, it will be set automatically
+    private long taskId;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -20,5 +22,14 @@ public class ChecklistItem {
     public ChecklistItem setName(String name) {
         this.name = name;
         return this;
+    }
+
+    public ChecklistItem setTaskId(long taskId) {
+        this.taskId = taskId;
+        return this;
+    }
+
+    public long getTaskId() {
+        return taskId;
     }
 }

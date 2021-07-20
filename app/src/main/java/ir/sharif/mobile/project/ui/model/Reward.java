@@ -1,7 +1,7 @@
 package ir.sharif.mobile.project.ui.model;
 
 public class Reward {
-    private long id;
+    private Long id;
     private String title;
     private String description;
     private int amount;
@@ -11,7 +11,7 @@ public class Reward {
         return this;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

@@ -1,6 +1,11 @@
 package ir.sharif.mobile.project.ui.repository;
 
+import android.database.Cursor;
+
+import java.util.ArrayList;
 import java.util.List;
+
+import ir.sharif.mobile.project.ui.model.ChecklistItem;
 
 public interface BaseRepository<T> {
 
@@ -10,6 +15,4 @@ public interface BaseRepository<T> {
     T save(T object);
 
     List<T> findAll();
-
-    T findById(Long id);
 }

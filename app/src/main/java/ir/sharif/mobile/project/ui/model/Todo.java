@@ -1,20 +1,19 @@
 package ir.sharif.mobile.project.ui.model;
 
-import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 public class Todo extends Task {
 
-    private Instant dueDate;
+    private Date dueDate;
     private List<Reminder> reminders;
     private List<ChecklistItem> checklistItems;
 
-
-    public Instant getDueDate() {
+    public Date getDueDate() {
         return dueDate;
     }
 
-    public Todo setDueDate(Instant dueDate) {
+    public Todo setDueDate(Date dueDate) {
         this.dueDate = dueDate;
         return this;
     }

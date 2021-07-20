@@ -3,16 +3,16 @@ package ir.sharif.mobile.project.ui.model;
 import java.io.Serializable;
 
 public abstract class Task implements Serializable {
-    private int id;
+    private Long id;
     private String title;
     private String description;
     private int reward;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public Task setId(int id) {
+    public Task setId(Long id) {
         this.id = id;
         return this;
     }

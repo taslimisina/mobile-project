@@ -8,11 +8,33 @@ import android.content.Context;
  */
 public class RepositoryHolder {
 
-    private static final TaskRepository TASK_REPOSITORY = null;
-    private static final RewardRepository rewardRepository = null;
-    private static final ReminderRepository reminderRepository = null;
-    private static final ChecklistItemRepository checklistItemRepository = null;
+    private static TaskRepository taskRepository;
+    private static RewardRepository rewardRepository;
+    private static ReminderRepository reminderRepository;
+    private static ChecklistItemRepository checklistItemRepository;
 
     public static void init(Context context) {
+        taskRepository = new TaskRepository(context);
+        rewardRepository = new RewardRepository(context);
+        reminderRepository = new ReminderRepository(context);
+        checklistItemRepository = new ChecklistItemRepository(context);
+        taskRepository.setChecklistItemRepository(checklistItemRepository)
+                .setReminderRepository(reminderRepository);
+    }
+
+    public static ChecklistItemRepository getChecklistItemRepository() {
+        return checklistItemRepository;
+    }
+
+    public static ReminderRepository getReminderRepository() {
+        return reminderRepository;
+    }
+
+    public static RewardRepository getRewardRepository() {
+        return rewardRepository;
+    }
+
+    public static TaskRepository getTaskRepository() {
+        return taskRepository;
     }
 }

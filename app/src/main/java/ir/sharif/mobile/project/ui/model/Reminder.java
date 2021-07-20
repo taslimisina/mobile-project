@@ -1,17 +1,19 @@
 package ir.sharif.mobile.project.ui.model;
 
-import java.time.Instant;
+import java.util.Date;
 
 public class Reminder {
-    private long id;
-    private Instant time;
+    private Long id;
+    private Date time;
+    // Don't set this in code, it will be set automatically
+    private long taskId;
 
-    public Reminder setTime(Instant time) {
+    public Reminder setTime(Date time) {
         this.time = time;
         return this;
     }
 
-    public Instant getTime() {
+    public Date getTime() {
         return time;
     }
 
@@ -20,7 +22,16 @@ public class Reminder {
         return this;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
+    }
+
+    public long getTaskId() {
+        return taskId;
+    }
+
+    public Reminder setTaskId(long taskId) {
+        this.taskId = taskId;
+        return this;
     }
 }
