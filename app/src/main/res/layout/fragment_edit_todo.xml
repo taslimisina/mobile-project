@@ -9,10 +9,10 @@
         android:id="@+id/habitEditToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/blue_icon">
+        android:background="@color/purple_700">
 
         <ImageButton
-            android:id="@+id/upButton"
+            android:id="@+id/up_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?android:selectableItemBackground"
@@ -24,12 +24,11 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:paddingLeft="10dp"
-                android:text="Habit Edditing!!!"
+                android:text="Edit"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -41,12 +40,13 @@
                 android:layout_height="wrap_content"
                 android:background="?android:selectableItemBackground"
                 android:text="Delete"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/button3"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/save_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?android:selectableItemBackground"

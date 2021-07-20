@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,9 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.text.DateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import ir.sharif.mobile.project.R;
 import ir.sharif.mobile.project.ui.model.ChecklistItem;
@@ -55,12 +52,21 @@ public class EditTodoFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_todo, container, false);
 
+        init_form_values(view);
         init_reminder_section(view);
         init_checklist_section(view);
         init_reward_section(view);
         init_due_date_section(view);
 
-        // TODO: 7/20/21 set values from received obj
+        view.findViewById(R.id.up_button).setOnClickListener(v -> {
+            // TODO: 7/20/21 discard changes
+            getActivity().onBackPressed();
+        });
+
+        view.findViewById(R.id.save_button).setOnClickListener(v -> {
+            // TODO: 7/20/21 save changes or create new todo
+            getActivity().onBackPressed();
+        });
 
         return view;
     }
@@ -172,5 +178,12 @@ public class EditTodoFragment extends Fragment {
         addReminderButton.setOnClickListener(v -> {
             reminderViewAdaptor.addItem(new Reminder(), todo.getReminders().size());
         });
+    }
+
+    void init_form_values(View view) {
+        ((TextInputEditText) view.findViewById(R.id.input_title)).setText(todo.getTitle());
+        ((TextInputEditText) view.findViewById(R.id.input_description)).setText(todo.getDescription());
+        ((TextInputEditText) view.findViewById(R.id.input_reward)).setText(String.valueOf(todo.getReward()));
+//        ((TextInputEditText) view.findViewById(R.id.input_due_date)).setText();
     }
 }
