@@ -40,6 +40,8 @@ public class TodoFragment extends Fragment {
         todo.setTitle("Hello");
         todo.setDescription("a description");
         todo.setReward(20);
+        todo.setChecklistItems(new ArrayList<>());
+        todo.setReminders(new ArrayList<>());
         todoList = new ArrayList<>();
         todoList.add(todo);
     }

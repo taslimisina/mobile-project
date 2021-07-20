@@ -14,13 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
 
-import java.util.Calendar;
 import java.util.List;
 
 import ir.sharif.mobile.project.R;
 import ir.sharif.mobile.project.ui.model.Reminder;
 
-public class ReminderViewAdaptor extends RecyclerView.Adapter<ReminderViewAdaptor.ReminderViewHolder> {
+public class EditReminderViewAdaptor extends RecyclerView.Adapter<EditReminderViewAdaptor.ReminderViewHolder> {
 
     private List<Reminder> reminders;
     private Context context;
@@ -39,7 +38,7 @@ public class ReminderViewAdaptor extends RecyclerView.Adapter<ReminderViewAdapto
         }
     }
 
-    public ReminderViewAdaptor(List<Reminder> reminders, Context context) {
+    public EditReminderViewAdaptor(List<Reminder> reminders, Context context) {
         this.reminders = reminders;
         this.context = context;
     }
@@ -61,7 +60,8 @@ public class ReminderViewAdaptor extends RecyclerView.Adapter<ReminderViewAdapto
 //        int minute = currentTime.get(Calendar.MINUTE);
 
         holder.deleteButton.setOnClickListener(v -> {
-            removeItem(position);
+            int removedItemPosition = reminders.indexOf(reminder);
+            removeItem(removedItemPosition);
         });
 
         holder.cardView.setOnClickListener(v -> {
@@ -92,9 +92,9 @@ public class ReminderViewAdaptor extends RecyclerView.Adapter<ReminderViewAdapto
         notifyItemRemoved(position);
     }
 
-    public void addItem() {
-        reminders.add(new Reminder());
-        notifyItemInserted(getItemCount() - 1);
+    public void addItem(Reminder reminder, int position) {
+        reminders.add(position, reminder);
+        notifyItemInserted(position);
     }
 
 }

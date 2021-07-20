@@ -14,14 +14,12 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.List;
 
 import ir.sharif.mobile.project.R;
-import ir.sharif.mobile.project.ui.habits.TaskViewHandler;
 import ir.sharif.mobile.project.ui.model.ChecklistItem;
 
 
-public class ChecklistItemViewAdaptor extends RecyclerView.Adapter<ChecklistItemViewAdaptor.ChecklistItemViewHolder> {
+public class EditChecklistViewAdaptor extends RecyclerView.Adapter<EditChecklistViewAdaptor.ChecklistItemViewHolder> {
 
     private List<ChecklistItem> items;
-    private final TaskViewHandler taskViewHandler;
 
     public class ChecklistItemViewHolder extends RecyclerView.ViewHolder {
 
@@ -35,9 +33,8 @@ public class ChecklistItemViewAdaptor extends RecyclerView.Adapter<ChecklistItem
         }
     }
 
-    public ChecklistItemViewAdaptor(List<ChecklistItem> items, TaskViewHandler taskViewHandler) {
+    public EditChecklistViewAdaptor(List<ChecklistItem> items) {
         this.items = items;
-        this.taskViewHandler = taskViewHandler;
     }
 
     @NonNull
@@ -54,7 +51,8 @@ public class ChecklistItemViewAdaptor extends RecyclerView.Adapter<ChecklistItem
         holder.name.setText(item.getName());
 
         holder.deleteButton.setOnClickListener(v -> {
-            removeItem(position);
+            int removedItemPosition = items.indexOf(item);
+            removeItem(removedItemPosition);
         });
 
     }
@@ -70,8 +68,8 @@ public class ChecklistItemViewAdaptor extends RecyclerView.Adapter<ChecklistItem
         notifyItemRemoved(position);
     }
 
-    public void addItem() {
-        items.add(new ChecklistItem());
-        notifyItemInserted(getItemCount() - 1);
+    public void addItem(ChecklistItem item, int position) {
+        items.add(position, item);
+        notifyItemInserted(position);
     }
 }
