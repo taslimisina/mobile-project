@@ -77,9 +77,9 @@ public class EditTodoFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.toString().trim().length() == 0) {
-                    clearDueDateButton.setVisibility(View.VISIBLE);
-                } else {
                     clearDueDateButton.setVisibility(View.INVISIBLE);
+                } else {
+                    clearDueDateButton.setVisibility(View.VISIBLE);
                 }
             }
 
