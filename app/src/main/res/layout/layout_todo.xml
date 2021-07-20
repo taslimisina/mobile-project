@@ -43,7 +43,7 @@
             android:background="@android:color/white">
 
             <androidx.appcompat.widget.AppCompatCheckBox
-                android:id="@+id/item_action_button"
+                android:id="@+id/item_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5pt"
-                android:layout_toRightOf="@id/item_action_button"
+                android:layout_toRightOf="@id/item_checkbox"
                 android:text="TITLE"
                 android:textStyle="bold" />
 
@@ -88,7 +88,7 @@
                 android:layout_below="@id/item_title"
                 android:layout_marginHorizontal="5pt"
                 android:layout_marginBottom="5pt"
-                android:layout_toRightOf="@id/item_action_button"
+                android:layout_toRightOf="@id/item_checkbox"
                 android:text="This is a description. This is a description. This is a description.\nIt can be multi line..." />
 
             <TextView
@@ -96,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_below="@id/item_description"
-                android:layout_toRightOf="@id/item_action_button"/>
+                android:layout_toRightOf="@id/item_checkbox"/>
 
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

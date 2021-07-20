@@ -14,4 +14,6 @@
     <string name="new_reminder">New reminder</string>
     <string name="reminders">Reminders</string>
     <string name="reward">Reward</string>
+
+    <string name="time">%1$02d:%2$d</string>
 </resources>
