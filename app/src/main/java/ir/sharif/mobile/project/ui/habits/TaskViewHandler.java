@@ -9,28 +9,30 @@ import androidx.annotation.NonNull;
 
 import java.lang.ref.WeakReference;
 
+import ir.sharif.mobile.project.ui.model.Task;
+import ir.sharif.mobile.project.ui.repository.RepositoryHolder;
+import ir.sharif.mobile.project.ui.repository.TaskRepository;
+
 
 public class TaskViewHandler extends Handler {
 
     public static final int DELETE_DATA = 0;
 
-    private final WeakReference<TaskDbHelper> helper;
 
-    public TaskViewHandler(TaskDbHelper db) {
+    public TaskViewHandler() {
         super(Looper.myLooper());
-        this.helper = new WeakReference<>(db);
     }
 
     @Override
     public void handleMessage(@NonNull Message msg) {
-        TaskDbHelper helper = this.helper.get();
+        TaskRepository helper = RepositoryHolder.getTaskRepository();
         if (helper == null) {
             return;
         }
 
         switch (msg.what) {
             case DELETE_DATA:
-                helper.delete((Task) msg.obj);
+                helper.delete(((Task) msg.obj).getId());
                 break;
             default:
                 Log.e("Handler", "Unknown Message");

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ir.sharif.mobile.project.R;
+import ir.sharif.mobile.project.ui.model.Task;
 
 public class HabitEditFragment extends Fragment {
     private Task task;

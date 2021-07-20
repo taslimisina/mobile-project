@@ -15,6 +15,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import ir.sharif.mobile.project.R;
+import ir.sharif.mobile.project.ui.model.Task;
 
 import java.util.List;
 

@@ -23,6 +23,9 @@ public class ChecklistItemRepository extends SQLiteOpenHelper
             " (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + "name VARCHAR(150) NOT NULL, " +
             " taskId INTEGER, CONSTRAINT taskId FOREIGN KEY (id) REFERENCES task);";
 
+    public static final String DELETE_TASK_PATTERN = "DELETE FROM " + TABLE_NAME + " " +
+            "WHERE id = %d;";
+
     public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
 
     public ChecklistItemRepository(@Nullable Context context) {
@@ -56,6 +59,12 @@ public class ChecklistItemRepository extends SQLiteOpenHelper
     public List<ChecklistItem> findAll() {
         Cursor cursor = getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_NAME, null);
         return parseResults(cursor);
+    }
+
+    @Override
+    public void delete(long id) {
+        String query = String.format(DELETE_TASK_PATTERN, id);
+        getWritableDatabase().execSQL(query);
     }
 
     public List<ChecklistItem> findForTask(long taskId) {

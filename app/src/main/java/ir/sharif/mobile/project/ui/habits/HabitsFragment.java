@@ -21,6 +21,10 @@ import java.util.List;
 
 import ir.sharif.mobile.project.MainActivity;
 import ir.sharif.mobile.project.R;
+import ir.sharif.mobile.project.ui.model.Habit;
+import ir.sharif.mobile.project.ui.model.Task;
+import ir.sharif.mobile.project.ui.repository.RepositoryHolder;
+import ir.sharif.mobile.project.ui.repository.TaskRepository;
 import ir.sharif.mobile.project.ui.utils.RecyclerItemTouchHelper;
 
 public class HabitsFragment extends Fragment implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
@@ -30,18 +34,15 @@ public class HabitsFragment extends Fragment implements RecyclerItemTouchHelper.
     private List<Task> habits;
     private TaskViewAdaptor mAdapter;
     private TaskViewHandler handler;
-    private TaskDbHelper dbHelper;
 
     public View onCreateView(@NonNull LayoutInflater inflater,  ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_habits, container, false);
         recyclerView = view.findViewById(R.id.recycler_view);
-        dbHelper = new TaskDbHelper(getContext());
-//        dbHelper.insert(new Task("Task 1", "This is a static test task!", 50));
-//        dbHelper.insert(new Task("Task 2", "This is a static test task!", 150));
-//        dbHelper.insert(new Task("Task 3", "This is a static test task!", -50));
-//        dbHelper.insert(new Task("Task 4", "This is a static test task!", 220));
-        handler = new TaskViewHandler(dbHelper);
-        habits = dbHelper.getAllMatched(null);
+//        TaskRepository dbHelper = RepositoryHolder.getTaskRepository();
+//        dbHelper.save(new Habit().setTitle("Task 1").setDescription("This is a static test task!").setReward(50));
+//        dbHelper.save(new Habit().setTitle("Task 2").setDescription("This is a static test task!").setReward(-50));
+        handler = new TaskViewHandler();
+        habits = RepositoryHolder.getTaskRepository().findAll(TaskRepository.TaskType.HABIT);
         mAdapter = new TaskViewAdaptor(habits, handler, getContext());
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());

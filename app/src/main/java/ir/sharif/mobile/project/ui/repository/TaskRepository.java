@@ -34,6 +34,9 @@ public class TaskRepository extends SQLiteOpenHelper implements BaseRepository<T
             " description text, reward INTEGER, every INTEGER, start DATETIME(3), dudate DATETIME(3)," +
             " type VARCHAR(20) not null);";
 
+    public static final String DELETE_TASK_PATTERN = "DELETE FROM " + TABLE_NAME + " " +
+            "WHERE id = %d;";
+
     public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
 
     private ChecklistItemRepository checklistItemRepository;
@@ -105,6 +108,12 @@ public class TaskRepository extends SQLiteOpenHelper implements BaseRepository<T
         return parseResults(cursor);
     }
 
+    @Override
+    public void delete(long id) {
+        String query = String.format(DELETE_TASK_PATTERN, id);
+        getWritableDatabase().execSQL(query);
+    }
+
     public List<Task> findAll(TaskType taskType) {
         List<Task> all = findAll();
         Iterator<Task> iterator = all.iterator();
@@ -134,12 +143,12 @@ public class TaskRepository extends SQLiteOpenHelper implements BaseRepository<T
         List<Task> items = new ArrayList<>();
         int idIndex = response.getColumnIndex("id");
         int titleIndex = response.getColumnIndex("title");
-        int descriptionIndex = response.getColumnIndex("title");
-        int rewardIndex = response.getColumnIndex("title");
-        int everyIndex = response.getColumnIndex("title");
-        int startIndex = response.getColumnIndex("title");
-        int dudateIndex = response.getColumnIndex("description");
-        int typeIndex = response.getColumnIndex("amount");
+        int descriptionIndex = response.getColumnIndex("description");
+        int rewardIndex = response.getColumnIndex("reward");
+        int everyIndex = response.getColumnIndex("every");
+        int startIndex = response.getColumnIndex("start");
+        int dudateIndex = response.getColumnIndex("dudate");
+        int typeIndex = response.getColumnIndex("type");
         while (response.moveToNext()) {
             String type = response.getString(typeIndex);
             Long id = response.getLong(idIndex);

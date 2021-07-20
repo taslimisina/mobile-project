@@ -22,6 +22,9 @@ public class RewardRepository extends SQLiteOpenHelper implements BaseRepository
             " (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + "title VARCHAR(150) NOT NULL, " +
             " amount INTEGER, description text);";
 
+    public static final String DELETE_TASK_PATTERN = "DELETE FROM " + TABLE_NAME + " " +
+            "WHERE id = %d;";
+
     public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
 
     @Override
@@ -56,6 +59,12 @@ public class RewardRepository extends SQLiteOpenHelper implements BaseRepository
     public List<Reward> findAll() {
         Cursor cursor = getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_NAME, null);
         return parseResults(cursor);
+    }
+
+    @Override
+    public void delete(long id) {
+        String query = String.format(DELETE_TASK_PATTERN, id);
+        getWritableDatabase().execSQL(query);
     }
 
     private List<Reward> parseResults(Cursor response) {

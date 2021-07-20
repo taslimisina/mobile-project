@@ -32,7 +32,7 @@
         tools:layout="@layout/fragment_edit_habit" >
         <argument
             android:name="task"
-            app:argType="ir.sharif.mobile.project.ui.habits.Task" />
+            app:argType="ir.sharif.mobile.project.ui.model.Task" />
     </fragment>
     <fragment
         android:id="@+id/editTodoFragment"
