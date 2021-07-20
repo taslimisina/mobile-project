@@ -14,7 +14,7 @@
         android:layout_height="wrap_content">
 
         <ImageButton
-            android:id="@+id/inc_reward_button"
+            android:id="@+id/dec_reward_button"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -28,17 +28,18 @@
             android:minHeight="50dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@id/inc_reward_button"
-            app:layout_constraintRight_toLeftOf="@id/dec_reward_button"
+            app:layout_constraintLeft_toRightOf="@id/dec_reward_button"
+            app:layout_constraintRight_toLeftOf="@id/inc_reward_button"
             android:background="@drawable/stroke_box"
-            android:hint="@string/reward"
+            android:hint="0"
             android:inputType="numberSigned"
             android:gravity="center"
-            tools:ignore="MissingConstraints" />
+            tools:ignore="MissingConstraints"
+            android:cursorVisible="false" />
 
 
         <ImageButton
-            android:id="@+id/dec_reward_button"
+            android:id="@+id/inc_reward_button"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:background="@null"

@@ -73,7 +73,7 @@ public class EditReminderViewAdaptor extends RecyclerView.Adapter<EditReminderVi
             mTimePicker = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                    holder.time.setText(context.getString(R.string.time,  hh, mm));
+                    holder.time.setText(context.getString(R.string.time,  selectedHour, selectedMinute));
                 }
             }, hh, mm, true);
             mTimePicker.setTitle("Select Time");

@@ -16,4 +16,5 @@
     <string name="reward">Reward</string>
 
     <string name="time">%1$02d:%2$d</string>
+    <string name="date">%1$02d-%2$02d-%3$04d</string>
 </resources>
