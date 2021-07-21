@@ -34,6 +34,7 @@ import ir.sharif.mobile.project.ui.repository.TaskRepository;
 import ir.sharif.mobile.project.ui.model.utils.DateUtil;
 import ir.sharif.mobile.project.ui.utils.EditChecklistViewAdaptor;
 import ir.sharif.mobile.project.ui.utils.EditReminderViewAdaptor;
+import ir.sharif.mobile.project.ui.utils.HideSoftKeyboardHelper;
 
 
 public class EditTodoFragment extends Fragment {
@@ -86,6 +87,7 @@ public class EditTodoFragment extends Fragment {
             getActivity().onBackPressed();
         });
 
+        HideSoftKeyboardHelper.setupUI(view, getActivity());
         return view;
     }
 

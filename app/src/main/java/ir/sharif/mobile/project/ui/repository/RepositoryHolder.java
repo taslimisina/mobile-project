@@ -33,7 +33,7 @@ public class RepositoryHolder {
 
         ChecklistItem ss = new ChecklistItem().setName("ss");
         Task sdf = new Todo().setChecklistItems(Collections.singletonList(ss)).setReward(10).setTitle("sdf");
-        taskRepository.save(sdf);
+//        taskRepository.save(sdf);
         taskRepository.findAll();
     }
 
