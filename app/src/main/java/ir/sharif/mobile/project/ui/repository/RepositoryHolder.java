@@ -32,10 +32,13 @@ public class RepositoryHolder {
                 .setReminderRepository(reminderRepository);
         taskRepository.findAll(TaskRepository.TaskType.HABIT);
 
-        Reminder ss = new Reminder().setTime(new Date(System.currentTimeMillis() + 10000));
-        Task sdf = new Todo().setReminders(Collections.singletonList(ss)).setReward(10).setTitle("sdf");
+//        Reminder ss = new Reminder().setTime(new Date(System.currentTimeMillis() + 10000));
+//        Task sdf = new Todo()
+//                .setReminders(Collections.singletonList(ss)).setReward(10).setTitle("sdf");
 //        taskRepository.save(sdf);
-        taskRepository.findAll();
+//        for (Reminder reminder : reminderRepository.findAll()) {
+//            reminderRepository.delete(reminder.getId());
+//        }
     }
 
     public static ChecklistItemRepository getChecklistItemRepository() {

@@ -32,8 +32,7 @@ public class NotificationManager {
                 .setContentText(text)
                 .setSmallIcon(R.drawable.coin_logo)
                 .setLargeIcon(((BitmapDrawable) context.getResources()
-                        .getDrawable(R.drawable.coin_logo)).getBitmap())
-                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+                        .getDrawable(R.drawable.coin_logo)).getBitmap());
 
         Intent intent = new Intent(context, MainActivity.class);
         PendingIntent activity = PendingIntent.getActivity(context, (int) reminderId, intent,
@@ -44,11 +43,20 @@ public class NotificationManager {
         Intent notificationIntent = new Intent(context, NotificationReceiver.class);
         notificationIntent.putExtra(NotificationReceiver.NOTIFICATION_ID, reminderId);
         notificationIntent.putExtra(NotificationReceiver.NOTIFICATION, notification);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, (int) reminderId,
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, reminderId,
                 notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         long futureInMillis = SystemClock.elapsedRealtime() + delayMillis;
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
+    }
+
+    public void cancelNotification(int reminderId) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, NotificationReceiver.class);
+        intent.putExtra(NotificationReceiver.NOTIFICATION_ID, reminderId);
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, reminderId, intent,
+                PendingIntent.FLAG_CANCEL_CURRENT);
+        alarmManager.cancel(alarmIntent);
     }
 }

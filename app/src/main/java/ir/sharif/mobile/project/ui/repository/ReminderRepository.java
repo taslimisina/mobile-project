@@ -58,6 +58,7 @@ public class ReminderRepository implements BaseRepository<Reminder> {
     @Override
     public void delete(long id) {
         String query = String.format(DELETE_TASK_PATTERN, id);
+        notificationManager.cancelNotification((int) id);
         dbHelper.getWritableDatabase().execSQL(query);
     }
 
