@@ -1,11 +1,9 @@
 package ir.sharif.mobile.project.ui.repository;
 
-import android.app.Presentation;
 import android.content.ContentValues;
 import android.database.Cursor;
 
 import java.util.Calendar;
-import java.util.List;
 
 public class CoinRepository {
 
@@ -14,6 +12,9 @@ public class CoinRepository {
     public static final String CREATE_TABLE_QUERY = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
             " (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + "time datetime(3) NOT NULL, " +
             " score INTEGER NOT NULL);";
+
+    public static final String DELETE_PATTERN = "DELETE FROM " + TABLE_NAME + " " +
+            "WHERE id = %d;";
 
     private DbHelper dbHelper;
 
@@ -54,6 +55,16 @@ public class CoinRepository {
         values.put("score", amount);
         dbHelper.getWritableDatabase().insert(TABLE_NAME, null, values);
         return amount;
+    }
+
+    public synchronized int undo() {
+        Cursor cursor = dbHelper.getReadableDatabase()
+                .rawQuery("SELECT * from " + TABLE_NAME + " ORDER BY id DESC", null, null);
+        int idIndex = cursor.getColumnIndex("id");
+        cursor.moveToFirst();
+        int id = cursor.getInt(idIndex);
+        dbHelper.getWritableDatabase().execSQL(String.format(DELETE_PATTERN, id));
+        return getLastScore();
     }
 
     public synchronized int getLastScore() {
