@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ import ir.sharif.mobile.project.R;
 import ir.sharif.mobile.project.ui.model.ChecklistItem;
 import ir.sharif.mobile.project.ui.model.Reminder;
 import ir.sharif.mobile.project.ui.model.Todo;
+import ir.sharif.mobile.project.ui.repository.ChecklistItemRepository;
 import ir.sharif.mobile.project.ui.repository.RepositoryHolder;
 import ir.sharif.mobile.project.ui.repository.TaskRepository;
 import ir.sharif.mobile.project.ui.model.utils.DateUtil;
@@ -45,6 +47,7 @@ public class EditTodoFragment extends Fragment {
     private RecyclerView checklistRecyclerview;
     private EditChecklistViewAdaptor checklistViewAdaptor;
     private static final TaskRepository taskRepository = RepositoryHolder.getTaskRepository();
+    private static final ChecklistItemRepository checklistItemRepository = RepositoryHolder.getChecklistItemRepository();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,12 +81,21 @@ public class EditTodoFragment extends Fragment {
             editingTodo.setTitle(((TextInputEditText) view.findViewById(R.id.input_title)).getText().toString());
             editingTodo.setDescription(((TextInputEditText) view.findViewById(R.id.input_description)).getText().toString());
             editingTodo.setReward(Integer.parseInt(((TextInputEditText) view.findViewById(R.id.input_reward)).getText().toString()));
+            Log.d("ChecklistItems", Integer.toString(todo.getChecklistItems().size()));
+//            Log.d("DueDateItems", todo.getDueDate().toString());
+            Log.d("ReminderItems", todo.getReminders().toString());
+            editingTodo.setChecklistItems(todo.getChecklistItems());
+            editingTodo.setDueDate(todo.getDueDate());
+            editingTodo.setReminders(todo.getReminders());
             //todo set checklist and reminders and due date
             if (editingTodo.getTitle().equals("")) {
                 Toast.makeText(getContext(), "Title shouldn't be empty!", Toast.LENGTH_SHORT).show();
                 return;
             }
-            taskRepository.save(editingTodo);
+            for (long id : checklistViewAdaptor.getToBeDeletedItems()) {
+                checklistItemRepository.delete(id); //todo handler
+            }
+            taskRepository.save(editingTodo);   //todo handler
             getActivity().onBackPressed();
         });
 
@@ -203,5 +215,11 @@ public class EditTodoFragment extends Fragment {
             String duDate = DateUtil.formatDate(todo.getDueDate(), DateUtil.LONG);
             ((TextInputEditText) view.findViewById(R.id.input_due_date)).setText(duDate);
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        checklistViewAdaptor.clearToBeDeletedItems();
     }
 }
