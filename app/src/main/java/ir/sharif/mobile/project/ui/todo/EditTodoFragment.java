@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,16 +26,15 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import ir.sharif.mobile.project.R;
 import ir.sharif.mobile.project.ui.model.ChecklistItem;
 import ir.sharif.mobile.project.ui.model.Reminder;
 import ir.sharif.mobile.project.ui.model.Todo;
+import ir.sharif.mobile.project.ui.model.utils.DateUtil;
 import ir.sharif.mobile.project.ui.repository.ChecklistItemRepository;
 import ir.sharif.mobile.project.ui.repository.ReminderRepository;
 import ir.sharif.mobile.project.ui.repository.RepositoryHolder;
 import ir.sharif.mobile.project.ui.repository.TaskRepository;
-import ir.sharif.mobile.project.ui.model.utils.DateUtil;
 import ir.sharif.mobile.project.ui.utils.EditChecklistViewAdaptor;
 import ir.sharif.mobile.project.ui.utils.EditReminderViewAdaptor;
 import ir.sharif.mobile.project.ui.utils.HideSoftKeyboardHelper;
@@ -114,8 +114,15 @@ public class EditTodoFragment extends Fragment {
 
         clearDueDateButton.setOnClickListener(v -> {
             dueDateEditText.setText("");
+            todo.setDueDate(null);
         });
 
+        if (dueDateEditText.getText().toString().length() == 0) {
+            clearDueDateButton.setVisibility(View.INVISIBLE);
+        }
+        else {
+            clearDueDateButton.setVisibility(View.VISIBLE);
+        }
         dueDateEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -146,7 +153,15 @@ public class EditTodoFragment extends Fragment {
 
             DatePickerDialog datePicker = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
                 public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                    dueDateEditText.setText(DateUtil.formatDate(year, monthOfYear, dayOfMonth, DateUtil.LONG));
+                    dueDateEditText.setText(DateUtil.formatDate(year, monthOfYear+1, dayOfMonth, DateUtil.LONG));
+                    Calendar cal = new GregorianCalendar();
+                    cal.set(Calendar.YEAR, year);
+                    cal.set(Calendar.MONTH, monthOfYear);
+                    cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                    cal.set(Calendar.HOUR_OF_DAY, 23);
+                    cal.set(Calendar.MINUTE, 59);
+                    cal.set(Calendar.SECOND, 59);
+                    todo.setDueDate(cal.getTime());
                 }
             }, yyyy, mm, dd);
             datePicker.show();
