@@ -13,7 +13,8 @@ import ir.sharif.mobile.project.ui.repository.TaskRepository;
 
 
 public class TodoViewHandler extends Handler {
-    public static final int DELETE_DATA = 0;
+    public static final int DELETE_TASK = 0;
+    public static final int DONE_TASK = 1;
 
 
     public TodoViewHandler() {
@@ -28,8 +29,11 @@ public class TodoViewHandler extends Handler {
         }
 
         switch (msg.what) {
-            case DELETE_DATA:
+            case DELETE_TASK:
                 helper.delete(((Task) msg.obj).getId());
+                break;
+            case DONE_TASK:
+                // TODO: 7/21/21 add reward
                 break;
             default:
                 Log.e("Handler", "Unknown Message");

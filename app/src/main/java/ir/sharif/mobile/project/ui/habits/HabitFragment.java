@@ -21,19 +21,18 @@ import java.util.List;
 
 import ir.sharif.mobile.project.MainActivity;
 import ir.sharif.mobile.project.R;
-import ir.sharif.mobile.project.ui.model.Habit;
 import ir.sharif.mobile.project.ui.model.Task;
 import ir.sharif.mobile.project.ui.repository.RepositoryHolder;
 import ir.sharif.mobile.project.ui.repository.TaskRepository;
 import ir.sharif.mobile.project.ui.utils.RecyclerItemTouchHelper;
 
-public class HabitsFragment extends Fragment implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
+public class HabitFragment extends Fragment implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private RecyclerView recyclerView;
     private List<Task> habits;
-    private TaskViewAdaptor mAdapter;
-    private TaskViewHandler handler;
+    private HabitViewAdaptor mAdapter;
+    private HabitViewHandler handler;
 
     public View onCreateView(@NonNull LayoutInflater inflater,  ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_habits, container, false);
@@ -41,9 +40,9 @@ public class HabitsFragment extends Fragment implements RecyclerItemTouchHelper.
 //        TaskRepository dbHelper = RepositoryHolder.getTaskRepository();
 //        dbHelper.save(new Habit().setTitle("Task 1").setDescription("This is a static test task!").setReward(50));
 //        dbHelper.save(new Habit().setTitle("Task 2").setDescription("This is a static test task!").setReward(-50));
-        handler = new TaskViewHandler();
+        handler = new HabitViewHandler();
         habits = RepositoryHolder.getTaskRepository().findAll(TaskRepository.TaskType.HABIT);
-        mAdapter = new TaskViewAdaptor(habits, handler, getContext());
+        mAdapter = new HabitViewAdaptor(habits, handler, getContext());
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -61,7 +60,7 @@ public class HabitsFragment extends Fragment implements RecyclerItemTouchHelper.
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
-        if (viewHolder instanceof TaskViewAdaptor.TaskViewHolder) {
+        if (viewHolder instanceof HabitViewAdaptor.TaskViewHolder) {
             // get the removed item name to display it in snack bar
             String name = habits.get(viewHolder.getAdapterPosition()).getTitle();
 
@@ -87,7 +86,7 @@ public class HabitsFragment extends Fragment implements RecyclerItemTouchHelper.
                 public void onDismissed(Snackbar snackbar, int event) {
                     if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT) {
                         Message message = new Message();
-                        message.what = TaskViewHandler.DELETE_DATA;
+                        message.what = HabitViewHandler.DELETE_DATA;
                         message.obj = deletedTask;
                         handler.sendMessage(message);
                     }

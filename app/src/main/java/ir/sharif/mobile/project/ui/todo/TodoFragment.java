@@ -24,8 +24,6 @@ import com.google.android.material.snackbar.Snackbar;
 
 import ir.sharif.mobile.project.MainActivity;
 import ir.sharif.mobile.project.R;
-import ir.sharif.mobile.project.ui.habits.TaskViewAdaptor;
-import ir.sharif.mobile.project.ui.habits.TaskViewHandler;
 import ir.sharif.mobile.project.ui.model.ChecklistItem;
 import ir.sharif.mobile.project.ui.model.Todo;
 import ir.sharif.mobile.project.ui.repository.RepositoryHolder;
@@ -117,7 +115,7 @@ public class TodoFragment extends Fragment implements RecyclerItemTouchHelper.Re
                 public void onDismissed(Snackbar snackbar, int event) {
                     if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT) {
                         Message message = new Message();
-                        message.what = TaskViewHandler.DELETE_DATA;
+                        message.what = TodoViewHandler.DELETE_TASK;
                         message.obj = deletedTask;
                         handler.sendMessage(message);
                     }

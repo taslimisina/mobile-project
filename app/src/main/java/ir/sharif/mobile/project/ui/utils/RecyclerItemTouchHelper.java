@@ -8,8 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 
-import ir.sharif.mobile.project.ui.habits.TaskViewAdaptor;
-
 
 public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
     private final RecyclerItemTouchHelperListener listener;

@@ -12,12 +12,12 @@ import ir.sharif.mobile.project.ui.repository.RepositoryHolder;
 import ir.sharif.mobile.project.ui.repository.TaskRepository;
 
 
-public class TaskViewHandler extends Handler {
+public class HabitViewHandler extends Handler {
 
     public static final int DELETE_DATA = 0;
 
 
-    public TaskViewHandler() {
+    public HabitViewHandler() {
         super(Looper.myLooper());
     }
 

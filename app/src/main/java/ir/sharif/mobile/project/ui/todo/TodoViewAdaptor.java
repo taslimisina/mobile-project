@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +27,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 
 import ir.sharif.mobile.project.R;
-import ir.sharif.mobile.project.ui.habits.TaskViewHandler;
 import ir.sharif.mobile.project.ui.model.ChecklistItem;
 import ir.sharif.mobile.project.ui.model.Todo;
 import ir.sharif.mobile.project.ui.model.utils.DateUtil;
@@ -69,6 +67,7 @@ public class TodoViewAdaptor extends RecyclerView.Adapter<TodoViewAdaptor.TodoVi
             View checklistItemView = LayoutInflater.from(context).inflate(R.layout.layout_checklist_item, (ViewGroup)holder.checklist, false);
             ((TextView)checklistItemView.findViewById(R.id.checklist_item_title)).setText(item.getName());
             holder.checklist.addView(checklistItemView);
+            // TODO: 7/21/21 set checked state
         }
 
         holder.checklist.setVisibility(View.GONE);
@@ -103,7 +102,6 @@ public class TodoViewAdaptor extends RecyclerView.Adapter<TodoViewAdaptor.TodoVi
         // Checked listener
         holder.checkBox.setOnCheckedChangeListener((CompoundButton buttonView, boolean isChecked) -> {
             if (isChecked) {
-                // TODO: 7/21/21 add reward
                 checkTodo(holder);
             }
         });
@@ -171,8 +169,8 @@ public class TodoViewAdaptor extends RecyclerView.Adapter<TodoViewAdaptor.TodoVi
         String name = todoList.get(holder.getAdapterPosition()).getTitle();
 
         // backup of removed item for undo purpose
-        final Todo deletedTask = todoList.get(holder.getAdapterPosition());
-        final int deletedIndex = holder.getAdapterPosition();
+        final Todo doneTask = todoList.get(holder.getAdapterPosition());
+        final int doneIndex = holder.getAdapterPosition();
 
         // remove the item from recycler view
         removeItem(holder.getAdapterPosition());
@@ -183,7 +181,7 @@ public class TodoViewAdaptor extends RecyclerView.Adapter<TodoViewAdaptor.TodoVi
             @Override
             public void onClick(View view) {
                 // undo is selected, restore the deleted item
-                restoreItem(deletedTask, deletedIndex);
+                restoreItem(doneTask, doneIndex);
                 holder.checkBox.setChecked(false);
             }
         });
@@ -193,8 +191,8 @@ public class TodoViewAdaptor extends RecyclerView.Adapter<TodoViewAdaptor.TodoVi
             public void onDismissed(Snackbar snackbar, int event) {
                 if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT) {
                     Message message = new Message();
-                    message.what = TaskViewHandler.DELETE_DATA;
-                    message.obj = deletedTask;
+                    message.what = TodoViewHandler.DELETE_TASK;
+                    message.obj = doneTask;
                     todoViewHandler.sendMessage(message);
                 }
             }

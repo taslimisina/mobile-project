@@ -2,7 +2,6 @@ package ir.sharif.mobile.project.ui.habits;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +19,10 @@ import ir.sharif.mobile.project.ui.utils.TwoLayerView;
 
 import java.util.List;
 
-public class TaskViewAdaptor extends RecyclerView.Adapter<TaskViewAdaptor.TaskViewHolder> {
+public class HabitViewAdaptor extends RecyclerView.Adapter<HabitViewAdaptor.TaskViewHolder> {
 
     private List<Task> tasks;
-    private final TaskViewHandler taskViewHandler;
+    private final HabitViewHandler habitViewHandler;
     private final Context context;
 
     public class TaskViewHolder extends RecyclerView.ViewHolder implements TwoLayerView {
@@ -31,13 +30,11 @@ public class TaskViewAdaptor extends RecyclerView.Adapter<TaskViewAdaptor.TaskVi
         public final TextView title;
         public final TextView description;
         public final TextView reward;
-//        public final View view;
         public final ImageButton actionButton;
         public RelativeLayout viewBackground, viewForeground;
 
         public TaskViewHolder(@NonNull View itemView) {
             super(itemView);
-//            this.view = itemView;
             title = itemView.findViewById(R.id.item_title);
             description = itemView.findViewById(R.id.item_description);
             reward = itemView.findViewById(R.id.item_reward);
@@ -52,9 +49,9 @@ public class TaskViewAdaptor extends RecyclerView.Adapter<TaskViewAdaptor.TaskVi
         }
     }
 
-    public TaskViewAdaptor(List<Task> tasks, TaskViewHandler taskViewHandler, Context context) {
+    public HabitViewAdaptor(List<Task> tasks, HabitViewHandler habitViewHandler, Context context) {
         this.tasks = tasks;
-        this.taskViewHandler = taskViewHandler;
+        this.habitViewHandler = habitViewHandler;
         this.context = context;
     }
 
