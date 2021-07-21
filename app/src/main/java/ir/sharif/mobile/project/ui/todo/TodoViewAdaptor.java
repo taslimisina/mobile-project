@@ -181,8 +181,8 @@ public class TodoViewAdaptor extends RecyclerView.Adapter<TodoViewAdaptor.TodoVi
             @Override
             public void onClick(View view) {
                 // undo is selected, restore the deleted item
-                restoreItem(doneTask, doneIndex);
                 holder.checkBox.setChecked(false);
+                restoreItem(doneTask, doneIndex);
             }
         });
         snackbar.addCallback(new Snackbar.Callback() {
