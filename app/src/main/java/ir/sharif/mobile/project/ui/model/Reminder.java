@@ -7,6 +7,7 @@ public class Reminder {
     private Date time;
     // Don't set this in code, it will be set automatically
     private long taskId;
+    private String taskName;
 
     public Reminder setTime(Date time) {
         this.time = time;
@@ -33,5 +34,14 @@ public class Reminder {
     public Reminder setTaskId(long taskId) {
         this.taskId = taskId;
         return this;
+    }
+
+    public Reminder setTaskName(String taskName) {
+        this.taskName = taskName;
+        return this;
+    }
+
+    public String getTaskName() {
+        return taskName;
     }
 }

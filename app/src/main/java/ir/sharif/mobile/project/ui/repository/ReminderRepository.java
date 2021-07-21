@@ -25,9 +25,11 @@ public class ReminderRepository implements BaseRepository<Reminder> {
     public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
 
     private final DbHelper dbHelper;
+    private final NotificationManager notificationManager;
 
-    public ReminderRepository(DbHelper dbHelper) {
+    public ReminderRepository(DbHelper dbHelper, NotificationManager notificationManager) {
         this.dbHelper = dbHelper;
+        this.notificationManager = notificationManager;
         SQLiteDatabase writableDatabase = dbHelper.getWritableDatabase();
 //        writableDatabase.execSQL(DROP_TABLE);
         writableDatabase.execSQL(CREATE_TABLE_QUERY);
@@ -42,6 +44,8 @@ public class ReminderRepository implements BaseRepository<Reminder> {
         values.put("time", object.getTime().toString());
         values.put("taskId", object.getTaskId());
         long insert = dbHelper.getWritableDatabase().replaceOrThrow(TABLE_NAME, null, values);
+        notificationManager.scheduleNotification(object.getTime().getTime() - System.currentTimeMillis(), (int) insert,
+                "Please do " + object.getTaskName() + "!.");
         return object.setId(insert);
     }
 

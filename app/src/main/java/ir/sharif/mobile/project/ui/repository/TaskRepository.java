@@ -88,6 +88,7 @@ public class TaskRepository implements BaseRepository<Task> {
             }
             for (Reminder reminder : ((Todo) object).getReminders()) {
                 reminder.setTaskId(insert);
+                reminder.setTaskName(object.getTitle());
                 reminderRepository.save(reminder);
             }
         } else if (object instanceof Daily) {
@@ -97,6 +98,7 @@ public class TaskRepository implements BaseRepository<Task> {
             }
             for (Reminder reminder : ((Todo) object).getReminders()) {
                 reminder.setTaskId(insert);
+                reminder.setTaskName(object.getTitle());
                 reminderRepository.save(reminder);
             }
         }

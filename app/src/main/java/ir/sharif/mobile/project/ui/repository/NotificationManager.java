@@ -10,10 +10,10 @@ import android.media.RingtoneManager;
 import android.os.SystemClock;
 
 import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
 import ir.sharif.mobile.project.MainActivity;
 import ir.sharif.mobile.project.R;
+import ir.sharif.mobile.project.util.NotificationUtil;
 
 public class NotificationManager {
 
@@ -23,8 +23,11 @@ public class NotificationManager {
         this.context = context;
     }
 
-    public void scheduleNotification(long delay, int reminderId, String text) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+    public void scheduleNotification(long delayMillis, int reminderId, String text) {
+        String notificationChannelId =
+                NotificationUtil.createNotificationChannel(context, "TASK_MANAGEMENT");
+        NotificationCompat.Builder builder = new NotificationCompat
+                .Builder(context, notificationChannelId)
                 .setContentTitle("Task-management")
                 .setContentText(text)
                 .setSmallIcon(R.drawable.coin_logo)
@@ -32,23 +35,19 @@ public class NotificationManager {
                         .getDrawable(R.drawable.coin_logo)).getBitmap())
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
 
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-        notificationManager.notify(1165, builder.build());
-
         Intent intent = new Intent(context, MainActivity.class);
-        PendingIntent activity = PendingIntent.getActivity(context, reminderId, intent,
+        PendingIntent activity = PendingIntent.getActivity(context, (int) reminderId, intent,
                 PendingIntent.FLAG_CANCEL_CURRENT);
         builder.setContentIntent(activity);
-
         Notification notification = builder.build();
 
         Intent notificationIntent = new Intent(context, NotificationReceiver.class);
         notificationIntent.putExtra(NotificationReceiver.NOTIFICATION_ID, reminderId);
         notificationIntent.putExtra(NotificationReceiver.NOTIFICATION, notification);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, reminderId,
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, (int) reminderId,
                 notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
-        long futureInMillis = SystemClock.elapsedRealtime() + delay;
+        long futureInMillis = SystemClock.elapsedRealtime() + delayMillis;
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
     }

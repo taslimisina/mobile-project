@@ -16,6 +16,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import ir.sharif.mobile.project.ui.repository.RepositoryHolder;
+import ir.sharif.mobile.project.util.NotificationUtil;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,17 +25,5 @@ public class MainActivity extends AppCompatActivity {
         RepositoryHolder.init(getApplicationContext());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext())
-                .setContentTitle("Task-management")
-                .setContentText("text")
-                .setSmallIcon(R.drawable.coin_logo)
-                .setLargeIcon(((BitmapDrawable) getApplicationContext().getResources()
-                        .getDrawable(R.drawable.coin_logo)).getBitmap())
-                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
-        notificationManager.notify(1165, builder.build());
-        Log.i("isEnable?", String.valueOf(notificationManager.areNotificationsEnabled()));
     }
 }
