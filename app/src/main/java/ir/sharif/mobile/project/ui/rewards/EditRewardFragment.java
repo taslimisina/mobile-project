@@ -1,46 +1,45 @@
-package ir.sharif.mobile.project.ui.habits;
+package ir.sharif.mobile.project.ui.rewards;
 
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.google.android.material.textfield.TextInputEditText;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 import ir.sharif.mobile.project.R;
-import ir.sharif.mobile.project.ui.model.Habit;
+import ir.sharif.mobile.project.ui.model.Reward;
 import ir.sharif.mobile.project.ui.repository.RepositoryHolder;
-import ir.sharif.mobile.project.ui.repository.TaskRepository;
+import ir.sharif.mobile.project.ui.repository.RewardRepository;
 import ir.sharif.mobile.project.ui.utils.HideSoftKeyboardHelper;
 
 
-public class EditHabitFragment extends Fragment {
-    private Habit habit;
-    private Habit editingHabit;
-    private static final TaskRepository taskRepository = RepositoryHolder.getTaskRepository();
+public class EditRewardFragment extends Fragment {
+    private Reward reward;
+    private Reward editingReward;
+    private static final RewardRepository rewardRepository = RepositoryHolder.getRewardRepository();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            habit = (Habit) getArguments().getSerializable("habit");
+            reward = (Reward) getArguments().getSerializable("reward");
         }
-        if (habit == null) {
-            habit = Habit.getEmptyHabit();
+        if (reward == null) {
+            reward = Reward.getEmptyReward();
         }
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_edit_habit, container, false);
+        View view = inflater.inflate(R.layout.fragment_edit_reward, container, false);
 
         init_form_values(view);
         init_reward_section(view);
@@ -50,23 +49,23 @@ public class EditHabitFragment extends Fragment {
         });
 
         view.findViewById(R.id.save_button).setOnClickListener(v -> {
-            editingHabit = new Habit();
-            editingHabit.setId(habit.getId());
-            editingHabit.setTitle(((TextInputEditText) view.findViewById(R.id.input_title)).getText().toString());
-            editingHabit.setDescription(((TextInputEditText) view.findViewById(R.id.input_description)).getText().toString());
-            editingHabit.setReward(Integer.parseInt(((TextInputEditText) view.findViewById(R.id.input_reward)).getText().toString()));
+            editingReward = new Reward();
+            editingReward.setId(reward.getId());
+            editingReward.setTitle(((TextInputEditText) view.findViewById(R.id.input_title)).getText().toString());
+            editingReward.setDescription(((TextInputEditText) view.findViewById(R.id.input_description)).getText().toString());
+            editingReward.setAmount(Integer.parseInt(((TextInputEditText) view.findViewById(R.id.input_reward)).getText().toString()));
 
-            if (editingHabit.getTitle().equals("")) {
+            if (editingReward.getTitle().equals("")) {
                 Toast.makeText(getContext(), "Title cannot be empty!", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             // Ask handler to save obj
 //            Message message = new Message();
-//            message.what = HabitViewHandler.DONE_TASK;
-//            message.obj = habit;
+//            message.what = RewardViewHandler.DONE_TASK;
+//            message.obj = reward;
 //            handler.sendMessage(message);
-            taskRepository.save(editingHabit);   //todo handler
+            rewardRepository.save(editingReward);   //todo handler
             getActivity().onBackPressed();
         });
 
@@ -87,15 +86,14 @@ public class EditHabitFragment extends Fragment {
         view.findViewById(R.id.dec_reward_button).setOnClickListener(v -> {
             String reward = rewardEditText.getText().toString();
             int val = reward.trim().length() == 0 ? 0 : Integer.parseInt(reward);
-            rewardEditText.setText(String.valueOf(val - 1));
+            rewardEditText.setText(String.valueOf(val));
         });
     }
 
     void init_form_values(View view) {
-        Log.v("******************", "Here " + habit.getTitle());
-        ((TextInputEditText) view.findViewById(R.id.input_title)).setText(habit.getTitle());
-        ((TextInputEditText) view.findViewById(R.id.input_description)).setText(habit.getDescription());
-        ((TextInputEditText) view.findViewById(R.id.input_reward)).setText(String.valueOf(habit.getReward()));
+        ((TextInputEditText) view.findViewById(R.id.input_title)).setText(reward.getTitle());
+        ((TextInputEditText) view.findViewById(R.id.input_description)).setText(reward.getDescription());
+        ((TextInputEditText) view.findViewById(R.id.input_reward)).setText(String.valueOf(reward.getAmount()));
     }
 
 }
