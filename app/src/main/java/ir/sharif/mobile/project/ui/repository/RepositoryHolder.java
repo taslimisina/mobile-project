@@ -27,8 +27,8 @@ public class RepositoryHolder {
         checklistItemRepository = new ChecklistItemRepository(dbHelper);
         taskRepository.setChecklistItemRepository(checklistItemRepository)
                 .setReminderRepository(reminderRepository);
-//        NotificationManager notificationManager = new NotificationManager(context);
-//        notificationManager.scheduleNotification(2000, 11, "Hi");
+        NotificationManager notificationManager = new NotificationManager(context);
+        notificationManager.scheduleNotification(2000, 11, "Hi");
         taskRepository.findAll(TaskRepository.TaskType.HABIT);
 
         ChecklistItem ss = new ChecklistItem().setName("ss");
