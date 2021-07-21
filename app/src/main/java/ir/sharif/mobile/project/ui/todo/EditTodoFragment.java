@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.time.Month;
 import java.util.Calendar;
 
 import ir.sharif.mobile.project.R;
@@ -103,8 +105,8 @@ public class EditTodoFragment extends Fragment {
             int dd, mm, yyyy;
             if (dueDate.length() == 0) {
                 final Calendar currentDate = Calendar.getInstance();
-                dd = currentDate.get(Calendar.MONTH);
-                mm = currentDate.get(Calendar.DAY_OF_MONTH);
+                dd = currentDate.get(Calendar.DAY_OF_MONTH);
+                mm = currentDate.get(Calendar.MONTH);
                 yyyy = currentDate.get(Calendar.YEAR);
             } else {
                 String[] dateParts = dueDate.split("-");
@@ -116,7 +118,7 @@ public class EditTodoFragment extends Fragment {
                 public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                     dueDateEditText.setText(getContext().getString(R.string.date, dayOfMonth, monthOfYear, year));
                 }
-            }, dd, mm, yyyy);
+            }, yyyy, mm, dd);
             datePicker.show();
 
         });
@@ -176,7 +178,7 @@ public class EditTodoFragment extends Fragment {
         // Add reminder
         ImageButton addReminderButton = view.findViewById(R.id.add_reminder_button);
         addReminderButton.setOnClickListener(v -> {
-            reminderViewAdaptor.addItem(new Reminder(), todo.getReminders().size());
+            reminderViewAdaptor.addItem(new Reminder().setTime(Calendar.getInstance().getTime()), todo.getReminders().size());
         });
     }
 
@@ -184,6 +186,11 @@ public class EditTodoFragment extends Fragment {
         ((TextInputEditText) view.findViewById(R.id.input_title)).setText(todo.getTitle());
         ((TextInputEditText) view.findViewById(R.id.input_description)).setText(todo.getDescription());
         ((TextInputEditText) view.findViewById(R.id.input_reward)).setText(String.valueOf(todo.getReward()));
-//        ((TextInputEditText) view.findViewById(R.id.input_due_date)).setText();
+        if (todo.getDueDate() != null) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(todo.getDueDate());
+            String duDate = getContext().getString(R.string.date, calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
+            ((TextInputEditText) view.findViewById(R.id.input_due_date)).setText(duDate);
+        }
     }
 }

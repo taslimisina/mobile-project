@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
 
+import java.util.Calendar;
 import java.util.List;
 
 import ir.sharif.mobile.project.R;
@@ -54,10 +55,9 @@ public class EditReminderViewAdaptor extends RecyclerView.Adapter<EditReminderVi
     @Override
     public void onBindViewHolder(@NonNull ReminderViewHolder holder, int position) {
         final Reminder reminder = reminders.get(position);
-        // TODO: set time
-//        Calendar currentTime = Calendar.getInstance();
-//        int hour = currentTime.get(Calendar.HOUR_OF_DAY);
-//        int minute = currentTime.get(Calendar.MINUTE);
+        Calendar time = Calendar.getInstance();
+        time.setTime(reminder.getTime());
+        holder.time.setText(context.getString(R.string.time, time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE)));
 
         holder.deleteButton.setOnClickListener(v -> {
             int removedItemPosition = reminders.indexOf(reminder);
@@ -70,13 +70,15 @@ public class EditReminderViewAdaptor extends RecyclerView.Adapter<EditReminderVi
             int hh = Integer.parseInt(timeParts[0]);
             int mm = Integer.parseInt(timeParts[1]);
             TimePickerDialog mTimePicker;
-            mTimePicker = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
-                @Override
-                public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                    holder.time.setText(context.getString(R.string.time,  selectedHour, selectedMinute));
-                }
-            }, hh, mm, true);
+            mTimePicker = new TimePickerDialog(context, android.R.style.Theme_Holo_Light_Dialog_NoActionBar,
+                    new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                            holder.time.setText(context.getString(R.string.time, selectedHour, selectedMinute));
+                        }
+                    }, hh, mm, true);
             mTimePicker.setTitle("Select Time");
+            mTimePicker.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             mTimePicker.show();
         });
     }
