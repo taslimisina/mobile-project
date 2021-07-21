@@ -73,7 +73,7 @@ public class HabitViewAdaptor extends RecyclerView.Adapter<HabitViewAdaptor.Habi
 
         holder.viewBackground.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
-            bundle.putSerializable("task", habit);
+            bundle.putSerializable("habit", habit);
             Navigation.findNavController(v.getRootView().findViewById(R.id.fragment))
                     .navigate(R.id.action_mainFragment_to_editHabitFragment, bundle);
         });

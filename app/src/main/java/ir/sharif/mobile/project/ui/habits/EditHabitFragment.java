@@ -30,11 +30,9 @@ public class EditHabitFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            Log.v("$$$$$$$$$$$$$$$$$$$$", "not null");
             habit = (Habit) getArguments().getSerializable("habit");
         }
         if (habit == null) {
-            Log.v("$$$$$$$$$$$$$$$$$$$$", "empty");
             habit = Habit.getEmptyHabit();
         }
     }
