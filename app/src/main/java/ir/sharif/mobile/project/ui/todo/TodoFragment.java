@@ -11,6 +11,7 @@ import java.util.Calendar;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -73,6 +74,11 @@ public class TodoFragment extends Fragment {
         super.onStart();
         todoList.clear();
         todoList.addAll(RepositoryHolder.getTaskRepository().findAllTodo());
-        adaptor.notifyDataSetChanged();
+//        adaptor.notifyDataSetChanged();
+
+        getActivity().findViewById(R.id.new_button).setOnClickListener(v -> {
+            Navigation.findNavController(getActivity().findViewById(R.id.fragment))
+                    .navigate(R.id.action_mainFragment_to_editTodoFragment);
+        });
     }
 }
