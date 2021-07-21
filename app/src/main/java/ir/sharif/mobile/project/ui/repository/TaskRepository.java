@@ -71,28 +71,35 @@ public class TaskRepository implements BaseRepository<Task> {
             if (((Todo) object).getDueDate() != null)
                 values.put("dudate", ((Todo) object).getDueDate().toString());
             values.put("type", TaskType.TODO.name());
-            for (ChecklistItem checklistItem : ((Todo) object).getChecklistItems()) {
-                checklistItemRepository.save(checklistItem);
-            }
-            for (Reminder reminder : ((Todo) object).getReminders()) {
-                reminderRepository.save(reminder);
-            }
         } else if (object instanceof Daily) {
             if (((Daily) object).getEvery() != null)
                 values.put("every", ((Daily) object).getEvery());
             if (((Daily) object).getStart() != null)
                 values.put("start", ((Daily) object).getStart().toString());
             values.put("type", TaskType.DAILY.name());
-            for (ChecklistItem checklistItem : ((Todo) object).getChecklistItems()) {
-                checklistItemRepository.save(checklistItem);
-            }
-            for (Reminder reminder : ((Todo) object).getReminders()) {
-                reminderRepository.save(reminder);
-            }
         } else {
             values.put("type", TaskType.HABIT.name());
         }
         long insert = dbHelper.getWritableDatabase().replaceOrThrow(TABLE_NAME, null, values);
+        if (object instanceof Todo) {
+            for (ChecklistItem checklistItem : ((Todo) object).getChecklistItems()) {
+                checklistItem.setTaskId(insert);
+                checklistItemRepository.save(checklistItem);
+            }
+            for (Reminder reminder : ((Todo) object).getReminders()) {
+                reminder.setTaskId(insert);
+                reminderRepository.save(reminder);
+            }
+        } else if (object instanceof Daily) {
+            for (ChecklistItem checklistItem : ((Todo) object).getChecklistItems()) {
+                checklistItem.setTaskId(insert);
+                checklistItemRepository.save(checklistItem);
+            }
+            for (Reminder reminder : ((Todo) object).getReminders()) {
+                reminder.setTaskId(insert);
+                reminderRepository.save(reminder);
+            }
+        }
         return object.setId(insert);
     }
 
