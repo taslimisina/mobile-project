@@ -73,7 +73,7 @@ public class HabitsFragment extends Fragment implements RecyclerItemTouchHelper.
             mAdapter.removeItem(viewHolder.getAdapterPosition());
 
             // showing snack bar with Undo option
-            Snackbar snackbar = Snackbar.make(getView(), name + " removed from habits!", Snackbar.LENGTH_LONG);
+            Snackbar snackbar = Snackbar.make(getView(), name + " removed from Habits!", Snackbar.LENGTH_LONG);
             snackbar.setAction("UNDO", new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

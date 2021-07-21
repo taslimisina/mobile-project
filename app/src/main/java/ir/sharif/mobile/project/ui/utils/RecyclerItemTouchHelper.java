@@ -27,7 +27,7 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
     @Override
     public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
         if (viewHolder != null) {
-            final View foregroundView = ((TaskViewAdaptor.TaskViewHolder) viewHolder).viewForeground;
+            final View foregroundView = ((TwoLayerView) viewHolder).getViewForeground();
             getDefaultUIUtil().onSelected(foregroundView);
         }
     }
@@ -36,14 +36,14 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
     public void onChildDrawOver(@NotNull Canvas c, @NotNull RecyclerView recyclerView,
                                 RecyclerView.ViewHolder viewHolder, float dX, float dY,
                                 int actionState, boolean isCurrentlyActive) {
-        final View foregroundView = ((TaskViewAdaptor.TaskViewHolder) viewHolder).viewForeground;
+        final View foregroundView = ((TwoLayerView) viewHolder).getViewForeground();
         getDefaultUIUtil().onDrawOver(c, recyclerView, foregroundView, dX, dY,
                 actionState, isCurrentlyActive);
     }
 
     @Override
     public void clearView(@NotNull RecyclerView recyclerView, @NotNull RecyclerView.ViewHolder viewHolder) {
-        final View foregroundView = ((TaskViewAdaptor.TaskViewHolder) viewHolder).viewForeground;
+        final View foregroundView = ((TwoLayerView) viewHolder).getViewForeground();
         getDefaultUIUtil().clearView(foregroundView);
     }
 
@@ -51,7 +51,7 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
     public void onChildDraw(@NotNull Canvas c, @NotNull RecyclerView recyclerView,
                             @NotNull RecyclerView.ViewHolder viewHolder, float dX, float dY,
                             int actionState, boolean isCurrentlyActive) {
-        final View foregroundView = ((TaskViewAdaptor.TaskViewHolder) viewHolder).viewForeground;
+        final View foregroundView = ((TwoLayerView) viewHolder).getViewForeground();
 
         getDefaultUIUtil().onDraw(c, recyclerView, foregroundView, dX, dY,
                 actionState, isCurrentlyActive);

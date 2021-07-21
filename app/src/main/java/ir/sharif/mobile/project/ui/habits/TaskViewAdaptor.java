@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import ir.sharif.mobile.project.R;
 import ir.sharif.mobile.project.ui.model.Task;
+import ir.sharif.mobile.project.ui.utils.TwoLayerView;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class TaskViewAdaptor extends RecyclerView.Adapter<TaskViewAdaptor.TaskVi
     private final TaskViewHandler taskViewHandler;
     private final Context context;
 
-    public class TaskViewHolder extends RecyclerView.ViewHolder {
+    public class TaskViewHolder extends RecyclerView.ViewHolder implements TwoLayerView {
 
         public final TextView title;
         public final TextView description;
@@ -43,6 +44,11 @@ public class TaskViewAdaptor extends RecyclerView.Adapter<TaskViewAdaptor.TaskVi
             actionButton = itemView.findViewById(R.id.item_action_button);
             viewBackground = itemView.findViewById(R.id.item_background);
             viewForeground = itemView.findViewById(R.id.item_foreground);
+        }
+
+        @Override
+        public View getViewForeground() {
+            return viewForeground;
         }
     }
 

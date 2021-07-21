@@ -2,12 +2,15 @@ package ir.sharif.mobile.project.ui.todo;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,21 +24,28 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.snackbar.Snackbar;
+
 import ir.sharif.mobile.project.R;
+import ir.sharif.mobile.project.ui.habits.TaskViewHandler;
 import ir.sharif.mobile.project.ui.model.ChecklistItem;
 import ir.sharif.mobile.project.ui.model.Todo;
 import ir.sharif.mobile.project.ui.model.utils.DateUtil;
+import ir.sharif.mobile.project.ui.utils.TwoLayerView;
 
 public class TodoViewAdaptor extends RecyclerView.Adapter<TodoViewAdaptor.TodoViewHolder> {
 
     private List<Todo> todoList;
     private final TodoViewHandler todoViewHandler;
     private final Context context;
+    private final View rootView;
 
-    public TodoViewAdaptor(List<Todo> todoList, TodoViewHandler todoViewHandler, Context context) {
+    public TodoViewAdaptor(List<Todo> todoList, TodoViewHandler todoViewHandler, Context context, View rootView) {
         this.todoList = todoList;
         this.todoViewHandler = todoViewHandler;
         this.context = context;
+        this.rootView = rootView;
     }
 
     @NonNull
@@ -90,7 +100,14 @@ public class TodoViewAdaptor extends RecyclerView.Adapter<TodoViewAdaptor.TodoVi
             holder.dueDate.setVisibility(View.GONE);
         }
 
-        // TODO: 7/20/21 checkBox click listener
+        // Checked listener
+        holder.checkBox.setOnCheckedChangeListener((CompoundButton buttonView, boolean isChecked) -> {
+            if (isChecked) {
+                // TODO: 7/21/21 add reward
+                checkTodo(holder);
+            }
+        });
+
 
         holder.viewBackground.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
@@ -106,7 +123,19 @@ public class TodoViewAdaptor extends RecyclerView.Adapter<TodoViewAdaptor.TodoVi
         return todoList.size();
     }
 
-    public class TodoViewHolder extends RecyclerView.ViewHolder {
+    public void removeItem(int position) {
+        todoList.remove(position);
+        // notify the item removed by position to perform recycler view delete animations
+        notifyItemRemoved(position);
+    }
+
+    public void restoreItem(Todo todo, int position) {
+        todoList.add(position, todo);
+        // notify task added by position
+        notifyItemInserted(position);
+    }
+
+    public class TodoViewHolder extends RecyclerView.ViewHolder implements TwoLayerView {
 
         public final TextView title;
         public final TextView description;
@@ -131,5 +160,46 @@ public class TodoViewAdaptor extends RecyclerView.Adapter<TodoViewAdaptor.TodoVi
             dueDate = itemView.findViewById(R.id.due_date);
             dueDateIcon = itemView.findViewById(R.id.due_logo);
         }
+
+        @Override
+        public View getViewForeground() {
+            return this.viewForeground;
+        }
+    }
+
+    void checkTodo(TodoViewHolder holder) {
+        String name = todoList.get(holder.getAdapterPosition()).getTitle();
+
+        // backup of removed item for undo purpose
+        final Todo deletedTask = todoList.get(holder.getAdapterPosition());
+        final int deletedIndex = holder.getAdapterPosition();
+
+        // remove the item from recycler view
+        removeItem(holder.getAdapterPosition());
+
+        // showing snack bar with Undo option
+        Snackbar snackbar = Snackbar.make(this.rootView, name + " is done!", Snackbar.LENGTH_LONG);
+        snackbar.setAction("UNDO", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // undo is selected, restore the deleted item
+                restoreItem(deletedTask, deletedIndex);
+                holder.checkBox.setChecked(false);
+            }
+        });
+        snackbar.addCallback(new Snackbar.Callback() {
+
+            @Override
+            public void onDismissed(Snackbar snackbar, int event) {
+                if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT) {
+                    Message message = new Message();
+                    message.what = TaskViewHandler.DELETE_DATA;
+                    message.obj = deletedTask;
+                    todoViewHandler.sendMessage(message);
+                }
+            }
+        });
+        snackbar.setActionTextColor(Color.YELLOW);
+        snackbar.show();
     }
 }
