@@ -30,22 +30,28 @@ import ir.sharif.mobile.project.R;
 import ir.sharif.mobile.project.ui.model.ChecklistItem;
 import ir.sharif.mobile.project.ui.model.Reminder;
 import ir.sharif.mobile.project.ui.model.Todo;
+import ir.sharif.mobile.project.ui.repository.RepositoryHolder;
+import ir.sharif.mobile.project.ui.repository.TaskRepository;
 import ir.sharif.mobile.project.ui.utils.EditChecklistViewAdaptor;
 import ir.sharif.mobile.project.ui.utils.EditReminderViewAdaptor;
 
 public class EditTodoFragment extends Fragment {
     private Todo todo;
-
+    private Todo editingTodo;
     private RecyclerView reminderRecyclerview;
     private EditReminderViewAdaptor reminderViewAdaptor;
     private RecyclerView checklistRecyclerview;
     private EditChecklistViewAdaptor checklistViewAdaptor;
+    private static final TaskRepository taskRepository = RepositoryHolder.getTaskRepository();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             todo = (Todo) getArguments().getSerializable("todo");
+        }
+        if (todo == null) {
+            todo = Todo.getEmptyTodo();
         }
     }
 
@@ -67,6 +73,7 @@ public class EditTodoFragment extends Fragment {
 
         view.findViewById(R.id.save_button).setOnClickListener(v -> {
             // TODO: 7/20/21 save changes or create new todo
+
             getActivity().onBackPressed();
         });
 

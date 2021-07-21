@@ -9,6 +9,7 @@ public class Todo extends Task {
     private Date dueDate;
     private List<Reminder> reminders = new ArrayList<>();
     private List<ChecklistItem> checklistItems = new ArrayList<>();
+    private static Todo emptyTodo;
 
     public Date getDueDate() {
         return dueDate;
@@ -35,5 +36,15 @@ public class Todo extends Task {
     public Todo setChecklistItems(List<ChecklistItem> checklistItems) {
         this.checklistItems = checklistItems;
         return this;
+    }
+
+    public static Todo getEmptyTodo() {
+        if (emptyTodo == null) {
+            emptyTodo = new Todo();
+            emptyTodo.setTitle("");
+            emptyTodo.setDescription("");
+            emptyTodo.setReward(10);
+        }
+        return emptyTodo;
     }
 }
