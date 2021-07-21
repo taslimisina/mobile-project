@@ -20,6 +20,8 @@ public class RepositoryHolder {
         checklistItemRepository = new ChecklistItemRepository(context);
         taskRepository.setChecklistItemRepository(checklistItemRepository)
                 .setReminderRepository(reminderRepository);
+
+        checklistItemRepository.findAll();
     }
 
     public static ChecklistItemRepository getChecklistItemRepository() {

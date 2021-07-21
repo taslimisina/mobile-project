@@ -139,6 +139,33 @@ public class TaskRepository extends SQLiteOpenHelper implements BaseRepository<T
         return all;
     }
 
+    public List<Todo> findAllTodo() {
+        List<Task> all = findAll(TaskType.TODO);
+        List<Todo> todos = new ArrayList<>();
+        for (Task task : all) {
+            todos.add((Todo) task);
+        }
+        return todos;
+    }
+
+    public List<Daily> findAllDaily() {
+        List<Task> all = findAll(TaskType.DAILY);
+        List<Daily> todos = new ArrayList<>();
+        for (Task task : all) {
+            todos.add((Daily) task);
+        }
+        return todos;
+    }
+
+    public List<Habit> findAllHabits() {
+        List<Task> all = findAll(TaskType.HABIT);
+        List<Habit> todos = new ArrayList<>();
+        for (Task task : all) {
+            todos.add((Habit) task);
+        }
+        return todos;
+    }
+
     private List<Task> parseResults(Cursor response) {
         List<Task> items = new ArrayList<>();
         int idIndex = response.getColumnIndex("id");
