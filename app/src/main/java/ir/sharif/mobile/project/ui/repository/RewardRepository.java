@@ -1,20 +1,15 @@
 package ir.sharif.mobile.project.ui.repository;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-
-import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import ir.sharif.mobile.project.ui.model.ChecklistItem;
 import ir.sharif.mobile.project.ui.model.Reward;
 
-public class RewardRepository extends SQLiteOpenHelper implements BaseRepository<Reward> {
+public class RewardRepository implements BaseRepository<Reward> {
 
     private static final String TABLE_NAME = "reward";
 
@@ -27,19 +22,13 @@ public class RewardRepository extends SQLiteOpenHelper implements BaseRepository
 
     public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
 
-    public RewardRepository(@Nullable Context context) {
-        super(context, "REWARD", null, DB_VERSION);
-    }
+    private final DbHelper dbHelper;
 
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_TABLE_QUERY);
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(DROP_TABLE);
-        onCreate(db);
+    public RewardRepository(DbHelper dbHelper) {
+        this.dbHelper = dbHelper;
+        SQLiteDatabase writableDatabase = dbHelper.getWritableDatabase();
+//        writableDatabase.execSQL(DROP_TABLE);
+        writableDatabase.execSQL(CREATE_TABLE_QUERY);
     }
 
     @Override
@@ -51,20 +40,20 @@ public class RewardRepository extends SQLiteOpenHelper implements BaseRepository
         values.put("title", object.getTitle());
         values.put("description", object.getDescription());
         values.put("amount", object.getAmount());
-        long insert = getWritableDatabase().replaceOrThrow(TABLE_NAME, null, values);
+        long insert = dbHelper.getWritableDatabase().replaceOrThrow(TABLE_NAME, null, values);
         return object.setId(insert);
     }
 
     @Override
     public List<Reward> findAll() {
-        Cursor cursor = getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        Cursor cursor = dbHelper.getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_NAME, null);
         return parseResults(cursor);
     }
 
     @Override
     public void delete(long id) {
         String query = String.format(DELETE_TASK_PATTERN, id);
-        getWritableDatabase().execSQL(query);
+        dbHelper.getWritableDatabase().execSQL(query);
     }
 
     private List<Reward> parseResults(Cursor response) {

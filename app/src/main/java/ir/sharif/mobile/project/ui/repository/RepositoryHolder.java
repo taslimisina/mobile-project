@@ -14,25 +14,14 @@ public class RepositoryHolder {
     private static ChecklistItemRepository checklistItemRepository;
 
     public static void init(Context context) {
-            taskRepository = new TaskRepository(context);
-        taskRepository.getReadableDatabase();
-        rewardRepository = new RewardRepository(context);
-        rewardRepository.getReadableDatabase();
-        reminderRepository = new ReminderRepository(context);
-        reminderRepository.getReadableDatabase();
-        checklistItemRepository = new ChecklistItemRepository(context);
-        checklistItemRepository.getReadableDatabase();
+        DbHelper dbHelper = new DbHelper(context);
+            taskRepository = new TaskRepository(dbHelper);
+        rewardRepository = new RewardRepository(dbHelper);
+        reminderRepository = new ReminderRepository(dbHelper);
+        checklistItemRepository = new ChecklistItemRepository(dbHelper);
         taskRepository.setChecklistItemRepository(checklistItemRepository)
                 .setReminderRepository(reminderRepository);
-        taskRepository.getReadableDatabase();
-        checklistItemRepository.findAll();
-    }
-
-    public static void close() {
-        taskRepository.close();
-        checklistItemRepository.close();
-        reminderRepository.close();
-        rewardRepository.close();
+        taskRepository.findAll(TaskRepository.TaskType.HABIT);
     }
 
     public static ChecklistItemRepository getChecklistItemRepository() {

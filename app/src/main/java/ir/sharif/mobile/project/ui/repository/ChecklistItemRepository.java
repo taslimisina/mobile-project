@@ -1,12 +1,8 @@
 package ir.sharif.mobile.project.ui.repository;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-
-import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -14,8 +10,7 @@ import java.util.List;
 
 import ir.sharif.mobile.project.ui.model.ChecklistItem;
 
-public class ChecklistItemRepository extends SQLiteOpenHelper
-        implements BaseRepository<ChecklistItem> {
+public class ChecklistItemRepository implements BaseRepository<ChecklistItem> {
 
     private static final String TABLE_NAME = "checklist";
 
@@ -28,19 +23,14 @@ public class ChecklistItemRepository extends SQLiteOpenHelper
 
     public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
 
-    public ChecklistItemRepository(@Nullable Context context) {
-        super(context, "CHECK", null, DB_VERSION);
-    }
+    private final DbHelper dbHelper;
 
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_TABLE_QUERY);
-    }
 
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(DROP_TABLE);
-        onCreate(db);
+    public ChecklistItemRepository(DbHelper dbHelper) {
+        this.dbHelper = dbHelper;
+        SQLiteDatabase writableDatabase = dbHelper.getWritableDatabase();
+//        writableDatabase.execSQL(DROP_TABLE);
+        writableDatabase.execSQL(CREATE_TABLE_QUERY);
     }
 
     @Override
@@ -51,20 +41,20 @@ public class ChecklistItemRepository extends SQLiteOpenHelper
         }
         values.put("name", object.getName());
         values.put("taskId", object.getTaskId());
-        long insert = getWritableDatabase().replaceOrThrow(TABLE_NAME, null, values);
+        long insert = dbHelper.getWritableDatabase().replaceOrThrow(TABLE_NAME, null, values);
         return object.setId(insert);
     }
 
     @Override
     public List<ChecklistItem> findAll() {
-        Cursor cursor = getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        Cursor cursor = dbHelper.getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_NAME, null);
         return parseResults(cursor);
     }
 
     @Override
     public void delete(long id) {
         String query = String.format(DELETE_TASK_PATTERN, id);
-        getWritableDatabase().execSQL(query);
+        dbHelper.getWritableDatabase().execSQL(query);
     }
 
     public List<ChecklistItem> findForTask(long taskId) {

@@ -1,15 +1,12 @@
 package ir.sharif.mobile.project.ui.repository;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -18,14 +15,13 @@ import ir.sharif.mobile.project.ui.model.ChecklistItem;
 import ir.sharif.mobile.project.ui.model.Daily;
 import ir.sharif.mobile.project.ui.model.Habit;
 import ir.sharif.mobile.project.ui.model.Reminder;
-import ir.sharif.mobile.project.ui.model.Reward;
 import ir.sharif.mobile.project.ui.model.Task;
 import ir.sharif.mobile.project.ui.model.Todo;
 
 /**
  * This class is a repository class for Daily, Habit and Todo classes.
  */
-public class TaskRepository extends SQLiteOpenHelper implements BaseRepository<Task> {
+public class TaskRepository implements BaseRepository<Task> {
 
     private static final String TABLE_NAME = "task";
 
@@ -41,20 +37,13 @@ public class TaskRepository extends SQLiteOpenHelper implements BaseRepository<T
 
     private ChecklistItemRepository checklistItemRepository;
     private ReminderRepository reminderRepository;
+    private final DbHelper dbHelper;
 
-    public TaskRepository(@Nullable Context context) {
-        super(context, "TASK", null, DB_VERSION);
-    }
-
-    @Override
-    public void onCreate(SQLiteDatabase db) {
+    public TaskRepository(@Nullable DbHelper dbHelper) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+//        db.execSQL(DROP_TABLE);
         db.execSQL(CREATE_TABLE_QUERY);
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(DROP_TABLE);
-        onCreate(db);
+        this.dbHelper = dbHelper;
     }
 
     public TaskRepository setChecklistItemRepository(ChecklistItemRepository checklistItemRepository) {
@@ -98,20 +87,20 @@ public class TaskRepository extends SQLiteOpenHelper implements BaseRepository<T
         } else {
             values.put("type", TaskType.HABIT.name());
         }
-        long insert = getWritableDatabase().replaceOrThrow(TABLE_NAME, null, values);
+        long insert = dbHelper.getWritableDatabase().replaceOrThrow(TABLE_NAME, null, values);
         return object.setId(insert);
     }
 
     @Override
     public List<Task> findAll() {
-        Cursor cursor = getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        Cursor cursor = dbHelper.getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_NAME, null);
         return parseResults(cursor);
     }
 
     @Override
     public void delete(long id) {
         String query = String.format(DELETE_TASK_PATTERN, id);
-        getWritableDatabase().execSQL(query);
+        dbHelper.getWritableDatabase().execSQL(query);
     }
 
     public List<Task> findAll(TaskType taskType) {

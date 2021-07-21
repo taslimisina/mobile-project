@@ -1,22 +1,17 @@
 package ir.sharif.mobile.project.ui.repository;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-
-import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import ir.sharif.mobile.project.ui.model.ChecklistItem;
 import ir.sharif.mobile.project.ui.model.Reminder;
 
-public class ReminderRepository extends SQLiteOpenHelper implements BaseRepository<Reminder> {
+public class ReminderRepository implements BaseRepository<Reminder> {
 
     private static final String TABLE_NAME = "remider";
 
@@ -29,19 +24,13 @@ public class ReminderRepository extends SQLiteOpenHelper implements BaseReposito
 
     public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
 
-    public ReminderRepository(@Nullable Context context) {
-        super(context, "REMINDER", null, DB_VERSION);
-    }
+    private final DbHelper dbHelper;
 
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_TABLE_QUERY);
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(DROP_TABLE);
-        onCreate(db);
+    public ReminderRepository(DbHelper dbHelper) {
+        this.dbHelper = dbHelper;
+        SQLiteDatabase writableDatabase = dbHelper.getWritableDatabase();
+//        writableDatabase.execSQL(DROP_TABLE);
+        writableDatabase.execSQL(CREATE_TABLE_QUERY);
     }
 
     @Override
@@ -52,20 +41,20 @@ public class ReminderRepository extends SQLiteOpenHelper implements BaseReposito
         }
         values.put("time", object.getTime().toString());
         values.put("taskId", object.getTaskId());
-        long insert = getWritableDatabase().replaceOrThrow(TABLE_NAME, null, values);
+        long insert = dbHelper.getWritableDatabase().replaceOrThrow(TABLE_NAME, null, values);
         return object.setId(insert);
     }
 
     @Override
     public List<Reminder> findAll() {
-        Cursor cursor = getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        Cursor cursor = dbHelper.getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_NAME, null);
         return parseResults(cursor);
     }
 
     @Override
     public void delete(long id) {
         String query = String.format(DELETE_TASK_PATTERN, id);
-        getWritableDatabase().execSQL(query);
+        dbHelper.getWritableDatabase().execSQL(query);
     }
 
     public List<Reminder> findForTask(long taskId) {
