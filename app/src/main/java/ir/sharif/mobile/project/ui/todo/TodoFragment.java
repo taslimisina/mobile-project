@@ -101,6 +101,7 @@ public class TodoFragment extends Fragment implements RecyclerItemTouchHelper.Re
                 @Override
                 public void onClick(View view) {
                     // undo is selected, restore the deleted item
+                    snackbar.setAction("UNDO", v -> {});
                     adaptor.restoreItem(deletedTask, deletedIndex);
                 }
             });

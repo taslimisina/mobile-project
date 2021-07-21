@@ -82,6 +82,7 @@ public class HabitFragment extends Fragment implements RecyclerItemTouchHelper.R
                 @Override
                 public void onClick(View view) {
                     // undo is selected, restore the deleted item
+                    snackbar.setAction("UNDO", v -> {});
                     mAdapter.restoreItem(deletedTask, deletedIndex);
                 }
             });

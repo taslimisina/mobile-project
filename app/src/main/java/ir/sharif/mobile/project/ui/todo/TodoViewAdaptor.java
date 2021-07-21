@@ -177,13 +177,11 @@ public class TodoViewAdaptor extends RecyclerView.Adapter<TodoViewAdaptor.TodoVi
 
         // showing snack bar with Undo option
         Snackbar snackbar = Snackbar.make(this.rootView, name + " is done!", Snackbar.LENGTH_LONG);
-        snackbar.setAction("UNDO", new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // undo is selected, restore the deleted item
-                holder.checkBox.setChecked(false);
-                restoreItem(doneTask, doneIndex);
-            }
+        snackbar.setAction("UNDO", view -> {
+            // undo is selected, restore the deleted item
+            snackbar.setAction("UNDO", v -> {});
+            holder.checkBox.setChecked(false);
+            restoreItem(doneTask, doneIndex);
         });
         snackbar.addCallback(new Snackbar.Callback() {
 
