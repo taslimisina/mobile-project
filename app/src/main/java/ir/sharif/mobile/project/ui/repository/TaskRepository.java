@@ -29,8 +29,8 @@ public class TaskRepository extends SQLiteOpenHelper implements BaseRepository<T
 
     private static final String TABLE_NAME = "task";
 
-    public static final String CREATE_TABLE_QUERY = "CREATE TABLE " + TABLE_NAME +
-            " (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + "title VARCHAR(150) NOT NULL, " +
+    public static final String CREATE_TABLE_QUERY = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
+            " (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + " title VARCHAR(150) NOT NULL, " +
             " description text, reward INTEGER, every INTEGER, start DATETIME(3), dudate DATETIME(3)," +
             " type VARCHAR(20) not null);";
 
@@ -42,6 +42,10 @@ public class TaskRepository extends SQLiteOpenHelper implements BaseRepository<T
     private ChecklistItemRepository checklistItemRepository;
     private ReminderRepository reminderRepository;
 
+    public TaskRepository(@Nullable Context context) {
+        super(context, "TASK", null, DB_VERSION);
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_QUERY);
@@ -51,10 +55,6 @@ public class TaskRepository extends SQLiteOpenHelper implements BaseRepository<T
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(DROP_TABLE);
         onCreate(db);
-    }
-
-    public TaskRepository(@Nullable Context context) {
-        super(context, DB_NAME, null, DB_VERSION);
     }
 
     public TaskRepository setChecklistItemRepository(ChecklistItemRepository checklistItemRepository) {

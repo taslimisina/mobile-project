@@ -19,9 +19,9 @@ public class ChecklistItemRepository extends SQLiteOpenHelper
 
     private static final String TABLE_NAME = "checklist";
 
-    public static final String CREATE_TABLE_QUERY = "CREATE TABLE " + TABLE_NAME +
-            " (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + "name VARCHAR(150) NOT NULL, " +
-            " taskId INTEGER, CONSTRAINT taskId FOREIGN KEY (id) REFERENCES task);";
+    public static final String CREATE_TABLE_QUERY = "CREATE TABLE  IF NOT EXISTS " + TABLE_NAME +
+            " (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + " name VARCHAR(150) NOT NULL, " +
+            " taskId INTEGER, FOREIGN KEY (taskId) REFERENCES task(id) ON DELETE CASCADE);";
 
     public static final String DELETE_TASK_PATTERN = "DELETE FROM " + TABLE_NAME + " " +
             "WHERE id = %d;";
@@ -29,7 +29,7 @@ public class ChecklistItemRepository extends SQLiteOpenHelper
     public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
 
     public ChecklistItemRepository(@Nullable Context context) {
-        super(context, DB_NAME, null, DB_VERSION);
+        super(context, "CHECK", null, DB_VERSION);
     }
 
     @Override

@@ -18,7 +18,7 @@ public class RewardRepository extends SQLiteOpenHelper implements BaseRepository
 
     private static final String TABLE_NAME = "reward";
 
-    public static final String CREATE_TABLE_QUERY = "CREATE TABLE " + TABLE_NAME +
+    public static final String CREATE_TABLE_QUERY = "CREATE TABLE  IF NOT EXISTS " + TABLE_NAME +
             " (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + "title VARCHAR(150) NOT NULL, " +
             " amount INTEGER, description text);";
 
@@ -26,6 +26,10 @@ public class RewardRepository extends SQLiteOpenHelper implements BaseRepository
             "WHERE id = %d;";
 
     public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
+
+    public RewardRepository(@Nullable Context context) {
+        super(context, "REWARD", null, DB_VERSION);
+    }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -36,10 +40,6 @@ public class RewardRepository extends SQLiteOpenHelper implements BaseRepository
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(DROP_TABLE);
         onCreate(db);
-    }
-
-    public RewardRepository(@Nullable Context context) {
-        super(context, DB_NAME, null, DB_VERSION);
     }
 
     @Override

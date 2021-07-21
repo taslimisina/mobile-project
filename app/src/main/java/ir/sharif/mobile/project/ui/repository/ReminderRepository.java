@@ -20,9 +20,9 @@ public class ReminderRepository extends SQLiteOpenHelper implements BaseReposito
 
     private static final String TABLE_NAME = "remider";
 
-    public static final String CREATE_TABLE_QUERY = "CREATE TABLE " + TABLE_NAME +
+    public static final String CREATE_TABLE_QUERY = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
             " (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + "time datetime(3) NOT NULL, " +
-            " taskId INTEGER, CONSTRAINT taskId FOREIGN KEY (id) REFERENCES task);";
+            " taskId INTEGER, FOREIGN KEY (taskId) REFERENCES task(id) ON DELETE CASCADE);";
 
     public static final String DELETE_TASK_PATTERN = "DELETE FROM " + TABLE_NAME + " " +
             "WHERE id = %d;";
@@ -30,7 +30,7 @@ public class ReminderRepository extends SQLiteOpenHelper implements BaseReposito
     public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
 
     public ReminderRepository(@Nullable Context context) {
-        super(context, DB_NAME, null, DB_VERSION);
+        super(context, "REMINDER", null, DB_VERSION);
     }
 
     @Override

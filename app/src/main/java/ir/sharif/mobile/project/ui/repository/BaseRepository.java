@@ -9,8 +9,6 @@ import ir.sharif.mobile.project.ui.model.ChecklistItem;
 
 public interface BaseRepository<T> {
 
-    String DB_NAME = "TASK_MANAGEMENT";
-
     int DB_VERSION = 1;
 
     T save(T object);
