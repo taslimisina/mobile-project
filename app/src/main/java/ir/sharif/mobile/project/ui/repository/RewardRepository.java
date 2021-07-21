@@ -38,7 +38,8 @@ public class RewardRepository implements BaseRepository<Reward> {
             values.put("id", object.getId());
         }
         values.put("title", object.getTitle());
-        values.put("description", object.getDescription());
+        if (object.getDescription() != null)
+            values.put("description", object.getDescription());
         values.put("amount", object.getAmount());
         long insert = dbHelper.getWritableDatabase().replaceOrThrow(TABLE_NAME, null, values);
         return object.setId(insert);
@@ -63,10 +64,14 @@ public class RewardRepository implements BaseRepository<Reward> {
         int desIndex = response.getColumnIndex("description");
         int amountIndex = response.getColumnIndex("amount");
         while (response.moveToNext()) {
+            String description  = null;
+            if (!response.isNull(desIndex)) {
+                description = response.getString(desIndex);
+            }
             items.add(new Reward()
                     .setId(response.getInt(idIndex))
                     .setTitle(response.getString(titleIndex))
-                    .setDescription(response.getString(desIndex))
+                    .setDescription(description)
                     .setAmount(response.getInt(amountIndex)));
         }
         return items;

@@ -62,11 +62,14 @@ public class TaskRepository implements BaseRepository<Task> {
         if (object.getId() != null) {
             values.put("id", object.getId());
         }
-        values.put("title", object.getTitle());
-        values.put("description", object.getDescription());
+        if (object.getTitle() != null)
+            values.put("title", object.getTitle());
+        if (object.getDescription() != null)
+            values.put("description", object.getDescription());
         values.put("reward", object.getReward());
         if (object instanceof Todo) {
-            values.put("dudate", ((Todo) object).getDueDate().toString());
+            if (((Todo) object).getDueDate() != null)
+                values.put("dudate", ((Todo) object).getDueDate().toString());
             values.put("type", TaskType.TODO.name());
             for (ChecklistItem checklistItem : ((Todo) object).getChecklistItems()) {
                 checklistItemRepository.save(checklistItem);
@@ -75,8 +78,10 @@ public class TaskRepository implements BaseRepository<Task> {
                 reminderRepository.save(reminder);
             }
         } else if (object instanceof Daily) {
-            values.put("every", ((Daily) object).getEvery());
-            values.put("start", ((Daily) object).getStart().toString());
+            if (((Daily) object).getEvery() != null)
+                values.put("every", ((Daily) object).getEvery());
+            if (((Daily) object).getStart() != null)
+                values.put("start", ((Daily) object).getStart().toString());
             values.put("type", TaskType.DAILY.name());
             for (ChecklistItem checklistItem : ((Todo) object).getChecklistItems()) {
                 checklistItemRepository.save(checklistItem);
@@ -171,32 +176,55 @@ public class TaskRepository implements BaseRepository<Task> {
             if (type.equals(TaskType.DAILY.name())) {
                 List<ChecklistItem> checkList = checklistItemRepository.findForTask(id);
                 List<Reminder> reminders = reminderRepository.findForTask(id);
+                Date start = null;
+                if (!response.isNull(startIndex))
+                    start = new Date(response.getString(startIndex));
+                Integer every = null;
+                if (!response.isNull(everyIndex)) {
+                    every = response.getInt(everyIndex);
+                }
+                String description = null;
+                if (!response.isNull(descriptionIndex)) {
+                    description = response.getString(descriptionIndex);
+                }
                 items.add(new Daily()
                         .setChecklistItems(checkList)
                         .setReminders(reminders)
-                        .setStart(new Date(response.getString(startIndex)))
-                        .setEvery(response.getInt(everyIndex))
+                        .setStart(start)
+                        .setEvery(every)
                         .setId(id)
                         .setTitle(response.getString(titleIndex))
-                        .setDescription(response.getString(descriptionIndex))
+                        .setDescription(description)
                         .setReward(response.getInt(rewardIndex)));
 
             } else if (type.equals(TaskType.TODO.name())) {
                 List<ChecklistItem> checkList = checklistItemRepository.findForTask(id);
                 List<Reminder> reminders = reminderRepository.findForTask(id);
+                Date dudate = null;
+                if (!response.isNull(dudateIndex))
+                    dudate = new Date(response.getString(dudateIndex));
+
+                String description = null;
+                if (!response.isNull(descriptionIndex)) {
+                    description = response.getString(descriptionIndex);
+                }
                 items.add(new Todo()
                         .setChecklistItems(checkList)
                         .setReminders(reminders)
-                        .setDueDate(new Date(response.getString(dudateIndex)))
+                        .setDueDate(dudate)
                         .setId(id)
                         .setTitle(response.getString(titleIndex))
-                        .setDescription(response.getString(descriptionIndex))
+                        .setDescription(description)
                         .setReward(response.getInt(rewardIndex)));
             } else {
+                String description = null;
+                if (!response.isNull(descriptionIndex)) {
+                    description = response.getString(descriptionIndex);
+                }
                 items.add(new Habit()
                         .setId(id)
                         .setTitle(response.getString(titleIndex))
-                        .setDescription(response.getString(descriptionIndex))
+                        .setDescription(description)
                         .setReward(response.getInt(rewardIndex)));
             }
         }

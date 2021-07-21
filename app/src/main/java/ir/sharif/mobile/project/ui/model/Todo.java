@@ -1,13 +1,14 @@
 package ir.sharif.mobile.project.ui.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class Todo extends Task {
 
     private Date dueDate;
-    private List<Reminder> reminders;
-    private List<ChecklistItem> checklistItems;
+    private List<Reminder> reminders = new ArrayList<>();
+    private List<ChecklistItem> checklistItems = new ArrayList<>();
 
     public Date getDueDate() {
         return dueDate;

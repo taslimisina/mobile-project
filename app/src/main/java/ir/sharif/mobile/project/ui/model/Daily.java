@@ -1,20 +1,21 @@
 package ir.sharif.mobile.project.ui.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class Daily extends Task {
-    private int every;
+    private Integer every;
     private Date start;
 
-    private List<Reminder> reminders;
-    private List<ChecklistItem> checklistItems;
+    private List<Reminder> reminders = new ArrayList<>();
+    private List<ChecklistItem> checklistItems = new ArrayList<>();
 
-    public int getEvery() {
+    public Integer getEvery() {
         return every;
     }
 
-    public Daily setEvery(int every) {
+    public Daily setEvery(Integer every) {
         this.every = every;
         return this;
     }
