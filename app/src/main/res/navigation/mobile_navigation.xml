@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/navigation_rewards"
-        android:name="ir.sharif.mobile.project.ui.rewards.RewardsFragment"
+        android:name="ir.sharif.mobile.project.ui.rewards.RewardFragment"
         android:label="@string/title_rewards"
         tools:layout="@layout/fragment_rewards" />
 

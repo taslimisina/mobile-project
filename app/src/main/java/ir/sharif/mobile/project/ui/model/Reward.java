@@ -1,10 +1,13 @@
 package ir.sharif.mobile.project.ui.model;
 
-public class Reward {
+import java.io.Serializable;
+
+public class Reward implements Serializable {
     private Long id;
     private String title;
     private String description;
     private int amount;
+    private static Reward emptyReward;
 
     public Reward setId(long id) {
         this.id = id;
@@ -40,5 +43,15 @@ public class Reward {
 
     public String getTitle() {
         return title;
+    }
+
+    public static Reward getEmptyReward() {
+        if (emptyReward == null) {
+            emptyReward = new Reward();
+            emptyReward.setTitle("");
+            emptyReward.setDescription("");
+            emptyReward.setAmount(0);
+        }
+        return emptyReward;
     }
 }

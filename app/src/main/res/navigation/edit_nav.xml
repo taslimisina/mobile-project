@@ -30,6 +30,13 @@
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_out"/>
+        <action
+            android:id="@+id/action_mainFragment_to_editRewardFragment"
+            app:destination="@id/editRewardFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
     </fragment>
 
     <fragment
@@ -58,5 +65,14 @@
         <argument
             android:name="daily"
             app:argType="ir.sharif.mobile.project.ui.model.Daily" />
+    </fragment>
+    <fragment
+        android:id="@+id/editRewardFragment"
+        android:name="ir.sharif.mobile.project.ui.rewards.EditRewardFragment"
+        android:label="fragment_edit_reward"
+        tools:layout="@layout/fragment_edit_reward" >
+        <argument
+            android:name="daily"
+            app:argType="ir.sharif.mobile.project.ui.model.Reward" />
     </fragment>
 </navigation>

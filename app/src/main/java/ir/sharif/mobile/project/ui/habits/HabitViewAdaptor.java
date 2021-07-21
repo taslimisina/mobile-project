@@ -60,7 +60,7 @@ public class HabitViewAdaptor extends RecyclerView.Adapter<HabitViewAdaptor.Habi
     @Override
     public HabitViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.layout_habits, parent, false);
+                .inflate(R.layout.layout_habit, parent, false);
         return new HabitViewHolder(view);
     }
 
@@ -71,12 +71,12 @@ public class HabitViewAdaptor extends RecyclerView.Adapter<HabitViewAdaptor.Habi
         holder.description.setText(habit.getDescription());
         holder.reward.setText(String.valueOf(habit.getReward()));
 
-        holder.viewBackground.setOnClickListener(v -> {
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("habit", habit);
-            Navigation.findNavController(v.getRootView().findViewById(R.id.fragment))
-                    .navigate(R.id.action_mainFragment_to_editHabitFragment, bundle);
-        });
+//        holder.viewBackground.setOnClickListener(v -> {
+//            Bundle bundle = new Bundle();
+//            bundle.putSerializable("habit", habit);
+//            Navigation.findNavController(v.getRootView().findViewById(R.id.fragment))
+//                    .navigate(R.id.action_mainFragment_to_editHabitFragment, bundle);
+//        });
 
         if (habit.getReward() < 0) {
             holder.actionButton.setImageResource(R.drawable.ic_minus_red_48);
