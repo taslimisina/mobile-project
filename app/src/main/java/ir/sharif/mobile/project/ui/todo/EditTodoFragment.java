@@ -24,14 +24,17 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import ir.sharif.mobile.project.R;
 import ir.sharif.mobile.project.ui.model.ChecklistItem;
 import ir.sharif.mobile.project.ui.model.Reminder;
 import ir.sharif.mobile.project.ui.model.Todo;
 import ir.sharif.mobile.project.ui.repository.RepositoryHolder;
 import ir.sharif.mobile.project.ui.repository.TaskRepository;
+import ir.sharif.mobile.project.ui.model.utils.DateUtil;
 import ir.sharif.mobile.project.ui.utils.EditChecklistViewAdaptor;
 import ir.sharif.mobile.project.ui.utils.EditReminderViewAdaptor;
+
 
 public class EditTodoFragment extends Fragment {
     private Todo todo;
@@ -115,21 +118,16 @@ public class EditTodoFragment extends Fragment {
 
         dueDateEditText.setOnClickListener(v -> {
             String dueDate = dueDateEditText.getText().toString().trim();
-            int dd, mm, yyyy;
-            if (dueDate.length() == 0) {
-                final Calendar currentDate = Calendar.getInstance();
-                dd = currentDate.get(Calendar.DAY_OF_MONTH);
-                mm = currentDate.get(Calendar.MONTH);
-                yyyy = currentDate.get(Calendar.YEAR);
-            } else {
-                String[] dateParts = dueDate.split("-");
-                dd = Integer.parseInt(dateParts[0]);
-                mm = Integer.parseInt(dateParts[1]);
-                yyyy = Integer.parseInt(dateParts[2]);
-            }
+            final Calendar calendar = Calendar.getInstance();
+            if (dueDate.length() != 0)
+                calendar.setTime(DateUtil.parseDate(dueDate));
+            int dd = calendar.get(Calendar.DAY_OF_MONTH);
+            int mm = calendar.get(Calendar.MONTH);
+            int yyyy = calendar.get(Calendar.YEAR);
+
             DatePickerDialog datePicker = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
                 public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                    dueDateEditText.setText(getContext().getString(R.string.date, dayOfMonth, monthOfYear, year));
+                    dueDateEditText.setText(DateUtil.formatDate(year, monthOfYear, dayOfMonth, DateUtil.LONG));
                 }
             }, yyyy, mm, dd);
             datePicker.show();
@@ -200,9 +198,7 @@ public class EditTodoFragment extends Fragment {
         ((TextInputEditText) view.findViewById(R.id.input_description)).setText(todo.getDescription());
         ((TextInputEditText) view.findViewById(R.id.input_reward)).setText(String.valueOf(todo.getReward()));
         if (todo.getDueDate() != null) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(todo.getDueDate());
-            String duDate = getContext().getString(R.string.date, calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
+            String duDate = DateUtil.formatDate(todo.getDueDate(), DateUtil.LONG);
             ((TextInputEditText) view.findViewById(R.id.input_due_date)).setText(duDate);
         }
     }

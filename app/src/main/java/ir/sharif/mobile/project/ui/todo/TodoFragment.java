@@ -1,13 +1,13 @@
 package ir.sharif.mobile.project.ui.todo;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Calendar;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -15,12 +15,13 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import ir.sharif.mobile.project.MainActivity;
 import ir.sharif.mobile.project.R;
-import ir.sharif.mobile.project.ui.model.Task;
+import ir.sharif.mobile.project.ui.model.ChecklistItem;
 import ir.sharif.mobile.project.ui.model.Todo;
 import ir.sharif.mobile.project.ui.repository.RepositoryHolder;
-import ir.sharif.mobile.project.ui.repository.TaskRepository;
+import ir.sharif.mobile.project.ui.utils.RecyclerItemTouchHelper;
 
 public class TodoFragment extends Fragment {
 
@@ -35,9 +36,13 @@ public class TodoFragment extends Fragment {
         todo.setTitle("Hello");
         todo.setDescription("a description");
         todo.setReward(20);
-        todo.setChecklistItems(new ArrayList<>());
+        List<ChecklistItem> list = new ArrayList<>();
+        list.add(new ChecklistItem().setName("One"));
+        list.add(new ChecklistItem().setName("Two"));
+        todo.setDueDate(Calendar.getInstance().getTime());
+        todo.setChecklistItems(list);
         todo.setReminders(new ArrayList<>());
-        todoList = new ArrayList<>();
+//        todoList = new ArrayList<>();
         todoList.add(todo);
         RepositoryHolder.getTaskRepository().save(todo);
     }
@@ -66,12 +71,8 @@ public class TodoFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        TaskRepository taskRepository = RepositoryHolder.getTaskRepository();
-        List<Task> todos = taskRepository.findAll(TaskRepository.TaskType.TODO);
         todoList.clear();
-        for (Task task : todos) {
-            todoList.add((Todo) task);
-        }
-//        adaptor.notifyDataSetChanged();
+        todoList.addAll(RepositoryHolder.getTaskRepository().findAllTodo());
+        adaptor.notifyDataSetChanged();
     }
 }
