@@ -10,10 +10,12 @@
         android:name="ir.sharif.mobile.project.MainFragment"
         android:label="MainFragment" >
         <action
-            android:id="@+id/action_mainFragment_to_habitEditFragment"
+            android:id="@+id/action_mainFragment_to_editHabitFragment"
             app:destination="@id/habitEditFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out" />
         <action
             android:id="@+id/action_mainFragment_to_editTodoFragment"
             app:destination="@id/editTodoFragment"
@@ -23,11 +25,16 @@
             app:popExitAnim="@anim/slide_out"/>
         <action
             android:id="@+id/action_mainFragment_to_editDailyFragment"
-            app:destination="@id/editDailyFragment" />
+            app:destination="@id/editDailyFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
     </fragment>
+
     <fragment
         android:id="@+id/habitEditFragment"
-        android:name="ir.sharif.mobile.project.ui.habits.HabitEditFragment"
+        android:name="ir.sharif.mobile.project.ui.habits.EditHabitFragment"
         android:label="fragment_habit_edit"
         tools:layout="@layout/fragment_edit_habit" >
         <argument

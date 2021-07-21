@@ -48,8 +48,6 @@ public class TodoFragment extends Fragment implements RecyclerItemTouchHelper.Re
         todo.setDueDate(Calendar.getInstance().getTime());
         todo.setChecklistItems(list);
         todo.setReminders(new ArrayList<>());
-//        todoList = new ArrayList<>();
-        todoList.add(todo);
         RepositoryHolder.getTaskRepository().save(todo);
     }
 
@@ -57,7 +55,6 @@ public class TodoFragment extends Fragment implements RecyclerItemTouchHelper.Re
 
         View view = inflater.inflate(R.layout.fragment_todo, container, false);
 
-//        init();
         recyclerView = view.findViewById(R.id.recycler_view);
         handler = new TodoViewHandler();
         adaptor = new TodoViewAdaptor(todoList, handler, getContext(), view);
@@ -79,8 +76,6 @@ public class TodoFragment extends Fragment implements RecyclerItemTouchHelper.Re
         super.onStart();
         todoList.clear();
         todoList.addAll(RepositoryHolder.getTaskRepository().findAllTodo());
-//        adaptor.notifyDataSetChanged();
-
         getActivity().findViewById(R.id.new_button).setOnClickListener(v -> {
             Navigation.findNavController(getActivity().findViewById(R.id.fragment))
                     .navigate(R.id.action_mainFragment_to_editTodoFragment);

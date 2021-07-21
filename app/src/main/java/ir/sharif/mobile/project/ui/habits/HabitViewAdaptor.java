@@ -2,6 +2,7 @@ package ir.sharif.mobile.project.ui.habits;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,18 +15,18 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import ir.sharif.mobile.project.R;
-import ir.sharif.mobile.project.ui.model.Task;
+import ir.sharif.mobile.project.ui.model.Habit;
 import ir.sharif.mobile.project.ui.utils.TwoLayerView;
 
 import java.util.List;
 
-public class HabitViewAdaptor extends RecyclerView.Adapter<HabitViewAdaptor.TaskViewHolder> {
+public class HabitViewAdaptor extends RecyclerView.Adapter<HabitViewAdaptor.HabitViewHolder> {
 
-    private List<Task> tasks;
+    private List<Habit> habits;
     private final HabitViewHandler habitViewHandler;
     private final Context context;
 
-    public class TaskViewHolder extends RecyclerView.ViewHolder implements TwoLayerView {
+    public class HabitViewHolder extends RecyclerView.ViewHolder implements TwoLayerView {
 
         public final TextView title;
         public final TextView description;
@@ -33,7 +34,7 @@ public class HabitViewAdaptor extends RecyclerView.Adapter<HabitViewAdaptor.Task
         public final ImageButton actionButton;
         public RelativeLayout viewBackground, viewForeground;
 
-        public TaskViewHolder(@NonNull View itemView) {
+        public HabitViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.item_title);
             description = itemView.findViewById(R.id.item_description);
@@ -49,35 +50,35 @@ public class HabitViewAdaptor extends RecyclerView.Adapter<HabitViewAdaptor.Task
         }
     }
 
-    public HabitViewAdaptor(List<Task> tasks, HabitViewHandler habitViewHandler, Context context) {
-        this.tasks = tasks;
+    public HabitViewAdaptor(List<Habit> habits, HabitViewHandler habitViewHandler, Context context) {
+        this.habits = habits;
         this.habitViewHandler = habitViewHandler;
         this.context = context;
     }
 
     @NonNull
     @Override
-    public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public HabitViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.layout_habits, parent, false);
-        return new TaskViewHolder(view);
+        return new HabitViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
-        final Task task = tasks.get(position);
-        holder.title.setText(task.getTitle());
-        holder.description.setText(task.getDescription());
-        holder.reward.setText(String.valueOf(task.getReward()));
+    public void onBindViewHolder(@NonNull HabitViewHolder holder, int position) {
+        final Habit habit = habits.get(position);
+        holder.title.setText(habit.getTitle());
+        holder.description.setText(habit.getDescription());
+        holder.reward.setText(String.valueOf(habit.getReward()));
 
         holder.viewBackground.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
-            bundle.putSerializable("task", task);
+            bundle.putSerializable("task", habit);
             Navigation.findNavController(v.getRootView().findViewById(R.id.fragment))
-                    .navigate(R.id.action_mainFragment_to_habitEditFragment, bundle);
+                    .navigate(R.id.action_mainFragment_to_editHabitFragment, bundle);
         });
 
-        if (task.getReward() < 0) {
+        if (habit.getReward() < 0) {
             holder.actionButton.setImageResource(R.drawable.ic_minus_red_48);
             holder.actionButton.setBackgroundColor(context.getResources().getColor(R.color.red_back));
         } else {
@@ -86,28 +87,34 @@ public class HabitViewAdaptor extends RecyclerView.Adapter<HabitViewAdaptor.Task
         }
 
         holder.itemView.setOnClickListener(v -> {
-            // TODO: go to edit fragment
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("habit", habit);
+            Navigation.findNavController(v.getRootView().findViewById(R.id.fragment))
+                    .navigate(R.id.action_mainFragment_to_editHabitFragment, bundle);
         });
 
         holder.actionButton.setOnClickListener(v -> {
-            // TODO: add reward
+            Message message = new Message();
+            message.what = HabitViewHandler.DONE_TASK;
+            message.obj = habit;
+            habitViewHandler.sendMessage(message);
         });
 
     }
 
     @Override
     public int getItemCount() {
-        return tasks.size();
+        return habits.size();
     }
 
     public void removeItem(int position) {
-        tasks.remove(position);
+        habits.remove(position);
         // notify the item removed by position to perform recycler view delete animations
         notifyItemRemoved(position);
     }
 
-    public void restoreItem(Task task, int position) {
-        tasks.add(position, task);
+    public void restoreItem(Habit habit, int position) {
+        habits.add(position, habit);
         // notify task added by position
         notifyItemInserted(position);
     }

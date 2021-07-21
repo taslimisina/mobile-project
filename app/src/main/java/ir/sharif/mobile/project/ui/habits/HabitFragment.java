@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -19,29 +20,23 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
-import ir.sharif.mobile.project.MainActivity;
 import ir.sharif.mobile.project.R;
-import ir.sharif.mobile.project.ui.model.Task;
+import ir.sharif.mobile.project.ui.model.Habit;
 import ir.sharif.mobile.project.ui.repository.RepositoryHolder;
-import ir.sharif.mobile.project.ui.repository.TaskRepository;
 import ir.sharif.mobile.project.ui.utils.RecyclerItemTouchHelper;
 
 public class HabitFragment extends Fragment implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
 
-    private static final String TAG = MainActivity.class.getSimpleName();
     private RecyclerView recyclerView;
-    private List<Task> habits;
+    private List<Habit> habits;
     private HabitViewAdaptor mAdapter;
     private HabitViewHandler handler;
 
     public View onCreateView(@NonNull LayoutInflater inflater,  ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_habits, container, false);
         recyclerView = view.findViewById(R.id.recycler_view);
-//        TaskRepository dbHelper = RepositoryHolder.getTaskRepository();
-//        dbHelper.save(new Habit().setTitle("Task 1").setDescription("This is a static test task!").setReward(50));
-//        dbHelper.save(new Habit().setTitle("Task 2").setDescription("This is a static test task!").setReward(-50));
         handler = new HabitViewHandler();
-        habits = RepositoryHolder.getTaskRepository().findAll(TaskRepository.TaskType.HABIT);
+        habits = RepositoryHolder.getTaskRepository().findAllHabits();
         mAdapter = new HabitViewAdaptor(habits, handler, getContext());
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
@@ -57,15 +52,25 @@ public class HabitFragment extends Fragment implements RecyclerItemTouchHelper.R
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        habits.clear();
+        habits.addAll(RepositoryHolder.getTaskRepository().findAllHabits());
+        getActivity().findViewById(R.id.new_button).setOnClickListener(v -> {
+            Navigation.findNavController(getActivity().findViewById(R.id.fragment))
+                    .navigate(R.id.action_mainFragment_to_editHabitFragment);
+        });
+    }
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
-        if (viewHolder instanceof HabitViewAdaptor.TaskViewHolder) {
+        if (viewHolder instanceof HabitViewAdaptor.HabitViewHolder) {
             // get the removed item name to display it in snack bar
             String name = habits.get(viewHolder.getAdapterPosition()).getTitle();
 
             // backup of removed item for undo purpose
-            final Task deletedTask = habits.get(viewHolder.getAdapterPosition());
+            final Habit deletedTask = habits.get(viewHolder.getAdapterPosition());
             final int deletedIndex = viewHolder.getAdapterPosition();
 
             // remove the item from recycler view
@@ -86,7 +91,7 @@ public class HabitFragment extends Fragment implements RecyclerItemTouchHelper.R
                 public void onDismissed(Snackbar snackbar, int event) {
                     if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT) {
                         Message message = new Message();
-                        message.what = HabitViewHandler.DELETE_DATA;
+                        message.what = HabitViewHandler.DELETE_TASK;
                         message.obj = deletedTask;
                         handler.sendMessage(message);
                     }
@@ -96,4 +101,6 @@ public class HabitFragment extends Fragment implements RecyclerItemTouchHelper.R
             snackbar.show();
         }
     }
+
+
 }

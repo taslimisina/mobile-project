@@ -6,7 +6,6 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/habitEditToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/purple_700">
@@ -35,17 +34,6 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/button2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?android:selectableItemBackground"
-                android:text="Delete"
-                android:visibility="invisible"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/button3"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
                 android:id="@+id/save_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -68,7 +56,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="@dimen/pad_10"
-            tools:context=".ui.habits.HabitEditFragment">
+            tools:context=".ui.todo.EditTodoFragment">
 
             <include
                 layout="@layout/layout_edit_title"
