@@ -66,14 +66,12 @@ public class TodoFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        Log.d("TodoFragment", "onStart called!");
         TaskRepository taskRepository = RepositoryHolder.getTaskRepository();
         List<Task> todos = taskRepository.findAll(TaskRepository.TaskType.TODO);
         todoList.clear();
         for (Task task : todos) {
             todoList.add((Todo) task);
         }
-        adaptor.notifyDataSetChanged();
-        Log.d("TodoFragment", Integer.toString(todos.size()));
+//        adaptor.notifyDataSetChanged();
     }
 }

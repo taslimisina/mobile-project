@@ -5,13 +5,17 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
+import android.widget.Toast;
+
+import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.Calendar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,12 +24,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.textfield.TextInputEditText;
-
-import java.time.Month;
-import java.util.Calendar;
-
 import ir.sharif.mobile.project.R;
 import ir.sharif.mobile.project.ui.model.ChecklistItem;
 import ir.sharif.mobile.project.ui.model.Reminder;
@@ -67,13 +65,21 @@ public class EditTodoFragment extends Fragment {
         init_due_date_section(view);
 
         view.findViewById(R.id.up_button).setOnClickListener(v -> {
-            // TODO: 7/20/21 discard changes
             getActivity().onBackPressed();
         });
 
         view.findViewById(R.id.save_button).setOnClickListener(v -> {
-            // TODO: 7/20/21 save changes or create new todo
-
+            editingTodo = new Todo();
+            editingTodo.setId(todo.getId());
+            editingTodo.setTitle(((TextInputEditText) view.findViewById(R.id.input_title)).getText().toString());
+            editingTodo.setDescription(((TextInputEditText) view.findViewById(R.id.input_description)).getText().toString());
+            editingTodo.setReward(Integer.parseInt(((TextInputEditText) view.findViewById(R.id.input_reward)).getText().toString()));
+            //todo set checklist and reminders and due date
+            if (editingTodo.getTitle().equals("")) {
+                Toast.makeText(getContext(), "Title shouldn't be empty!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            taskRepository.save(editingTodo);
             getActivity().onBackPressed();
         });
 
