@@ -14,7 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import ir.sharif.mobile.project.R;
@@ -24,6 +27,7 @@ public class EditReminderViewAdaptor extends RecyclerView.Adapter<EditReminderVi
 
     private List<Reminder> reminders;
     private Context context;
+    private List<Long> toBeDeletedReminders = new ArrayList<>();
 
     public class ReminderViewHolder extends RecyclerView.ViewHolder {
 
@@ -75,6 +79,12 @@ public class EditReminderViewAdaptor extends RecyclerView.Adapter<EditReminderVi
                         @Override
                         public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                             holder.time.setText(context.getString(R.string.time, selectedHour, selectedMinute));
+
+                            Calendar calendar = new GregorianCalendar();
+                            calendar.setTime(new Date());
+                            calendar.set(Calendar.HOUR_OF_DAY, selectedHour);
+                            calendar.set(Calendar.MINUTE, selectedMinute);
+                            reminder.setTime(calendar.getTime());
                         }
                     }, hh, mm, true);
             mTimePicker.setTitle("Select Time");
@@ -89,6 +99,7 @@ public class EditReminderViewAdaptor extends RecyclerView.Adapter<EditReminderVi
     }
 
     public void removeItem(int position) {
+        toBeDeletedReminders.add(reminders.get(position).getId());
         reminders.remove(position);
         // notify the item removed by position to perform recycler view delete animations
         notifyItemRemoved(position);
@@ -99,4 +110,11 @@ public class EditReminderViewAdaptor extends RecyclerView.Adapter<EditReminderVi
         notifyItemInserted(position);
     }
 
+    public void clearToBeDeletedReminders() {
+        toBeDeletedReminders.clear();
+    }
+
+    public List<Long> getToBeDeletedReminders() {
+        return toBeDeletedReminders;
+    }
 }

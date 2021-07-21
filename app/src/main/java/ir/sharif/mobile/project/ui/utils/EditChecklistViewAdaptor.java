@@ -23,7 +23,7 @@ import ir.sharif.mobile.project.ui.model.ChecklistItem;
 public class EditChecklistViewAdaptor extends RecyclerView.Adapter<EditChecklistViewAdaptor.ChecklistItemViewHolder> {
 
     private List<ChecklistItem> items;
-    private List<Long> toBeDeletedItems = new ArrayList<Long>();
+    private List<Long> toBeDeletedItems = new ArrayList<>();
 
     public class ChecklistItemViewHolder extends RecyclerView.ViewHolder {
 

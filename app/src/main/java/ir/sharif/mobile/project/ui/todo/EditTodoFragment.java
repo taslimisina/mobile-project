@@ -31,6 +31,7 @@ import ir.sharif.mobile.project.ui.model.ChecklistItem;
 import ir.sharif.mobile.project.ui.model.Reminder;
 import ir.sharif.mobile.project.ui.model.Todo;
 import ir.sharif.mobile.project.ui.repository.ChecklistItemRepository;
+import ir.sharif.mobile.project.ui.repository.ReminderRepository;
 import ir.sharif.mobile.project.ui.repository.RepositoryHolder;
 import ir.sharif.mobile.project.ui.repository.TaskRepository;
 import ir.sharif.mobile.project.ui.model.utils.DateUtil;
@@ -48,6 +49,7 @@ public class EditTodoFragment extends Fragment {
     private EditChecklistViewAdaptor checklistViewAdaptor;
     private static final TaskRepository taskRepository = RepositoryHolder.getTaskRepository();
     private static final ChecklistItemRepository checklistItemRepository = RepositoryHolder.getChecklistItemRepository();
+    private static final ReminderRepository reminderRepository = RepositoryHolder.getReminderRepository();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,13 +89,16 @@ public class EditTodoFragment extends Fragment {
             editingTodo.setChecklistItems(todo.getChecklistItems());
             editingTodo.setDueDate(todo.getDueDate());
             editingTodo.setReminders(todo.getReminders());
-            //todo set checklist and reminders and due date
+            //todo set due date
             if (editingTodo.getTitle().equals("")) {
                 Toast.makeText(getContext(), "Title shouldn't be empty!", Toast.LENGTH_SHORT).show();
                 return;
             }
             for (long id : checklistViewAdaptor.getToBeDeletedItems()) {
                 checklistItemRepository.delete(id); //todo handler
+            }
+            for (long id : reminderViewAdaptor.getToBeDeletedReminders()) {
+                reminderRepository.delete(id); //todo handler
             }
             taskRepository.save(editingTodo);   //todo handler
             getActivity().onBackPressed();
@@ -221,5 +226,6 @@ public class EditTodoFragment extends Fragment {
     public void onStart() {
         super.onStart();
         checklistViewAdaptor.clearToBeDeletedItems();
+        reminderViewAdaptor.clearToBeDeletedReminders();
     }
 }
