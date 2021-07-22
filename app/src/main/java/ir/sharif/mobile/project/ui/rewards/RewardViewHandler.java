@@ -3,6 +3,7 @@ package ir.sharif.mobile.project.ui.rewards;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -11,13 +12,14 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 
 import ir.sharif.mobile.project.Executor;
+import ir.sharif.mobile.project.R;
 import ir.sharif.mobile.project.ui.model.Reward;
 
 
 public class RewardViewHandler extends Handler {
 
     public static final int LOAD_DONE = 0;
-    public static final int UPDATE_SCORE = 2;
+    public static final int UPDATE_SCORE = Executor.UPDATE_SCORE;
     public static final int SHOW_TOAST = Executor.SHOW_TOAST;
 
     private WeakReference<RewardFragment> rewardFragment;
@@ -41,7 +43,8 @@ public class RewardViewHandler extends Handler {
                         .show();
                 break;
             case UPDATE_SCORE:
-                // TODO: 7/22/21 update score
+                String score = String.valueOf((int) msg.obj);
+                ((TextView) rewardFragment.get().getActivity().findViewById(R.id.score)).setText(score);
                 break;
             default:
                 Log.e("Handler", "Unknown Message");
