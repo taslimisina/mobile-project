@@ -4,6 +4,9 @@ import android.content.ContentValues;
 import android.database.Cursor;
 
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CoinRepository {
 
@@ -75,4 +78,17 @@ public class CoinRepository {
         return cursor.getInt(scoreIndex);
     }
 
+    public Map<Date, Integer> getHistory() {
+        Cursor cursor = dbHelper.getReadableDatabase()
+                .rawQuery("SELECT * from " + TABLE_NAME + " ORDER BY id DESC", null, null);
+        int scoreIndex = cursor.getColumnIndex("score");
+        int timeIndex = cursor.getColumnIndex("time");
+        HashMap<Date, Integer> history = new HashMap<>();
+        while (cursor.moveToNext()) {
+            int score = cursor.getInt(scoreIndex);
+            Date date = new Date(cursor.getString(timeIndex));
+            history.put(date, score);
+        }
+        return history;
+    }
 }
