@@ -13,17 +13,15 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import ir.sharif.mobile.project.Executor;
 import ir.sharif.mobile.project.R;
 import ir.sharif.mobile.project.ui.model.Reward;
-import ir.sharif.mobile.project.ui.repository.RepositoryHolder;
-import ir.sharif.mobile.project.ui.repository.RewardRepository;
 import ir.sharif.mobile.project.ui.utils.HideSoftKeyboardHelper;
 
 
 public class EditRewardFragment extends Fragment {
     private Reward reward;
     private Reward editingReward;
-    private static final RewardRepository rewardRepository = RepositoryHolder.getRewardRepository();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,9 +42,7 @@ public class EditRewardFragment extends Fragment {
         init_form_values(view);
         init_reward_section(view);
 
-        view.findViewById(R.id.up_button).setOnClickListener(v -> {
-            getActivity().onBackPressed();
-        });
+        view.findViewById(R.id.up_button).setOnClickListener(v -> getActivity().onBackPressed());
 
         view.findViewById(R.id.save_button).setOnClickListener(v -> {
             editingReward = new Reward();
@@ -60,12 +56,7 @@ public class EditRewardFragment extends Fragment {
                 return;
             }
 
-            // Ask handler to save obj
-//            Message message = new Message();
-//            message.what = RewardViewHandler.DONE_TASK;
-//            message.obj = reward;
-//            handler.sendMessage(message);
-            rewardRepository.save(editingReward);   //todo handler
+            Executor.getInstance().saveReward(editingReward);
             getActivity().onBackPressed();
         });
 
@@ -86,7 +77,7 @@ public class EditRewardFragment extends Fragment {
         view.findViewById(R.id.dec_reward_button).setOnClickListener(v -> {
             String reward = rewardEditText.getText().toString();
             int val = reward.trim().length() == 0 ? 0 : Integer.parseInt(reward);
-            rewardEditText.setText(String.valueOf(val));
+            rewardEditText.setText(String.valueOf(val > 0 ? val - 1 : 0));
         });
     }
 

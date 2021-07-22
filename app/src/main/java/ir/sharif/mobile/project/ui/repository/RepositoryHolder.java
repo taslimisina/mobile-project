@@ -68,4 +68,8 @@ public class RepositoryHolder {
     public static TaskRepository getTaskRepository() {
         return taskRepository;
     }
+
+    public static CoinRepository getCoinRepository() {
+        return coinRepository;
+    }
 }

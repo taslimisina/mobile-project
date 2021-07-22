@@ -2,7 +2,6 @@ package ir.sharif.mobile.project.ui.habits;
 
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,17 +13,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import ir.sharif.mobile.project.Executor;
 import ir.sharif.mobile.project.R;
 import ir.sharif.mobile.project.ui.model.Habit;
-import ir.sharif.mobile.project.ui.repository.RepositoryHolder;
-import ir.sharif.mobile.project.ui.repository.TaskRepository;
 import ir.sharif.mobile.project.ui.utils.HideSoftKeyboardHelper;
 
 
 public class EditHabitFragment extends Fragment {
     private Habit habit;
     private Habit editingHabit;
-    private static final TaskRepository taskRepository = RepositoryHolder.getTaskRepository();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,9 +42,7 @@ public class EditHabitFragment extends Fragment {
         init_form_values(view);
         init_reward_section(view);
 
-        view.findViewById(R.id.up_button).setOnClickListener(v -> {
-            getActivity().onBackPressed();
-        });
+        view.findViewById(R.id.up_button).setOnClickListener(v -> getActivity().onBackPressed());
 
         view.findViewById(R.id.save_button).setOnClickListener(v -> {
             editingHabit = new Habit();
@@ -60,13 +55,7 @@ public class EditHabitFragment extends Fragment {
                 Toast.makeText(getContext(), "Title cannot be empty!", Toast.LENGTH_SHORT).show();
                 return;
             }
-
-            // Ask handler to save obj
-//            Message message = new Message();
-//            message.what = HabitViewHandler.DONE_TASK;
-//            message.obj = habit;
-//            handler.sendMessage(message);
-            taskRepository.save(editingHabit);   //todo handler
+            Executor.getInstance().saveTask(editingHabit);
             getActivity().onBackPressed();
         });
 
@@ -92,7 +81,6 @@ public class EditHabitFragment extends Fragment {
     }
 
     void init_form_values(View view) {
-        Log.v("******************", "Here " + habit.getTitle());
         ((TextInputEditText) view.findViewById(R.id.input_title)).setText(habit.getTitle());
         ((TextInputEditText) view.findViewById(R.id.input_description)).setText(habit.getDescription());
         ((TextInputEditText) view.findViewById(R.id.input_reward)).setText(String.valueOf(habit.getReward()));

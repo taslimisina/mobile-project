@@ -9,7 +9,7 @@ public class Reward implements Serializable {
     private int amount;
     private static Reward emptyReward;
 
-    public Reward setId(long id) {
+    public Reward setId(Long id) {
         this.id = id;
         return this;
     }

@@ -1,44 +1,47 @@
 package ir.sharif.mobile.project.ui.rewards;
 
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import java.lang.ref.WeakReference;
+import java.util.List;
+
+import ir.sharif.mobile.project.Executor;
 import ir.sharif.mobile.project.ui.model.Reward;
-import ir.sharif.mobile.project.ui.repository.RepositoryHolder;
-import ir.sharif.mobile.project.ui.repository.RewardRepository;
 
 
 public class RewardViewHandler extends Handler {
 
-    public static final int DELETE_REWARD = 0;
-    public static final int DONE_REWARD = 1;
-    public static final int SAVE_REWARD = 2;
+    public static final int LOAD_DONE = 0;
+    public static final int UPDATE_SCORE = 2;
+    public static final int SHOW_TOAST = Executor.SHOW_TOAST;
 
+    private WeakReference<RewardFragment> rewardFragment;
 
-    public RewardViewHandler() {
-        super(Looper.myLooper());
+    public RewardViewHandler(RewardFragment rewardFragment) {
+        this.rewardFragment = new WeakReference<>(rewardFragment);
     }
 
     @Override
     public void handleMessage(@NonNull Message msg) {
-        RewardRepository helper = RepositoryHolder.getRewardRepository();
-        if (helper == null) {
+        if (rewardFragment == null)
             return;
-        }
 
         switch (msg.what) {
-            case DELETE_REWARD:
-                helper.delete(((Reward) msg.obj).getId());
+            case LOAD_DONE:
+                rewardFragment.get().getAdapter().addAll(((List<Reward>) msg.obj));
                 break;
-            case DONE_REWARD:
-                // TODO: 7/21/21 add reward
+            case SHOW_TOAST:
+                String text = (String) msg.obj;
+                Toast.makeText(rewardFragment.get().getContext(), text, Toast.LENGTH_LONG)
+                        .show();
                 break;
-            case SAVE_REWARD:
-                helper.save((Reward) msg.obj);
+            case UPDATE_SCORE:
+                // TODO: 7/22/21 update score
                 break;
             default:
                 Log.e("Handler", "Unknown Message");

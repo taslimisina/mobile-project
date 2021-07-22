@@ -69,7 +69,7 @@ public class RewardRepository implements BaseRepository<Reward> {
                 description = response.getString(desIndex);
             }
             items.add(new Reward()
-                    .setId(response.getInt(idIndex))
+                    .setId(response.getLong(idIndex))
                     .setTitle(response.getString(titleIndex))
                     .setDescription(description)
                     .setAmount(response.getInt(amountIndex)));

@@ -1,39 +1,47 @@
 package ir.sharif.mobile.project.ui.todo;
 
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import ir.sharif.mobile.project.ui.model.Task;
-import ir.sharif.mobile.project.ui.repository.RepositoryHolder;
-import ir.sharif.mobile.project.ui.repository.TaskRepository;
+import java.lang.ref.WeakReference;
+import java.util.List;
+
+import ir.sharif.mobile.project.Executor;
+import ir.sharif.mobile.project.ui.model.Todo;
 
 
 public class TodoViewHandler extends Handler {
-    public static final int DELETE_TASK = 0;
-    public static final int DONE_TASK = 1;
 
+    public static final int LOAD_DONE = 0;
+    public static final int UPDATE_SCORE = 2;
+    public static final int SHOW_TOAST = Executor.SHOW_TOAST;
 
-    public TodoViewHandler() {
-        super(Looper.myLooper());
+    private WeakReference<TodoFragment> todoFragment;
+
+    public TodoViewHandler(TodoFragment todoFragment) {
+        this.todoFragment = new WeakReference<>(todoFragment);
     }
 
     @Override
     public void handleMessage(@NonNull Message msg) {
-        TaskRepository helper = RepositoryHolder.getTaskRepository();
-        if (helper == null) {
+        if (todoFragment == null)
             return;
-        }
 
         switch (msg.what) {
-            case DELETE_TASK:
-                helper.delete(((Task) msg.obj).getId());
+            case LOAD_DONE:
+                todoFragment.get().getAdapter().addAll(((List<Todo>) msg.obj));
                 break;
-            case DONE_TASK:
-                // TODO: 7/21/21 add reward
+            case SHOW_TOAST:
+                String text = (String) msg.obj;
+                Toast.makeText(todoFragment.get().getContext(), text, Toast.LENGTH_LONG)
+                        .show();
+                break;
+            case UPDATE_SCORE:
+                // TODO: 7/22/21 update score
                 break;
             default:
                 Log.e("Handler", "Unknown Message");

@@ -2,7 +2,6 @@ package ir.sharif.mobile.project.ui.habits;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,16 +13,17 @@ import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import ir.sharif.mobile.project.Executor;
 import ir.sharif.mobile.project.R;
 import ir.sharif.mobile.project.ui.model.Habit;
 import ir.sharif.mobile.project.ui.utils.TwoLayerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class HabitViewAdaptor extends RecyclerView.Adapter<HabitViewAdaptor.HabitViewHolder> {
+public class HabitViewAdapter extends RecyclerView.Adapter<HabitViewAdapter.HabitViewHolder> {
 
     private List<Habit> habits;
-    private final HabitViewHandler habitViewHandler;
     private final Context context;
 
     public class HabitViewHolder extends RecyclerView.ViewHolder implements TwoLayerView {
@@ -50,9 +50,8 @@ public class HabitViewAdaptor extends RecyclerView.Adapter<HabitViewAdaptor.Habi
         }
     }
 
-    public HabitViewAdaptor(List<Habit> habits, HabitViewHandler habitViewHandler, Context context) {
-        this.habits = habits;
-        this.habitViewHandler = habitViewHandler;
+    public HabitViewAdapter(Context context) {
+        this.habits = new ArrayList<>();
         this.context = context;
     }
 
@@ -71,13 +70,6 @@ public class HabitViewAdaptor extends RecyclerView.Adapter<HabitViewAdaptor.Habi
         holder.description.setText(habit.getDescription());
         holder.reward.setText(String.valueOf(habit.getReward()));
 
-//        holder.viewBackground.setOnClickListener(v -> {
-//            Bundle bundle = new Bundle();
-//            bundle.putSerializable("habit", habit);
-//            Navigation.findNavController(v.getRootView().findViewById(R.id.fragment))
-//                    .navigate(R.id.action_mainFragment_to_editHabitFragment, bundle);
-//        });
-
         if (habit.getReward() < 0) {
             holder.actionButton.setImageResource(R.drawable.ic_minus_red_48);
             holder.actionButton.setBackgroundColor(context.getResources().getColor(R.color.red_back));
@@ -94,10 +86,7 @@ public class HabitViewAdaptor extends RecyclerView.Adapter<HabitViewAdaptor.Habi
         });
 
         holder.actionButton.setOnClickListener(v -> {
-            Message message = new Message();
-            message.what = HabitViewHandler.DONE_TASK;
-            message.obj = habit;
-            habitViewHandler.sendMessage(message);
+            Executor.getInstance().addCoin(habit.getReward());
         });
 
     }
@@ -105,6 +94,17 @@ public class HabitViewAdaptor extends RecyclerView.Adapter<HabitViewAdaptor.Habi
     @Override
     public int getItemCount() {
         return habits.size();
+    }
+
+    public void addAll(List<Habit> list) {
+        for (Habit habit : list)
+            if (!habits.contains(habit))
+                habits.add(habit);
+        notifyDataSetChanged();
+    }
+
+    public Habit getItem(int position) {
+        return habits.get(position);
     }
 
     public void removeItem(int position) {

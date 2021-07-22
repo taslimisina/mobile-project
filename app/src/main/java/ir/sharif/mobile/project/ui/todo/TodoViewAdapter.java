@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -26,22 +26,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import ir.sharif.mobile.project.Executor;
 import ir.sharif.mobile.project.R;
 import ir.sharif.mobile.project.ui.model.ChecklistItem;
 import ir.sharif.mobile.project.ui.model.Todo;
 import ir.sharif.mobile.project.ui.model.utils.DateUtil;
 import ir.sharif.mobile.project.ui.utils.TwoLayerView;
 
-public class TodoViewAdaptor extends RecyclerView.Adapter<TodoViewAdaptor.TodoViewHolder> {
+public class TodoViewAdapter extends RecyclerView.Adapter<TodoViewAdapter.TodoViewHolder> {
 
     private List<Todo> todoList;
-    private final TodoViewHandler todoViewHandler;
     private final Context context;
     private final View rootView;
 
-    public TodoViewAdaptor(List<Todo> todoList, TodoViewHandler todoViewHandler, Context context, View rootView) {
-        this.todoList = todoList;
-        this.todoViewHandler = todoViewHandler;
+    public TodoViewAdapter(Context context, View rootView) {
+        this.todoList = new ArrayList<>();
         this.context = context;
         this.rootView = rootView;
     }
@@ -51,7 +50,7 @@ public class TodoViewAdaptor extends RecyclerView.Adapter<TodoViewAdaptor.TodoVi
     public TodoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.layout_todo, parent, false);
-        return new TodoViewAdaptor.TodoViewHolder(view);
+        return new TodoViewAdapter.TodoViewHolder(view);
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -121,6 +120,13 @@ public class TodoViewAdaptor extends RecyclerView.Adapter<TodoViewAdaptor.TodoVi
         return todoList.size();
     }
 
+    public void addAll(List<Todo> list) {
+        for (Todo todo : list)
+            if (!todoList.contains(todo))
+                todoList.add(todo);
+        notifyDataSetChanged();
+    }
+
     public void removeItem(int position) {
         todoList.remove(position);
         // notify the item removed by position to perform recycler view delete animations
@@ -131,6 +137,10 @@ public class TodoViewAdaptor extends RecyclerView.Adapter<TodoViewAdaptor.TodoVi
         todoList.add(position, todo);
         // notify task added by position
         notifyItemInserted(position);
+    }
+
+    public Todo getItem(int position) {
+        return todoList.get(position);
     }
 
     public class TodoViewHolder extends RecyclerView.ViewHolder implements TwoLayerView {
@@ -172,6 +182,9 @@ public class TodoViewAdaptor extends RecyclerView.Adapter<TodoViewAdaptor.TodoVi
         final Todo doneTask = todoList.get(holder.getAdapterPosition());
         final int doneIndex = holder.getAdapterPosition();
 
+        // add reward
+        Executor.getInstance().addCoin(doneTask.getReward());
+
         // remove the item from recycler view
         removeItem(holder.getAdapterPosition());
 
@@ -182,17 +195,14 @@ public class TodoViewAdaptor extends RecyclerView.Adapter<TodoViewAdaptor.TodoVi
             snackbar.setAction("UNDO", v -> {});
             holder.checkBox.setChecked(false);
             restoreItem(doneTask, doneIndex);
+            Executor.getInstance().undoCoin();
         });
         snackbar.addCallback(new Snackbar.Callback() {
 
             @Override
             public void onDismissed(Snackbar snackbar, int event) {
-                if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT) {
-                    Message message = new Message();
-                    message.what = TodoViewHandler.DELETE_TASK;
-                    message.obj = doneTask;
-                    todoViewHandler.sendMessage(message);
-                }
+                if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT)
+                    Executor.getInstance().deleteTask(doneTask);
             }
         });
         snackbar.setActionTextColor(Color.YELLOW);

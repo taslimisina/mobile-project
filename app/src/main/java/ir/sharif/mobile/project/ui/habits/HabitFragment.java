@@ -2,7 +2,6 @@ package ir.sharif.mobile.project.ui.habits;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,27 +17,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
 
-import java.util.List;
-
+import ir.sharif.mobile.project.Executor;
 import ir.sharif.mobile.project.R;
 import ir.sharif.mobile.project.ui.model.Habit;
-import ir.sharif.mobile.project.ui.repository.RepositoryHolder;
+import ir.sharif.mobile.project.ui.repository.TaskRepository;
 import ir.sharif.mobile.project.ui.utils.RecyclerItemTouchHelper;
 
 public class HabitFragment extends Fragment implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
 
     private RecyclerView recyclerView;
-    private List<Habit> habits;
-    private HabitViewAdaptor mAdapter;
-    private HabitViewHandler handler;
+    private HabitViewAdapter mAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,  ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_habits, container, false);
-        recyclerView = view.findViewById(R.id.recycler_view);
-        handler = new HabitViewHandler();
-        habits = RepositoryHolder.getTaskRepository().findAllHabits();
-        mAdapter = new HabitViewAdaptor(habits, handler, getContext());
 
+        Executor.getInstance().setHandler(new HabitViewHandler(this));
+        recyclerView = view.findViewById(R.id.recycler_view);
+        mAdapter = new HabitViewAdapter(getContext());
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -55,8 +50,7 @@ public class HabitFragment extends Fragment implements RecyclerItemTouchHelper.R
     @Override
     public void onStart() {
         super.onStart();
-        habits.clear();
-        habits.addAll(RepositoryHolder.getTaskRepository().findAllHabits());
+        Executor.getInstance().loadTasks(TaskRepository.TaskType.HABIT);
         getActivity().findViewById(R.id.new_button).setOnClickListener(v -> {
             Navigation.findNavController(getActivity().findViewById(R.id.fragment))
                     .navigate(R.id.action_mainFragment_to_editHabitFragment);
@@ -65,12 +59,12 @@ public class HabitFragment extends Fragment implements RecyclerItemTouchHelper.R
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
-        if (viewHolder instanceof HabitViewAdaptor.HabitViewHolder) {
+        if (viewHolder instanceof HabitViewAdapter.HabitViewHolder) {
             // get the removed item name to display it in snack bar
-            String name = habits.get(viewHolder.getAdapterPosition()).getTitle();
+            String name = mAdapter.getItem(viewHolder.getAdapterPosition()).getTitle();
 
             // backup of removed item for undo purpose
-            final Habit deletedTask = habits.get(viewHolder.getAdapterPosition());
+            final Habit deletedTask = mAdapter.getItem(viewHolder.getAdapterPosition());
             final int deletedIndex = viewHolder.getAdapterPosition();
 
             // remove the item from recycler view
@@ -90,12 +84,8 @@ public class HabitFragment extends Fragment implements RecyclerItemTouchHelper.R
 
                 @Override
                 public void onDismissed(Snackbar snackbar, int event) {
-                    if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT) {
-                        Message message = new Message();
-                        message.what = HabitViewHandler.DELETE_TASK;
-                        message.obj = deletedTask;
-                        handler.sendMessage(message);
-                    }
+                    if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT)
+                        Executor.getInstance().deleteTask(deletedTask);
                 }
             });
             snackbar.setActionTextColor(Color.YELLOW);
@@ -103,5 +93,7 @@ public class HabitFragment extends Fragment implements RecyclerItemTouchHelper.R
         }
     }
 
-
+    public HabitViewAdapter getAdapter() {
+        return mAdapter;
+    }
 }

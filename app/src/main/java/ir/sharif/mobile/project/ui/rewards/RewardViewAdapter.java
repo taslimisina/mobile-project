@@ -2,7 +2,6 @@ package ir.sharif.mobile.project.ui.rewards;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,16 +13,17 @@ import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import ir.sharif.mobile.project.Executor;
 import ir.sharif.mobile.project.R;
 import ir.sharif.mobile.project.ui.model.Reward;
 import ir.sharif.mobile.project.ui.utils.TwoLayerView;
 
-public class RewardViewAdaptor extends RecyclerView.Adapter<RewardViewAdaptor.RewardViewHolder> {
+public class RewardViewAdapter extends RecyclerView.Adapter<RewardViewAdapter.RewardViewHolder> {
 
     private List<Reward> rewards;
-    private final RewardViewHandler rewardViewHandler;
     private final Context context;
 
     public class RewardViewHolder extends RecyclerView.ViewHolder implements TwoLayerView {
@@ -50,9 +50,8 @@ public class RewardViewAdaptor extends RecyclerView.Adapter<RewardViewAdaptor.Re
         }
     }
 
-    public RewardViewAdaptor(List<Reward> rewards, RewardViewHandler rewardViewHandler, Context context) {
-        this.rewards = rewards;
-        this.rewardViewHandler = rewardViewHandler;
+    public RewardViewAdapter(Context context) {
+        this.rewards = new ArrayList<>();
         this.context = context;
     }
 
@@ -78,18 +77,24 @@ public class RewardViewAdaptor extends RecyclerView.Adapter<RewardViewAdaptor.Re
                     .navigate(R.id.action_mainFragment_to_editRewardFragment, bundle);
         });
 
-        holder.actionButton.setOnClickListener(v -> {
-            Message message = new Message();
-            message.what = RewardViewHandler.DONE_REWARD;
-            message.obj = reward;
-            rewardViewHandler.sendMessage(message);
-        });
+        holder.actionButton.setOnClickListener(v -> Executor.getInstance().subCoin(reward.getAmount()));
 
     }
 
     @Override
     public int getItemCount() {
         return rewards.size();
+    }
+
+    public void addAll(List<Reward> list) {
+        for (Reward reward : list)
+            if (!rewards.contains(reward))
+                rewards.add(reward);
+        notifyDataSetChanged();
+    }
+
+    public Reward getItem(int position) {
+        return rewards.get(position);
     }
 
     public void removeItem(int position) {

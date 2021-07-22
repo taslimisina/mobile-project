@@ -26,15 +26,13 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import ir.sharif.mobile.project.Executor;
 import ir.sharif.mobile.project.R;
 import ir.sharif.mobile.project.ui.model.ChecklistItem;
 import ir.sharif.mobile.project.ui.model.Reminder;
 import ir.sharif.mobile.project.ui.model.Todo;
 import ir.sharif.mobile.project.ui.model.utils.DateUtil;
-import ir.sharif.mobile.project.ui.repository.ChecklistItemRepository;
-import ir.sharif.mobile.project.ui.repository.ReminderRepository;
-import ir.sharif.mobile.project.ui.repository.RepositoryHolder;
-import ir.sharif.mobile.project.ui.repository.TaskRepository;
 import ir.sharif.mobile.project.ui.utils.EditChecklistViewAdaptor;
 import ir.sharif.mobile.project.ui.utils.EditReminderViewAdaptor;
 import ir.sharif.mobile.project.ui.utils.HideSoftKeyboardHelper;
@@ -47,9 +45,7 @@ public class EditTodoFragment extends Fragment {
     private EditReminderViewAdaptor reminderViewAdaptor;
     private RecyclerView checklistRecyclerview;
     private EditChecklistViewAdaptor checklistViewAdaptor;
-    private static final TaskRepository taskRepository = RepositoryHolder.getTaskRepository();
-    private static final ChecklistItemRepository checklistItemRepository = RepositoryHolder.getChecklistItemRepository();
-    private static final ReminderRepository reminderRepository = RepositoryHolder.getReminderRepository();
+    private TodoViewHandler handler;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,6 +62,8 @@ public class EditTodoFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_todo, container, false);
+
+        handler = new TodoViewHandler(null);
 
         init_form_values(view);
         init_reminder_section(view);
@@ -94,13 +92,13 @@ public class EditTodoFragment extends Fragment {
                 Toast.makeText(getContext(), "Title shouldn't be empty!", Toast.LENGTH_SHORT).show();
                 return;
             }
-            for (long id : checklistViewAdaptor.getToBeDeletedItems()) {
-                checklistItemRepository.delete(id); //todo handler
-            }
-            for (long id : reminderViewAdaptor.getToBeDeletedReminders()) {
-                reminderRepository.delete(id); //todo handler
-            }
-            taskRepository.save(editingTodo);   //todo handler
+
+            for (long id : checklistViewAdaptor.getToBeDeletedItems())
+                Executor.getInstance().deleteChecklistItem(id);
+            for (long id : reminderViewAdaptor.getToBeDeletedReminders())
+                Executor.getInstance().deleteReminder(id);
+
+            Executor.getInstance().saveTask(editingTodo);
             getActivity().onBackPressed();
         });
 

@@ -43,7 +43,7 @@ public class Todo extends Task {
             emptyTodo = new Todo();
             emptyTodo.setTitle("");
             emptyTodo.setDescription("");
-            emptyTodo.setReward(10);
+            emptyTodo.setReward(0);
         }
         return emptyTodo;
     }
