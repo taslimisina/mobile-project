@@ -20,7 +20,7 @@ import ir.sharif.mobile.project.R;
 import ir.sharif.mobile.project.ui.model.ChecklistItem;
 
 
-public class EditChecklistViewAdaptor extends RecyclerView.Adapter<EditChecklistViewAdaptor.ChecklistItemViewHolder> {
+public class EditChecklistViewAdapter extends RecyclerView.Adapter<EditChecklistViewAdapter.ChecklistItemViewHolder> {
 
     private List<ChecklistItem> items;
     private List<Long> toBeDeletedItems = new ArrayList<>();
@@ -37,7 +37,7 @@ public class EditChecklistViewAdaptor extends RecyclerView.Adapter<EditChecklist
         }
     }
 
-    public EditChecklistViewAdaptor(List<ChecklistItem> items) {
+    public EditChecklistViewAdapter(List<ChecklistItem> items) {
         this.items = items;
     }
 

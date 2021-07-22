@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,17 +33,17 @@ import ir.sharif.mobile.project.ui.model.ChecklistItem;
 import ir.sharif.mobile.project.ui.model.Daily;
 import ir.sharif.mobile.project.ui.model.Reminder;
 import ir.sharif.mobile.project.ui.model.utils.DateUtil;
-import ir.sharif.mobile.project.ui.utils.EditChecklistViewAdaptor;
-import ir.sharif.mobile.project.ui.utils.EditReminderViewAdaptor;
+import ir.sharif.mobile.project.ui.utils.EditChecklistViewAdapter;
+import ir.sharif.mobile.project.ui.utils.EditReminderViewAdapter;
 import ir.sharif.mobile.project.ui.utils.HideSoftKeyboardHelper;
 
 public class EditDailyFragment extends Fragment {
     private Daily daily;
     private Daily editingDaily;
     private RecyclerView reminderRecyclerview;
-    private EditReminderViewAdaptor reminderViewAdaptor;
+    private EditReminderViewAdapter reminderViewAdapter;
     private RecyclerView checklistRecyclerview;
-    private EditChecklistViewAdaptor checklistViewAdaptor;
+    private EditChecklistViewAdapter checklistViewAdapter;
     private DailyViewHandler handler;
 
     @Override
@@ -90,9 +89,9 @@ public class EditDailyFragment extends Fragment {
                 return;
             }
 
-            for (long id : checklistViewAdaptor.getToBeDeletedItems())
+            for (long id : checklistViewAdapter.getToBeDeletedItems())
                 Executor.getInstance().deleteChecklistItem(id);
-            for (long id : reminderViewAdaptor.getToBeDeletedReminders())
+            for (long id : reminderViewAdapter.getToBeDeletedReminders())
                 Executor.getInstance().deleteReminder(id);
 
             Executor.getInstance().saveTask(editingDaily);
@@ -193,12 +192,12 @@ public class EditDailyFragment extends Fragment {
         checklistRecyclerview.setItemAnimator(new DefaultItemAnimator());
         checklistRecyclerview.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 //        checklistRecyclerview.setNestedScrollingEnabled(false);
-        checklistViewAdaptor = new EditChecklistViewAdaptor(daily.getChecklistItems());
-        checklistRecyclerview.setAdapter(checklistViewAdaptor);
+        checklistViewAdapter = new EditChecklistViewAdapter(daily.getChecklistItems());
+        checklistRecyclerview.setAdapter(checklistViewAdapter);
         // Add checklist item
         ImageButton addChecklistItemButton = view.findViewById(R.id.add_checklist_item_button);
         addChecklistItemButton.setOnClickListener(v -> {
-            checklistViewAdaptor.addItem(new ChecklistItem(), daily.getChecklistItems().size());
+            checklistViewAdapter.addItem(new ChecklistItem(), daily.getChecklistItems().size());
         });
     }
 
@@ -213,12 +212,12 @@ public class EditDailyFragment extends Fragment {
         reminderRecyclerview.setLayoutManager(reminderLayoutManager);
         reminderRecyclerview.setItemAnimator(new DefaultItemAnimator());
         reminderRecyclerview.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-        reminderViewAdaptor = new EditReminderViewAdaptor(daily.getReminders(), getContext());
-        reminderRecyclerview.setAdapter(reminderViewAdaptor);
+        reminderViewAdapter = new EditReminderViewAdapter(daily.getReminders(), getContext());
+        reminderRecyclerview.setAdapter(reminderViewAdapter);
         // Add reminder
         ImageButton addReminderButton = view.findViewById(R.id.add_reminder_button);
         addReminderButton.setOnClickListener(v -> {
-            reminderViewAdaptor.addItem(new Reminder().setTime(Calendar.getInstance().getTime()), daily.getReminders().size());
+            reminderViewAdapter.addItem(new Reminder().setTime(Calendar.getInstance().getTime()), daily.getReminders().size());
         });
     }
 
@@ -236,7 +235,7 @@ public class EditDailyFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        checklistViewAdaptor.clearToBeDeletedItems();
-        reminderViewAdaptor.clearToBeDeletedReminders();
+        checklistViewAdapter.clearToBeDeletedItems();
+        reminderViewAdapter.clearToBeDeletedReminders();
     }
 }

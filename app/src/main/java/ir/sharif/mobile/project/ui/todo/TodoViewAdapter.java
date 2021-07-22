@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,8 +66,12 @@ public class TodoViewAdapter extends RecyclerView.Adapter<TodoViewAdapter.TodoVi
         for (ChecklistItem item : todo.getChecklistItems()) {
             View checklistItemView = LayoutInflater.from(context).inflate(R.layout.layout_checklist_item, (ViewGroup)holder.checklist, false);
             ((TextView)checklistItemView.findViewById(R.id.checklist_item_title)).setText(item.getName());
+            CheckBox itemCheckBox = checklistItemView.findViewById(R.id.checklist_item_box);
+            itemCheckBox.setChecked(item.isChecked());
+            itemCheckBox.setOnCheckedChangeListener((CompoundButton buttonView, boolean isChecked) -> {item.setChecked(isChecked);
+                Executor.getInstance().saveChecklistItem(item);
+            });
             holder.checklist.addView(checklistItemView);
-            // TODO: 7/21/21 set checked state
         }
 
         holder.checklist.setVisibility(View.GONE);

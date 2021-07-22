@@ -15,6 +15,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import ir.sharif.mobile.project.ui.dailies.DailyViewHandler;
 import ir.sharif.mobile.project.ui.habits.HabitViewHandler;
+import ir.sharif.mobile.project.ui.model.ChecklistItem;
 import ir.sharif.mobile.project.ui.model.Daily;
 import ir.sharif.mobile.project.ui.model.Habit;
 import ir.sharif.mobile.project.ui.model.Reward;
@@ -99,6 +100,10 @@ public class Executor {
 
     public void saveReward(Reward reward) {
         submitTask(() -> RepositoryHolder.getRewardRepository().save(reward));
+    }
+
+    public void saveChecklistItem(ChecklistItem item) {
+        submitTask(() -> RepositoryHolder.getChecklistItemRepository().save(item));
     }
 
     public void deleteTask(Task task) {

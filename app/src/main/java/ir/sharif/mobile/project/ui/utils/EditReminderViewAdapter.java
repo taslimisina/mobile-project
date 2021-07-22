@@ -23,7 +23,7 @@ import java.util.List;
 import ir.sharif.mobile.project.R;
 import ir.sharif.mobile.project.ui.model.Reminder;
 
-public class EditReminderViewAdaptor extends RecyclerView.Adapter<EditReminderViewAdaptor.ReminderViewHolder> {
+public class EditReminderViewAdapter extends RecyclerView.Adapter<EditReminderViewAdapter.ReminderViewHolder> {
 
     private List<Reminder> reminders;
     private Context context;
@@ -43,7 +43,7 @@ public class EditReminderViewAdaptor extends RecyclerView.Adapter<EditReminderVi
         }
     }
 
-    public EditReminderViewAdaptor(List<Reminder> reminders, Context context) {
+    public EditReminderViewAdapter(List<Reminder> reminders, Context context) {
         this.reminders = reminders;
         this.context = context;
     }

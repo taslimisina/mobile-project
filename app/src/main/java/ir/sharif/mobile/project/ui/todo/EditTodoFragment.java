@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,8 +32,8 @@ import ir.sharif.mobile.project.ui.model.ChecklistItem;
 import ir.sharif.mobile.project.ui.model.Reminder;
 import ir.sharif.mobile.project.ui.model.Todo;
 import ir.sharif.mobile.project.ui.model.utils.DateUtil;
-import ir.sharif.mobile.project.ui.utils.EditChecklistViewAdaptor;
-import ir.sharif.mobile.project.ui.utils.EditReminderViewAdaptor;
+import ir.sharif.mobile.project.ui.utils.EditChecklistViewAdapter;
+import ir.sharif.mobile.project.ui.utils.EditReminderViewAdapter;
 import ir.sharif.mobile.project.ui.utils.HideSoftKeyboardHelper;
 
 
@@ -42,9 +41,9 @@ public class EditTodoFragment extends Fragment {
     private Todo todo;
     private Todo editingTodo;
     private RecyclerView reminderRecyclerview;
-    private EditReminderViewAdaptor reminderViewAdaptor;
+    private EditReminderViewAdapter reminderViewAdapter;
     private RecyclerView checklistRecyclerview;
-    private EditChecklistViewAdaptor checklistViewAdaptor;
+    private EditChecklistViewAdapter checklistViewAdapter;
     private TodoViewHandler handler;
 
     @Override
@@ -89,9 +88,9 @@ public class EditTodoFragment extends Fragment {
                 return;
             }
 
-            for (long id : checklistViewAdaptor.getToBeDeletedItems())
+            for (long id : checklistViewAdapter.getToBeDeletedItems())
                 Executor.getInstance().deleteChecklistItem(id);
-            for (long id : reminderViewAdaptor.getToBeDeletedReminders())
+            for (long id : reminderViewAdapter.getToBeDeletedReminders())
                 Executor.getInstance().deleteReminder(id);
 
             Executor.getInstance().saveTask(editingTodo);
@@ -192,12 +191,12 @@ public class EditTodoFragment extends Fragment {
         checklistRecyclerview.setItemAnimator(new DefaultItemAnimator());
         checklistRecyclerview.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 //        checklistRecyclerview.setNestedScrollingEnabled(false);
-        checklistViewAdaptor = new EditChecklistViewAdaptor(todo.getChecklistItems());
-        checklistRecyclerview.setAdapter(checklistViewAdaptor);
+        checklistViewAdapter = new EditChecklistViewAdapter(todo.getChecklistItems());
+        checklistRecyclerview.setAdapter(checklistViewAdapter);
         // Add checklist item
         ImageButton addChecklistItemButton = view.findViewById(R.id.add_checklist_item_button);
         addChecklistItemButton.setOnClickListener(v -> {
-            checklistViewAdaptor.addItem(new ChecklistItem(), todo.getChecklistItems().size());
+            checklistViewAdapter.addItem(new ChecklistItem(), todo.getChecklistItems().size());
         });
     }
 
@@ -212,12 +211,12 @@ public class EditTodoFragment extends Fragment {
         reminderRecyclerview.setLayoutManager(reminderLayoutManager);
         reminderRecyclerview.setItemAnimator(new DefaultItemAnimator());
         reminderRecyclerview.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-        reminderViewAdaptor = new EditReminderViewAdaptor(todo.getReminders(), getContext());
-        reminderRecyclerview.setAdapter(reminderViewAdaptor);
+        reminderViewAdapter = new EditReminderViewAdapter(todo.getReminders(), getContext());
+        reminderRecyclerview.setAdapter(reminderViewAdapter);
         // Add reminder
         ImageButton addReminderButton = view.findViewById(R.id.add_reminder_button);
         addReminderButton.setOnClickListener(v -> {
-            reminderViewAdaptor.addItem(new Reminder().setTime(Calendar.getInstance().getTime()), todo.getReminders().size());
+            reminderViewAdapter.addItem(new Reminder().setTime(Calendar.getInstance().getTime()), todo.getReminders().size());
         });
     }
 
@@ -234,7 +233,7 @@ public class EditTodoFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        checklistViewAdaptor.clearToBeDeletedItems();
-        reminderViewAdaptor.clearToBeDeletedReminders();
+        checklistViewAdapter.clearToBeDeletedItems();
+        reminderViewAdapter.clearToBeDeletedReminders();
     }
 }
