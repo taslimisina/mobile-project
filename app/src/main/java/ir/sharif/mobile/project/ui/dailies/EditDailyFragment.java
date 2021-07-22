@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -81,7 +82,15 @@ public class EditDailyFragment extends Fragment {
             editingDaily.setDescription(((TextInputEditText) view.findViewById(R.id.input_description)).getText().toString());
             editingDaily.setReward(Integer.parseInt(((TextInputEditText) view.findViewById(R.id.input_reward)).getText().toString()));
             editingDaily.setChecklistItems(daily.getChecklistItems());
-            editingDaily.setStart(daily.getStart());
+            Calendar calendar = new GregorianCalendar();
+            if (daily.getStart() != null)
+                calendar.setTime(daily.getStart());
+            else
+                calendar.setTime(new Date());
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            editingDaily.setStart(calendar.getTime());
             editingDaily.setEvery(Integer.parseInt(((TextInputEditText) view.findViewById(R.id.input_repeat)).getText().toString()));
             editingDaily.setReminders(daily.getReminders());
             if (editingDaily.getTitle().equals("")) {
@@ -152,10 +161,10 @@ public class EditDailyFragment extends Fragment {
                     cal.set(Calendar.YEAR, year);
                     cal.set(Calendar.MONTH, monthOfYear);
                     cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                    cal.set(Calendar.HOUR_OF_DAY, 23);
-                    cal.set(Calendar.MINUTE, 59);
-                    cal.set(Calendar.SECOND, 59);
-                    daily.setStart(cal.getTime());    //todo
+                    cal.set(Calendar.HOUR_OF_DAY, 0);
+                    cal.set(Calendar.MINUTE, 0);
+                    cal.set(Calendar.SECOND, 0);
+                    daily.setStart(cal.getTime());
                 }
             }, yyyy, mm, dd);
             datePicker.show();

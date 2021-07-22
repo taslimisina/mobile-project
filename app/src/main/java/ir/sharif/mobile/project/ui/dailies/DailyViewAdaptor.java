@@ -90,7 +90,6 @@ public class DailyViewAdaptor extends RecyclerView.Adapter<DailyViewAdaptor.Dail
             });
         }
 
-        // Todo replace with start/every
         if (daily.getStart() != null) {
             holder.startDate.setText(DateUtil.formatDate(daily.getStart(), DateUtil.SHORT));
             Date today = Calendar.getInstance().getTime();
@@ -103,10 +102,16 @@ public class DailyViewAdaptor extends RecyclerView.Adapter<DailyViewAdaptor.Dail
         }
 
         // Checked listener
+        holder.checkBox.setChecked(daily.isChecked());
         holder.checkBox.setOnCheckedChangeListener((CompoundButton buttonView, boolean isChecked) -> {
+            daily.setChecked(isChecked);
             if (isChecked) {
-                checkDaily(holder);
+                Executor.getInstance().addCoin(daily.getReward());
             }
+            else {
+                Executor.getInstance().subCoin(daily.getReward());
+            }
+            Executor.getInstance().saveTask(daily);
         });
 
 
@@ -177,39 +182,5 @@ public class DailyViewAdaptor extends RecyclerView.Adapter<DailyViewAdaptor.Dail
         public View getViewForeground() {
             return this.viewForeground;
         }
-    }
-
-    void checkDaily(DailyViewAdaptor.DailyViewHolder holder) {
-        String name = dailyList.get(holder.getAdapterPosition()).getTitle();
-
-        // backup of removed item for undo purpose
-        final Daily doneTask = dailyList.get(holder.getAdapterPosition());
-        final int doneIndex = holder.getAdapterPosition();
-
-        // add reward
-        Executor.getInstance().addCoin(doneTask.getReward());
-
-        // remove the item from recycler view
-        removeItem(holder.getAdapterPosition());
-
-        // showing snack bar with Undo option
-        Snackbar snackbar = Snackbar.make(this.rootView, name + " is done!", Snackbar.LENGTH_LONG);
-        snackbar.setAction("UNDO", view -> {
-            // undo is selected, restore the deleted item
-            snackbar.setAction("UNDO", v -> {});
-            holder.checkBox.setChecked(false);
-            restoreItem(doneTask, doneIndex);
-            Executor.getInstance().undoCoin();
-        });
-        snackbar.addCallback(new Snackbar.Callback() {
-
-            @Override
-            public void onDismissed(Snackbar snackbar, int event) {
-                if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT)
-                    Executor.getInstance().deleteTask(doneTask);
-            }
-        });
-        snackbar.setActionTextColor(Color.YELLOW);
-        snackbar.show();
     }
 }

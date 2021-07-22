@@ -2,11 +2,15 @@ package ir.sharif.mobile.project.ui.dailies;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.Date;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -18,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import ir.sharif.mobile.project.Executor;
 import ir.sharif.mobile.project.R;
+import ir.sharif.mobile.project.ui.model.ChecklistItem;
 import ir.sharif.mobile.project.ui.model.Daily;
 import ir.sharif.mobile.project.ui.repository.TaskRepository;
 import ir.sharif.mobile.project.ui.utils.RecyclerItemTouchHelper;
@@ -96,5 +101,33 @@ public class DailiesFragment extends Fragment implements RecyclerItemTouchHelper
 
     public DailyViewAdaptor getAdapter() {
         return mAdapter;
+    }
+
+    public void setDailies(List<Daily> dailies) {
+        Date now = new Date();
+        for (Daily daily : dailies) {
+            long start = daily.getStart().getTime();
+            long diff = now.getTime() - start;
+            long diffDays = diff / (1000 * 60 * 60 * 24);
+            Log.d("Daily_Diff:", Long.toString(diff));
+            int every = daily.getEvery();
+            if (diffDays >= every) {
+//                boolean checked = daily.getLastCheckedDate() != null && daily.getLastCheckedDate().getTime() > daily.getStart().getTime();
+                boolean checked = daily.isChecked();
+                long passedPeriods = diffDays / every;
+                daily.setStart( new Date( daily.getStart().getTime() + passedPeriods * every * (1000 * 60 * 60 * 24) ) );
+                if (!checked) {
+                    // we can sub reward times passedPeriods but we don't want a user to lose all of their money because they don't check the app
+                    Executor.getInstance().subCoin(daily.getReward());
+                }
+                // set checklist and item to unchecked
+                for (ChecklistItem checklistItem : daily.getChecklistItems()) {
+                    checklistItem.setChecked(false);
+                }
+                daily.setChecked(false);
+                Executor.getInstance().saveTask(daily);
+            }
+        }
+        mAdapter.addAll((dailies));
     }
 }

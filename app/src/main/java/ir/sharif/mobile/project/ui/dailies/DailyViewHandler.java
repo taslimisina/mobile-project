@@ -32,7 +32,7 @@ public class DailyViewHandler extends Handler {
 
         switch (msg.what) {
             case LOAD_DONE:
-                dailyFragment.get().getAdapter().addAll(((List<Daily>) msg.obj));
+                dailyFragment.get().setDailies((List<Daily>) msg.obj);
                 break;
             case SHOW_TOAST:
                 String text = (String) msg.obj;
