@@ -51,6 +51,7 @@ public class DailiesFragment extends Fragment implements RecyclerItemTouchHelper
         super.onStart();
         Executor.getInstance().setHandler(new DailyViewHandler(this));
         Executor.getInstance().loadTasks(TaskRepository.TaskType.DAILY);
+        Executor.getInstance().loadScore();
         getActivity().findViewById(R.id.new_button).setOnClickListener(v -> {
             Navigation.findNavController(getActivity().findViewById(R.id.fragment))
                     .navigate(R.id.action_mainFragment_to_editDailyFragment);

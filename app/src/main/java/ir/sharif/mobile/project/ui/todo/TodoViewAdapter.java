@@ -63,6 +63,7 @@ public class TodoViewAdapter extends RecyclerView.Adapter<TodoViewAdapter.TodoVi
         holder.reward.setText(String.valueOf(todo.getReward()));
 
         // Init checklist
+        holder.checklist.removeAllViews();
         for (ChecklistItem item : todo.getChecklistItems()) {
             View checklistItemView = LayoutInflater.from(context).inflate(R.layout.layout_checklist_item, (ViewGroup)holder.checklist, false);
             ((TextView)checklistItemView.findViewById(R.id.checklist_item_title)).setText(item.getName());
@@ -80,6 +81,7 @@ public class TodoViewAdapter extends RecyclerView.Adapter<TodoViewAdapter.TodoVi
             holder.expandButton.setVisibility(View.GONE);
         } else {
             holder.expandButton.setVisibility(View.VISIBLE);
+            holder.expandButton.setImageResource(R.drawable.ic_expand_more_black_24dp);
             holder.expandButton.setOnClickListener(v -> {
                 if (holder.checklist.getVisibility() == View.GONE) {
                     holder.expandButton.setImageResource(R.drawable.ic_expand_less_black_24dp);

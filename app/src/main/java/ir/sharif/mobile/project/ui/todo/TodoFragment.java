@@ -52,7 +52,7 @@ public class TodoFragment extends Fragment implements RecyclerItemTouchHelper.Re
         super.onStart();
         Executor.getInstance().setHandler(new TodoViewHandler(this));
         Executor.getInstance().loadTasks(TaskRepository.TaskType.TODO);
-        Executor.getInstance().getCoin();
+        Executor.getInstance().loadScore();
         getActivity().findViewById(R.id.new_button).setOnClickListener(v -> {
             Navigation.findNavController(getActivity().findViewById(R.id.fragment))
                     .navigate(R.id.action_mainFragment_to_editTodoFragment);

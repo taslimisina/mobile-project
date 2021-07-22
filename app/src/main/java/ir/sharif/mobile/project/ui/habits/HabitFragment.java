@@ -51,7 +51,7 @@ public class HabitFragment extends Fragment implements RecyclerItemTouchHelper.R
         super.onStart();
         Executor.getInstance().setHandler(new HabitViewHandler(this));
         Executor.getInstance().loadTasks(TaskRepository.TaskType.HABIT);
-        Executor.getInstance().getCoin();
+        Executor.getInstance().loadScore();
         getActivity().findViewById(R.id.new_button).setOnClickListener(v -> {
             Navigation.findNavController(getActivity().findViewById(R.id.fragment))
                     .navigate(R.id.action_mainFragment_to_editHabitFragment);

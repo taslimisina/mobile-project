@@ -52,7 +52,7 @@ public class RewardFragment extends Fragment implements RecyclerItemTouchHelper.
         super.onStart();
         Executor.getInstance().setHandler(new RewardViewHandler(this));
         Executor.getInstance().loadRewards();
-        Executor.getInstance().getCoin();
+        Executor.getInstance().loadScore();
         getActivity().findViewById(R.id.new_button).setOnClickListener(v -> {
             Navigation.findNavController(getActivity().findViewById(R.id.fragment))
                     .navigate(R.id.action_mainFragment_to_editRewardFragment);

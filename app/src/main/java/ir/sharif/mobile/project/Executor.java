@@ -1,6 +1,5 @@
 package ir.sharif.mobile.project;
 
-import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -11,7 +10,6 @@ import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import ir.sharif.mobile.project.ui.dailies.DailyViewHandler;
 import ir.sharif.mobile.project.ui.habits.HabitViewHandler;
@@ -122,7 +120,7 @@ public class Executor {
         submitTask(() -> RepositoryHolder.getChecklistItemRepository().delete(id));
     }
 
-    public void getCoin() {
+    public void loadScore() {
         submitTask(() -> {
             int lastScore = RepositoryHolder.getCoinRepository().getLastScore();
             if (handler != null) {
@@ -140,7 +138,7 @@ public class Executor {
                 handler.get().sendMessage(message);
             } else {
                 RepositoryHolder.getCoinRepository().increase(amount);
-                getCoin();
+                loadScore();
             }
         });
     }
@@ -152,7 +150,7 @@ public class Executor {
     public void undoCoin() {
         submitTask(() -> {
                     RepositoryHolder.getCoinRepository().undo();
-                    getCoin();
+                    loadScore();
                 }
         );
     }
