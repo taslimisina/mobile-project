@@ -11,6 +11,7 @@ import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import ir.sharif.mobile.project.ui.dailies.DailyViewHandler;
 import ir.sharif.mobile.project.ui.habits.HabitViewHandler;
@@ -27,9 +28,9 @@ import ir.sharif.mobile.project.ui.todo.TodoViewHandler;
 
 public class Executor {
     public static final int SHOW_TOAST = 3;
+    public static final int UPDATE_SCORE = 2;
     private static Executor instance = null;
     private final ThreadPoolExecutor threadPool;
-    private WeakReference<Context> context;
     private WeakReference<Handler> handler;
 
     private Executor() {
@@ -116,6 +117,16 @@ public class Executor {
         submitTask(() -> RepositoryHolder.getChecklistItemRepository().delete(id));
     }
 
+    public void getCoin() {
+        submitTask(() -> {
+            int lastScore = RepositoryHolder.getCoinRepository().getLastScore();
+            if (handler != null) {
+                Message message = Message.obtain(handler.get(), UPDATE_SCORE, lastScore);
+                handler.get().sendMessage(message);
+            }
+        });
+    }
+
     public void addCoin(int amount) {
         submitTask(() -> {
             int lastScore = RepositoryHolder.getCoinRepository().getLastScore();
@@ -124,6 +135,7 @@ public class Executor {
                 handler.get().sendMessage(message);
             } else {
                 RepositoryHolder.getCoinRepository().increase(amount);
+                getCoin();
             }
         });
     }
@@ -133,7 +145,11 @@ public class Executor {
     }
 
     public void undoCoin() {
-        submitTask(() -> RepositoryHolder.getCoinRepository().undo());
+        submitTask(() -> {
+                    RepositoryHolder.getCoinRepository().undo();
+                    getCoin();
+                }
+        );
     }
 
     public void setHandler(Handler handler) {

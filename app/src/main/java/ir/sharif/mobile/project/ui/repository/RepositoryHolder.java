@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Date;
 
 import ir.sharif.mobile.project.ui.model.ChecklistItem;
+import ir.sharif.mobile.project.ui.model.Daily;
 import ir.sharif.mobile.project.ui.model.Reminder;
 import ir.sharif.mobile.project.ui.model.Task;
 import ir.sharif.mobile.project.ui.model.Todo;
@@ -40,14 +41,16 @@ public class RepositoryHolder {
 //        coinRepository.increase(1);
 //        coinRepository.decrease(2);
 //        Log.i("f", "SCORE:" + coinRepository.getLastScore());
-//        Reminder ss = new Reminder().setTime(new Date(System.currentTimeMillis() + 10000));
-//        Reminder sss = new Reminder().setTime(new Date(System.currentTimeMillis() + 20000));
-//        ArrayList<Reminder> reminders = new ArrayList<>();
-//        reminders.add(ss);
-//        reminders.add(sss);
-//        Task sdf = new Todo()
-//                .setReminders(reminders).setReward(10).setTitle("sdf");
-//        taskRepository.save(sdf);
+        Reminder ss = new Reminder().setTime(new Date(System.currentTimeMillis() + 10000));
+        Reminder sss = new Reminder().setTime(new Date(System.currentTimeMillis() + 20000));
+        ArrayList<Reminder> reminders = new ArrayList<>();
+        reminders.add(ss);
+        reminders.add(sss);
+        Daily sdf = (Daily) new Daily()
+                .setReminders(reminders).setReward(10).setTitle("sdf");
+
+        taskRepository.save(sdf);
+//        taskRepository.findAll();
 //        for (Reminder reminder : reminderRepository.findAll()) {
 //            reminderRepository.delete(reminder.getId());
 //        }
