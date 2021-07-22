@@ -5,11 +5,14 @@ import java.util.Date;
 import java.util.List;
 
 public class Daily extends Task {
+    private static Daily emptyDaily;
+
     private Integer every;
     private Date start;
+    private Date lastCheckedDate;
+
     private List<Reminder> reminders = new ArrayList<>();
     private List<ChecklistItem> checklistItems = new ArrayList<>();
-    private static Daily emptyDaily;
 
     public Integer getEvery() {
         return every;
@@ -45,6 +48,15 @@ public class Daily extends Task {
     public Daily setChecklistItems(List<ChecklistItem> checklistItems) {
         this.checklistItems = checklistItems;
         return this;
+    }
+
+    public Daily setLastCheckedDate(Date lastCheckedDate) {
+        this.lastCheckedDate = lastCheckedDate;
+        return this;
+    }
+
+    public Date getLastCheckedDate() {
+        return lastCheckedDate;
     }
 
     public static Daily getEmptyDaily() {

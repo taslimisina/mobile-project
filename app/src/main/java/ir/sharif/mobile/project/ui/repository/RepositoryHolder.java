@@ -41,15 +41,15 @@ public class RepositoryHolder {
 //        coinRepository.increase(1);
 //        coinRepository.decrease(2);
 //        Log.i("f", "SCORE:" + coinRepository.getLastScore());
-        Reminder ss = new Reminder().setTime(new Date(System.currentTimeMillis() + 10000));
-        Reminder sss = new Reminder().setTime(new Date(System.currentTimeMillis() + 20000));
-        ArrayList<Reminder> reminders = new ArrayList<>();
-        reminders.add(ss);
-        reminders.add(sss);
-        Daily sdf = (Daily) new Daily()
-                .setReminders(reminders).setReward(10).setTitle("sdf");
-
-        taskRepository.save(sdf);
+//        Reminder ss = new Reminder().setTime(new Date(System.currentTimeMillis() + 10000));
+//        Reminder sss = new Reminder().setTime(new Date(System.currentTimeMillis() + 20000));
+//        ArrayList<Reminder> reminders = new ArrayList<>();
+//        reminders.add(ss);
+//        reminders.add(sss);
+//        Daily sdf = (Daily) new Daily()
+//                .setReminders(reminders).setReward(10).setTitle("sdf");
+//
+//        taskRepository.save(sdf);
 //        taskRepository.findAll();
 //        for (Reminder reminder : reminderRepository.findAll()) {
 //            reminderRepository.delete(reminder.getId());

@@ -28,7 +28,7 @@ public class TaskRepository implements BaseRepository<Task> {
     public static final String CREATE_TABLE_QUERY = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
             " (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + " title VARCHAR(150) NOT NULL, " +
             " description text, reward INTEGER, every INTEGER, start DATETIME(3), dudate DATETIME(3)," +
-            " type VARCHAR(20) not null);";
+            " type VARCHAR(20) not null, last_check DATETIME(3));";
 
     public static final String DELETE_TASK_PATTERN = "DELETE FROM " + TABLE_NAME + " " +
             "WHERE id = %d;";
@@ -76,6 +76,9 @@ public class TaskRepository implements BaseRepository<Task> {
                 values.put("every", ((Daily) object).getEvery());
             if (((Daily) object).getStart() != null)
                 values.put("start", ((Daily) object).getStart().toString());
+            if (((Daily) object).getLastCheckedDate() != null) {
+                values.put("last_check", ((Daily) object).getLastCheckedDate().toString());
+            }
             values.put("type", TaskType.DAILY.name());
         } else {
             values.put("type", TaskType.HABIT.name());
@@ -179,6 +182,7 @@ public class TaskRepository implements BaseRepository<Task> {
         int startIndex = response.getColumnIndex("start");
         int dudateIndex = response.getColumnIndex("dudate");
         int typeIndex = response.getColumnIndex("type");
+        int lastCheckIndex = response.getColumnIndex("last_check");
         while (response.moveToNext()) {
             String type = response.getString(typeIndex);
             Long id = response.getLong(idIndex);
@@ -196,11 +200,16 @@ public class TaskRepository implements BaseRepository<Task> {
                 if (!response.isNull(descriptionIndex)) {
                     description = response.getString(descriptionIndex);
                 }
+                Date lastCheck = null;
+                if (!response.isNull(lastCheckIndex)) {
+                    lastCheck = new Date(response.getString(lastCheckIndex));
+                }
                 items.add(new Daily()
                         .setChecklistItems(checkList)
                         .setReminders(reminders)
                         .setStart(start)
                         .setEvery(every)
+                        .setLastCheckedDate(lastCheck)
                         .setId(id)
                         .setTitle(response.getString(titleIndex))
                         .setDescription(description)

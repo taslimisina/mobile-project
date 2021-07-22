@@ -3,6 +3,7 @@ package ir.sharif.mobile.project.ui.model;
 public class ChecklistItem {
     private Long id;
     private String name;
+    private boolean checked = false;
     // Don't set this in code, it will be set automatically
     private long taskId;
 
@@ -31,5 +32,14 @@ public class ChecklistItem {
 
     public long getTaskId() {
         return taskId;
+    }
+
+    public ChecklistItem setChecked(boolean checked) {
+        this.checked = checked;
+        return this;
+    }
+
+    public boolean isChecked() {
+        return checked;
     }
 }
