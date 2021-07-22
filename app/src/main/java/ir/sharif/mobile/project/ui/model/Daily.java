@@ -7,9 +7,9 @@ import java.util.List;
 public class Daily extends Task {
     private Integer every;
     private Date start;
-
     private List<Reminder> reminders = new ArrayList<>();
     private List<ChecklistItem> checklistItems = new ArrayList<>();
+    private static Daily emptyDaily;
 
     public Integer getEvery() {
         return every;
@@ -45,5 +45,16 @@ public class Daily extends Task {
     public Daily setChecklistItems(List<ChecklistItem> checklistItems) {
         this.checklistItems = checklistItems;
         return this;
+    }
+
+    public static Daily getEmptyDaily() {
+        if (emptyDaily == null) {
+            emptyDaily = new Daily();
+            emptyDaily.setTitle("");
+            emptyDaily.setDescription("");
+            emptyDaily.setReward(0);
+            emptyDaily.setEvery(1);
+        }
+        return emptyDaily;
     }
 }

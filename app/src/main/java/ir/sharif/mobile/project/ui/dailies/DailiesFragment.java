@@ -1,34 +1,99 @@
 package ir.sharif.mobile.project.ui.dailies;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import ir.sharif.mobile.project.Executor;
 import ir.sharif.mobile.project.R;
+import ir.sharif.mobile.project.ui.model.Daily;
+import ir.sharif.mobile.project.ui.repository.TaskRepository;
+import ir.sharif.mobile.project.ui.utils.RecyclerItemTouchHelper;
 
-public class DailiesFragment extends Fragment {
+public class DailiesFragment extends Fragment implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
 
-    private DailiesViewModel dailiesViewModel;
+    private RecyclerView recyclerView;
+    private DailyViewAdaptor mAdapter;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        dailiesViewModel =
-                new ViewModelProvider(this).get(DailiesViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_dailies, container, false);
-        final TextView textView = root.findViewById(R.id.text_dailies);
-        dailiesViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
+
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_dailies, container, false);
+
+        recyclerView = view.findViewById(R.id.recycler_view);
+        mAdapter = new DailyViewAdaptor(getContext(), view);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        recyclerView.setAdapter(mAdapter);
+
+        // adding item touch helper
+        ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, this);
+        new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Executor.getInstance().setHandler(new DailyViewHandler(this));
+        Executor.getInstance().loadTasks(TaskRepository.TaskType.DAILY);
+        getActivity().findViewById(R.id.new_button).setOnClickListener(v -> {
+            Navigation.findNavController(getActivity().findViewById(R.id.fragment))
+                    .navigate(R.id.action_mainFragment_to_editDailyFragment);
         });
-        return root;
+    }
+
+    @Override
+    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
+        if (viewHolder instanceof DailyViewAdaptor.DailyViewHolder) {
+            // get the removed item name to display it in snack bar
+            String name = mAdapter.getItem(viewHolder.getAdapterPosition()).getTitle();
+
+            // backup of removed item for undo purpose
+            final int deletedIndex = viewHolder.getAdapterPosition();
+            final Daily deletedTask = mAdapter.getItem(deletedIndex);
+
+            // remove the item from recycler view
+            mAdapter.removeItem(viewHolder.getAdapterPosition());
+
+            // showing snack bar with Undo option
+            Snackbar snackbar = Snackbar.make(getView(), name + " removed from Dailies!", Snackbar.LENGTH_LONG);
+            snackbar.setAction("UNDO", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // undo is selected, restore the deleted item
+                    snackbar.setAction("UNDO", v -> {});
+                    mAdapter.restoreItem(deletedTask, deletedIndex);
+                }
+            });
+            snackbar.addCallback(new Snackbar.Callback() {
+
+                @Override
+                public void onDismissed(Snackbar snackbar, int event) {
+                    if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT)
+                        Executor.getInstance().deleteTask(deletedTask);
+                }
+            });
+            snackbar.setActionTextColor(Color.YELLOW);
+            snackbar.show();
+        }
+    }
+
+    public DailyViewAdaptor getAdapter() {
+        return mAdapter;
     }
 }

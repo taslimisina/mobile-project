@@ -92,11 +92,11 @@ public class TaskRepository implements BaseRepository<Task> {
                 reminderRepository.save(reminder);
             }
         } else if (object instanceof Daily) {
-            for (ChecklistItem checklistItem : ((Todo) object).getChecklistItems()) {
+            for (ChecklistItem checklistItem : ((Daily) object).getChecklistItems()) {
                 checklistItem.setTaskId(insert);
                 checklistItemRepository.save(checklistItem);
             }
-            for (Reminder reminder : ((Todo) object).getReminders()) {
+            for (Reminder reminder : ((Daily) object).getReminders()) {
                 reminder.setTaskId(insert);
                 reminder.setTaskName(object.getTitle());
                 reminderRepository.save(reminder);

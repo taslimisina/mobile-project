@@ -31,7 +31,6 @@ public class RewardFragment extends Fragment implements RecyclerItemTouchHelper.
     public View onCreateView(@NonNull LayoutInflater inflater,  ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_rewards, container, false);
 
-        Executor.getInstance().setHandler(new RewardViewHandler(this));
         recyclerView = view.findViewById(R.id.recycler_view);
         mAdapter = new RewardViewAdapter(getContext());
 
@@ -51,6 +50,7 @@ public class RewardFragment extends Fragment implements RecyclerItemTouchHelper.
     @Override
     public void onStart() {
         super.onStart();
+        Executor.getInstance().setHandler(new RewardViewHandler(this));
         Executor.getInstance().loadRewards();
         getActivity().findViewById(R.id.new_button).setOnClickListener(v -> {
             Navigation.findNavController(getActivity().findViewById(R.id.fragment))

@@ -31,7 +31,6 @@ public class HabitFragment extends Fragment implements RecyclerItemTouchHelper.R
     public View onCreateView(@NonNull LayoutInflater inflater,  ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_habits, container, false);
 
-        Executor.getInstance().setHandler(new HabitViewHandler(this));
         recyclerView = view.findViewById(R.id.recycler_view);
         mAdapter = new HabitViewAdapter(getContext());
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
@@ -50,6 +49,7 @@ public class HabitFragment extends Fragment implements RecyclerItemTouchHelper.R
     @Override
     public void onStart() {
         super.onStart();
+        Executor.getInstance().setHandler(new HabitViewHandler(this));
         Executor.getInstance().loadTasks(TaskRepository.TaskType.HABIT);
         getActivity().findViewById(R.id.new_button).setOnClickListener(v -> {
             Navigation.findNavController(getActivity().findViewById(R.id.fragment))

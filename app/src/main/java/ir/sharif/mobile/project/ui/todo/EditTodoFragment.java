@@ -81,13 +81,9 @@ public class EditTodoFragment extends Fragment {
             editingTodo.setTitle(((TextInputEditText) view.findViewById(R.id.input_title)).getText().toString());
             editingTodo.setDescription(((TextInputEditText) view.findViewById(R.id.input_description)).getText().toString());
             editingTodo.setReward(Integer.parseInt(((TextInputEditText) view.findViewById(R.id.input_reward)).getText().toString()));
-            Log.d("ChecklistItems", Integer.toString(todo.getChecklistItems().size()));
-//            Log.d("DueDateItems", todo.getDueDate().toString());
-            Log.d("ReminderItems", todo.getReminders().toString());
             editingTodo.setChecklistItems(todo.getChecklistItems());
             editingTodo.setDueDate(todo.getDueDate());
             editingTodo.setReminders(todo.getReminders());
-            //todo set due date
             if (editingTodo.getTitle().equals("")) {
                 Toast.makeText(getContext(), "Title shouldn't be empty!", Toast.LENGTH_SHORT).show();
                 return;

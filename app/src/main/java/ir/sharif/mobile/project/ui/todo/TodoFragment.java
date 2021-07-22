@@ -33,7 +33,6 @@ public class TodoFragment extends Fragment implements RecyclerItemTouchHelper.Re
 
         View view = inflater.inflate(R.layout.fragment_todo, container, false);
 
-        Executor.getInstance().setHandler(new TodoViewHandler(this));
         recyclerView = view.findViewById(R.id.recycler_view);
         mAdapter = new TodoViewAdapter(getContext(), view);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
@@ -51,6 +50,7 @@ public class TodoFragment extends Fragment implements RecyclerItemTouchHelper.Re
     @Override
     public void onStart() {
         super.onStart();
+        Executor.getInstance().setHandler(new TodoViewHandler(this));
         Executor.getInstance().loadTasks(TaskRepository.TaskType.TODO);
         getActivity().findViewById(R.id.new_button).setOnClickListener(v -> {
             Navigation.findNavController(getActivity().findViewById(R.id.fragment))

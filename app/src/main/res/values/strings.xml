@@ -17,4 +17,5 @@
 
     <string name="time">%1$02d:%2$02d</string>
     <string name="date">%1$02d-%2$02d-%3$04d</string>
+    <string name="repeat_days">Repeat (Days)</string>
 </resources>

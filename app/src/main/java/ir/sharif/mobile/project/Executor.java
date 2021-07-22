@@ -12,7 +12,9 @@ import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import ir.sharif.mobile.project.ui.dailies.DailyViewHandler;
 import ir.sharif.mobile.project.ui.habits.HabitViewHandler;
+import ir.sharif.mobile.project.ui.model.Daily;
 import ir.sharif.mobile.project.ui.model.Habit;
 import ir.sharif.mobile.project.ui.model.Reward;
 import ir.sharif.mobile.project.ui.model.Task;
@@ -69,6 +71,12 @@ public class Executor {
                 }
                 break;
             case DAILY:
+                if (handler.get() instanceof DailyViewHandler) {
+                    List<Daily> dailyList = RepositoryHolder.getTaskRepository().findAllDaily();
+                    Message message = Message.obtain(handler.get(), DailyViewHandler.LOAD_DONE, dailyList);
+                    Log.d("DAILY_HANDLER", message.toString());
+                    handler.get().sendMessage(message);
+                }
                 break;
             default:
                 break;
