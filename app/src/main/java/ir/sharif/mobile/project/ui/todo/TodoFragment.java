@@ -19,8 +19,8 @@ import com.google.android.material.snackbar.Snackbar;
 
 import ir.sharif.mobile.project.Executor;
 import ir.sharif.mobile.project.R;
-import ir.sharif.mobile.project.ui.model.Todo;
-import ir.sharif.mobile.project.ui.repository.TaskRepository;
+import ir.sharif.mobile.project.model.Todo;
+import ir.sharif.mobile.project.repository.TaskRepository;
 import ir.sharif.mobile.project.ui.utils.RecyclerItemTouchHelper;
 
 public class TodoFragment extends Fragment implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {

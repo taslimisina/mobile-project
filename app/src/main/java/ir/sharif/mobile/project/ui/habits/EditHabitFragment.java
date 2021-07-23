@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import ir.sharif.mobile.project.Executor;
 import ir.sharif.mobile.project.R;
-import ir.sharif.mobile.project.ui.model.Habit;
+import ir.sharif.mobile.project.model.Habit;
 import ir.sharif.mobile.project.ui.utils.HideSoftKeyboardHelper;
 
 

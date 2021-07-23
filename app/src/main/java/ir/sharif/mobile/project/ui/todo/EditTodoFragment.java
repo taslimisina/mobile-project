@@ -28,10 +28,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import ir.sharif.mobile.project.Executor;
 import ir.sharif.mobile.project.R;
-import ir.sharif.mobile.project.ui.model.ChecklistItem;
-import ir.sharif.mobile.project.ui.model.Reminder;
-import ir.sharif.mobile.project.ui.model.Todo;
-import ir.sharif.mobile.project.ui.model.utils.DateUtil;
+import ir.sharif.mobile.project.model.ChecklistItem;
+import ir.sharif.mobile.project.model.Reminder;
+import ir.sharif.mobile.project.model.Todo;
+import ir.sharif.mobile.project.util.DateUtil;
 import ir.sharif.mobile.project.ui.utils.EditChecklistViewAdapter;
 import ir.sharif.mobile.project.ui.utils.EditReminderViewAdapter;
 import ir.sharif.mobile.project.ui.utils.HideSoftKeyboardHelper;

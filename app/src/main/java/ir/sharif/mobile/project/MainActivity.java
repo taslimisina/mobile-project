@@ -1,22 +1,10 @@
 package ir.sharif.mobile.project;
 
-import android.graphics.drawable.BitmapDrawable;
-import android.media.RingtoneManager;
 import android.os.Bundle;
-import android.util.Log;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
-import ir.sharif.mobile.project.ui.repository.RepositoryHolder;
-import ir.sharif.mobile.project.util.NotificationUtil;
+import ir.sharif.mobile.project.repository.RepositoryHolder;
 
 public class MainActivity extends AppCompatActivity {
 

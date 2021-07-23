@@ -15,7 +15,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import ir.sharif.mobile.project.Executor;
 import ir.sharif.mobile.project.R;
-import ir.sharif.mobile.project.ui.model.Reward;
+import ir.sharif.mobile.project.model.Reward;
 import ir.sharif.mobile.project.ui.utils.HideSoftKeyboardHelper;
 
 

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ir.sharif.mobile.project.R;
-import ir.sharif.mobile.project.ui.model.ChecklistItem;
+import ir.sharif.mobile.project.model.ChecklistItem;
 
 
 public class EditChecklistViewAdapter extends RecyclerView.Adapter<EditChecklistViewAdapter.ChecklistItemViewHolder> {

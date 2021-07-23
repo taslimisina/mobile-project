@@ -13,14 +13,14 @@ import java.util.concurrent.TimeUnit;
 
 import ir.sharif.mobile.project.ui.dailies.DailyViewHandler;
 import ir.sharif.mobile.project.ui.habits.HabitViewHandler;
-import ir.sharif.mobile.project.ui.model.ChecklistItem;
-import ir.sharif.mobile.project.ui.model.Daily;
-import ir.sharif.mobile.project.ui.model.Habit;
-import ir.sharif.mobile.project.ui.model.Reward;
-import ir.sharif.mobile.project.ui.model.Task;
-import ir.sharif.mobile.project.ui.model.Todo;
-import ir.sharif.mobile.project.ui.repository.RepositoryHolder;
-import ir.sharif.mobile.project.ui.repository.TaskRepository;
+import ir.sharif.mobile.project.model.ChecklistItem;
+import ir.sharif.mobile.project.model.Daily;
+import ir.sharif.mobile.project.model.Habit;
+import ir.sharif.mobile.project.model.Reward;
+import ir.sharif.mobile.project.model.Task;
+import ir.sharif.mobile.project.model.Todo;
+import ir.sharif.mobile.project.repository.RepositoryHolder;
+import ir.sharif.mobile.project.repository.TaskRepository;
 import ir.sharif.mobile.project.ui.rewards.RewardViewHandler;
 import ir.sharif.mobile.project.ui.todo.TodoViewHandler;
 

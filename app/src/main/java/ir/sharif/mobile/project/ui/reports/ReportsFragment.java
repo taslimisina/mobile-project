@@ -18,15 +18,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
 import ir.sharif.mobile.project.R;
-import ir.sharif.mobile.project.ui.repository.RepositoryHolder;
 
 import static android.view.View.INVISIBLE;
 

@@ -21,7 +21,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import ir.sharif.mobile.project.R;
-import ir.sharif.mobile.project.ui.model.Reminder;
+import ir.sharif.mobile.project.model.Reminder;
 
 public class EditReminderViewAdapter extends RecyclerView.Adapter<EditReminderViewAdapter.ReminderViewHolder> {
 

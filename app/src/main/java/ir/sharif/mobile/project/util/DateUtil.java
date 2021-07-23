@@ -1,4 +1,4 @@
-package ir.sharif.mobile.project.ui.model.utils;
+package ir.sharif.mobile.project.util;
 
 import android.util.Log;
 

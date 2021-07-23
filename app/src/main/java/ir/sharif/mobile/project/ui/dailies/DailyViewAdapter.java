@@ -2,7 +2,6 @@ package ir.sharif.mobile.project.ui.dailies;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -27,17 +24,17 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 import ir.sharif.mobile.project.Executor;
 import ir.sharif.mobile.project.R;
-import ir.sharif.mobile.project.ui.model.ChecklistItem;
-import ir.sharif.mobile.project.ui.model.Daily;
-import ir.sharif.mobile.project.ui.model.utils.DateUtil;
+import ir.sharif.mobile.project.model.ChecklistItem;
+import ir.sharif.mobile.project.model.Daily;
+import ir.sharif.mobile.project.util.DateUtil;
 import ir.sharif.mobile.project.ui.utils.TwoLayerView;
 
-public class DailyViewAdaptor extends RecyclerView.Adapter<DailyViewAdaptor.DailyViewHolder>{
+public class DailyViewAdapter extends RecyclerView.Adapter<DailyViewAdapter.DailyViewHolder>{
     private List<Daily> dailyList;
     private final Context context;
     private final View rootView;
 
-    public DailyViewAdaptor(Context context, View rootView) {
+    public DailyViewAdapter(Context context, View rootView) {
         this.dailyList = new ArrayList<>();
         this.context = context;
         this.rootView = rootView;
@@ -45,15 +42,15 @@ public class DailyViewAdaptor extends RecyclerView.Adapter<DailyViewAdaptor.Dail
 
     @NonNull
     @Override
-    public DailyViewAdaptor.DailyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public DailyViewAdapter.DailyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.layout_dailies, parent, false);
-        return new DailyViewAdaptor.DailyViewHolder(view);
+        return new DailyViewAdapter.DailyViewHolder(view);
     }
 
     @SuppressLint("SimpleDateFormat")
     @Override
-    public void onBindViewHolder(@NonNull DailyViewAdaptor.DailyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull DailyViewAdapter.DailyViewHolder holder, int position) {
         final Daily daily = dailyList.get(position);
         holder.title.setText(daily.getTitle());
         holder.description.setText(daily.getDescription());

@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import ir.sharif.mobile.project.ui.repository.RepositoryHolder;
+import ir.sharif.mobile.project.repository.RepositoryHolder;
 
 public class ReportsViewModel extends ViewModel {
 

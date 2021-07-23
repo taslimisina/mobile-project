@@ -14,7 +14,7 @@ import java.util.List;
 
 import ir.sharif.mobile.project.Executor;
 import ir.sharif.mobile.project.R;
-import ir.sharif.mobile.project.ui.model.Reward;
+import ir.sharif.mobile.project.model.Reward;
 
 
 public class RewardViewHandler extends Handler {

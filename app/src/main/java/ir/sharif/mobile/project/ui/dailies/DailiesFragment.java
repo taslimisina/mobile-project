@@ -22,15 +22,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import ir.sharif.mobile.project.Executor;
 import ir.sharif.mobile.project.R;
-import ir.sharif.mobile.project.ui.model.ChecklistItem;
-import ir.sharif.mobile.project.ui.model.Daily;
-import ir.sharif.mobile.project.ui.repository.TaskRepository;
+import ir.sharif.mobile.project.model.ChecklistItem;
+import ir.sharif.mobile.project.model.Daily;
+import ir.sharif.mobile.project.repository.TaskRepository;
 import ir.sharif.mobile.project.ui.utils.RecyclerItemTouchHelper;
 
 public class DailiesFragment extends Fragment implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
 
     private RecyclerView recyclerView;
-    private DailyViewAdaptor mAdapter;
+    private DailyViewAdapter mAdapter;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class DailiesFragment extends Fragment implements RecyclerItemTouchHelper
         View view = inflater.inflate(R.layout.fragment_dailies, container, false);
 
         recyclerView = view.findViewById(R.id.recycler_view);
-        mAdapter = new DailyViewAdaptor(getContext(), view);
+        mAdapter = new DailyViewAdapter(getContext(), view);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -66,7 +66,7 @@ public class DailiesFragment extends Fragment implements RecyclerItemTouchHelper
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
-        if (viewHolder instanceof DailyViewAdaptor.DailyViewHolder) {
+        if (viewHolder instanceof DailyViewAdapter.DailyViewHolder) {
             // get the removed item name to display it in snack bar
             String name = mAdapter.getItem(viewHolder.getAdapterPosition()).getTitle();
 
@@ -100,7 +100,7 @@ public class DailiesFragment extends Fragment implements RecyclerItemTouchHelper
         }
     }
 
-    public DailyViewAdaptor getAdapter() {
+    public DailyViewAdapter getAdapter() {
         return mAdapter;
     }
 

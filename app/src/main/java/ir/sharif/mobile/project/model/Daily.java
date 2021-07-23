@@ -1,4 +1,4 @@
-package ir.sharif.mobile.project.ui.model;
+package ir.sharif.mobile.project.model;
 
 import java.util.ArrayList;
 import java.util.Date;

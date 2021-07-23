@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import ir.sharif.mobile.project.Executor;
 import ir.sharif.mobile.project.R;
-import ir.sharif.mobile.project.ui.model.Habit;
+import ir.sharif.mobile.project.model.Habit;
 import ir.sharif.mobile.project.ui.utils.TwoLayerView;
 
 import java.util.ArrayList;

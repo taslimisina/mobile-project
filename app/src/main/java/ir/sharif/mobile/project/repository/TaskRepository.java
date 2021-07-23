@@ -1,4 +1,4 @@
-package ir.sharif.mobile.project.ui.repository;
+package ir.sharif.mobile.project.repository;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -11,12 +11,12 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import ir.sharif.mobile.project.ui.model.ChecklistItem;
-import ir.sharif.mobile.project.ui.model.Daily;
-import ir.sharif.mobile.project.ui.model.Habit;
-import ir.sharif.mobile.project.ui.model.Reminder;
-import ir.sharif.mobile.project.ui.model.Task;
-import ir.sharif.mobile.project.ui.model.Todo;
+import ir.sharif.mobile.project.model.ChecklistItem;
+import ir.sharif.mobile.project.model.Daily;
+import ir.sharif.mobile.project.model.Habit;
+import ir.sharif.mobile.project.model.Reminder;
+import ir.sharif.mobile.project.model.Task;
+import ir.sharif.mobile.project.model.Todo;
 
 /**
  * This class is a repository class for Daily, Habit and Todo classes.

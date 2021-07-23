@@ -1,4 +1,4 @@
-package ir.sharif.mobile.project.ui.repository;
+package ir.sharif.mobile.project.repository;
 
 import android.app.AlarmManager;
 import android.app.Notification;
@@ -6,7 +6,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
-import android.media.RingtoneManager;
 import android.os.SystemClock;
 
 import androidx.core.app.NotificationCompat;

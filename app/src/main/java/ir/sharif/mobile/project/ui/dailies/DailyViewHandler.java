@@ -13,7 +13,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import ir.sharif.mobile.project.Executor;
 import ir.sharif.mobile.project.R;
-import ir.sharif.mobile.project.ui.model.Daily;
+import ir.sharif.mobile.project.model.Daily;
 
 public class DailyViewHandler extends Handler {
     public static final int LOAD_DONE = 0;

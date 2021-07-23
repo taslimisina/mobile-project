@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,9 +28,9 @@ import com.google.android.material.snackbar.Snackbar;
 
 import ir.sharif.mobile.project.Executor;
 import ir.sharif.mobile.project.R;
-import ir.sharif.mobile.project.ui.model.ChecklistItem;
-import ir.sharif.mobile.project.ui.model.Todo;
-import ir.sharif.mobile.project.ui.model.utils.DateUtil;
+import ir.sharif.mobile.project.model.ChecklistItem;
+import ir.sharif.mobile.project.model.Todo;
+import ir.sharif.mobile.project.util.DateUtil;
 import ir.sharif.mobile.project.ui.utils.TwoLayerView;
 
 public class TodoViewAdapter extends RecyclerView.Adapter<TodoViewAdapter.TodoViewHolder> {

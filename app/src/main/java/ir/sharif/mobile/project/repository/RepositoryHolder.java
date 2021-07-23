@@ -1,17 +1,6 @@
-package ir.sharif.mobile.project.ui.repository;
+package ir.sharif.mobile.project.repository;
 
 import android.content.Context;
-import android.util.Log;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-
-import ir.sharif.mobile.project.ui.model.ChecklistItem;
-import ir.sharif.mobile.project.ui.model.Daily;
-import ir.sharif.mobile.project.ui.model.Reminder;
-import ir.sharif.mobile.project.ui.model.Task;
-import ir.sharif.mobile.project.ui.model.Todo;
 
 /**
  * This class holds all repository in application. use static getter function for retrieve them.

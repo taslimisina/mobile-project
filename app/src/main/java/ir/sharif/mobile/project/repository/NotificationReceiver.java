@@ -1,4 +1,4 @@
-package ir.sharif.mobile.project.ui.repository;
+package ir.sharif.mobile.project.repository;
 
 import android.app.Notification;
 import android.app.NotificationManager;

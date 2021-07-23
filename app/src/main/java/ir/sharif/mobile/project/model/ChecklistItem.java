@@ -1,4 +1,4 @@
-package ir.sharif.mobile.project.ui.model;
+package ir.sharif.mobile.project.model;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package ir.sharif.mobile.project.ui.repository;
+package ir.sharif.mobile.project.repository;
 
 import android.content.ContentValues;
 import android.database.Cursor;

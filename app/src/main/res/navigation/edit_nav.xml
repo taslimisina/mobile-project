@@ -46,7 +46,7 @@
         tools:layout="@layout/fragment_edit_habit" >
         <argument
             android:name="habit"
-            app:argType="ir.sharif.mobile.project.ui.model.Habit" />
+            app:argType="ir.sharif.mobile.project.model.Habit" />
     </fragment>
     <fragment
         android:id="@+id/editTodoFragment"
@@ -55,7 +55,7 @@
         tools:layout="@layout/fragment_edit_todo" >
         <argument
             android:name="todo"
-            app:argType="ir.sharif.mobile.project.ui.model.Todo" />
+            app:argType="ir.sharif.mobile.project.model.Todo" />
     </fragment>
     <fragment
         android:id="@+id/editDailyFragment"
@@ -64,7 +64,7 @@
         tools:layout="@layout/fragment_edit_daily" >
         <argument
             android:name="daily"
-            app:argType="ir.sharif.mobile.project.ui.model.Daily" />
+            app:argType="ir.sharif.mobile.project.model.Daily" />
     </fragment>
     <fragment
         android:id="@+id/editRewardFragment"
@@ -73,6 +73,6 @@
         tools:layout="@layout/fragment_edit_reward" >
         <argument
             android:name="daily"
-            app:argType="ir.sharif.mobile.project.ui.model.Reward" />
+            app:argType="ir.sharif.mobile.project.model.Reward" />
     </fragment>
 </navigation>
