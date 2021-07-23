@@ -145,7 +145,7 @@
                     app:layout_constraintLeft_toRightOf="@id/dec_repeat_button"
                     app:layout_constraintRight_toLeftOf="@id/inc_repeat_button"
                     android:background="@drawable/stroke_box"
-                    android:hint="0"
+                    android:hint="1"
                     android:inputType="numberSigned"
                     android:gravity="center"
                     tools:ignore="MissingConstraints"

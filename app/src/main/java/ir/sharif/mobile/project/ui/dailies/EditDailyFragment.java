@@ -91,7 +91,15 @@ public class EditDailyFragment extends Fragment {
             calendar.set(Calendar.MINUTE, 0);
             calendar.set(Calendar.SECOND, 0);
             editingDaily.setStart(calendar.getTime());
-            editingDaily.setEvery(Integer.parseInt(((TextInputEditText) view.findViewById(R.id.input_repeat)).getText().toString()));
+            int every;
+            try {
+                every = Integer.parseInt(((TextInputEditText) view.findViewById(R.id.input_repeat)).getText().toString());
+                if (every < 1)
+                    every = 1;
+            } catch (Exception e) {
+                every = 1;
+            }
+            editingDaily.setEvery(every);
             editingDaily.setReminders(daily.getReminders());
             if (editingDaily.getTitle().equals("")) {
                 Toast.makeText(getContext(), "Title shouldn't be empty!", Toast.LENGTH_SHORT).show();
@@ -186,6 +194,21 @@ public class EditDailyFragment extends Fragment {
             String reward = rewardEditText.getText().toString();
             int val = reward.trim().length() == 0 ? 0 : Integer.parseInt(reward);
             rewardEditText.setText(String.valueOf(val > 0 ? val - 1 : 0));
+        });
+
+        TextInputEditText repeatEditText = view.findViewById(R.id.input_repeat);
+        repeatEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+        view.findViewById(R.id.inc_repeat_button).setOnClickListener(v -> {
+            String repeat = repeatEditText.getText().toString();
+            int val = repeat.trim().length() == 0 ? 0 : Integer.parseInt(repeat);
+            repeatEditText.setText(String.valueOf(val + 1));
+        });
+
+        view.findViewById(R.id.dec_repeat_button).setOnClickListener(v -> {
+            String repeat = repeatEditText.getText().toString();
+            int val = repeat.trim().length() == 0 ? 0 : Integer.parseInt(repeat);
+            repeatEditText.setText(String.valueOf(val > 1 ? val - 1 : 1));
         });
     }
 
