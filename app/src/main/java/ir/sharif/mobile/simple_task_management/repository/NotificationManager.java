@@ -25,6 +25,9 @@ public class NotificationManager {
     public void scheduleNotification(long delayMillis, int reminderId, String text) {
         String notificationChannelId =
                 NotificationUtil.createNotificationChannel(context, "TASK_MANAGEMENT");
+        if (delayMillis < 0) {
+            delayMillis += 24 * 60 * 60 * 1000; // On day
+        }
         NotificationCompat.Builder builder = new NotificationCompat
                 .Builder(context, notificationChannelId)
                 .setContentTitle("Task-management")
@@ -42,6 +45,7 @@ public class NotificationManager {
         Intent notificationIntent = new Intent(context, NotificationReceiver.class);
         notificationIntent.putExtra(NotificationReceiver.NOTIFICATION_ID, reminderId);
         notificationIntent.putExtra(NotificationReceiver.NOTIFICATION, notification);
+        notificationIntent.putExtra(NotificationReceiver.NOTIFICATION_TEXT, text);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, reminderId,
                 notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
