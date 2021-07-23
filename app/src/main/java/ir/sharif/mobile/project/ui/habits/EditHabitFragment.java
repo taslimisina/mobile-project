@@ -65,7 +65,7 @@ public class EditHabitFragment extends Fragment {
 
     private void init_reward_section(View view) {
         TextInputEditText rewardEditText = view.findViewById(R.id.input_reward);
-        rewardEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        rewardEditText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
 
         view.findViewById(R.id.inc_reward_button).setOnClickListener(v -> {
             String reward = rewardEditText.getText().toString();

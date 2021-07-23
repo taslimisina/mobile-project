@@ -49,7 +49,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignBottom="@id/alignment_view"
-                android:background="@color/green_back"
+                android:background="?android:selectableItemBackground"
                 android:src="@drawable/ic_plus_green_48" />
 
             <TextView

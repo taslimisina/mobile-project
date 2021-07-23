@@ -72,10 +72,10 @@ public class HabitViewAdapter extends RecyclerView.Adapter<HabitViewAdapter.Habi
 
         if (habit.getReward() < 0) {
             holder.actionButton.setImageResource(R.drawable.ic_minus_red_48);
-            holder.actionButton.setBackgroundColor(context.getResources().getColor(R.color.red_back));
+//            holder.actionButton.setBackgroundColor(context.getResources().getColor(R.color.red_back));
         } else {
             holder.actionButton.setImageResource(R.drawable.ic_plus_green_48);
-            holder.actionButton.setBackgroundColor(context.getResources().getColor(R.color.green_back));
+//            holder.actionButton.setBackgroundColor(context.getResources().getColor(R.color.green_back));
         }
 
         holder.itemView.setOnClickListener(v -> {
