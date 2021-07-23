@@ -215,4 +215,8 @@ public class TodoViewAdapter extends RecyclerView.Adapter<TodoViewAdapter.TodoVi
         snackbar.setActionTextColor(Color.YELLOW);
         snackbar.show();
     }
+
+    public void clearList() {
+        todoList.clear();
+    }
 }

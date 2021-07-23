@@ -50,6 +50,7 @@ public class TodoFragment extends Fragment implements RecyclerItemTouchHelper.Re
     @Override
     public void onStart() {
         super.onStart();
+        mAdapter.clearList();
         Executor.getInstance().setHandler(new TodoViewHandler(this));
         Executor.getInstance().loadTasks(TaskRepository.TaskType.TODO);
         Executor.getInstance().loadScore();

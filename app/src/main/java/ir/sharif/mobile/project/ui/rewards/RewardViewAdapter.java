@@ -108,4 +108,8 @@ public class RewardViewAdapter extends RecyclerView.Adapter<RewardViewAdapter.Re
         // notify task added by position
         notifyItemInserted(position);
     }
+
+    public void clearList() {
+        rewards.clear();
+    }
 }

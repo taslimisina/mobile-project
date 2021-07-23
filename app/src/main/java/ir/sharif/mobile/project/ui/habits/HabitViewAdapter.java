@@ -118,4 +118,8 @@ public class HabitViewAdapter extends RecyclerView.Adapter<HabitViewAdapter.Habi
         // notify task added by position
         notifyItemInserted(position);
     }
+
+    public void clearList() {
+        habits.clear();
+    }
 }

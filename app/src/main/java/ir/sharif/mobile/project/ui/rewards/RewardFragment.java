@@ -50,6 +50,7 @@ public class RewardFragment extends Fragment implements RecyclerItemTouchHelper.
     @Override
     public void onStart() {
         super.onStart();
+        mAdapter.clearList();
         Executor.getInstance().setHandler(new RewardViewHandler(this));
         Executor.getInstance().loadRewards();
         Executor.getInstance().loadScore();

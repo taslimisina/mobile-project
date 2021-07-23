@@ -183,4 +183,8 @@ public class DailyViewAdaptor extends RecyclerView.Adapter<DailyViewAdaptor.Dail
             return this.viewForeground;
         }
     }
+
+    public void clearList() {
+        dailyList.clear();
+    }
 }

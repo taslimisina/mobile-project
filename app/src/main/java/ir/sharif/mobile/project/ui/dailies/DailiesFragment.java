@@ -54,6 +54,7 @@ public class DailiesFragment extends Fragment implements RecyclerItemTouchHelper
     @Override
     public void onStart() {
         super.onStart();
+        mAdapter.clearList();
         Executor.getInstance().setHandler(new DailyViewHandler(this));
         Executor.getInstance().loadTasks(TaskRepository.TaskType.DAILY);
         Executor.getInstance().loadScore();

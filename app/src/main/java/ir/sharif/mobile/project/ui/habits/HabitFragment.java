@@ -49,6 +49,7 @@ public class HabitFragment extends Fragment implements RecyclerItemTouchHelper.R
     @Override
     public void onStart() {
         super.onStart();
+        mAdapter.clearList();
         Executor.getInstance().setHandler(new HabitViewHandler(this));
         Executor.getInstance().loadTasks(TaskRepository.TaskType.HABIT);
         Executor.getInstance().loadScore();
