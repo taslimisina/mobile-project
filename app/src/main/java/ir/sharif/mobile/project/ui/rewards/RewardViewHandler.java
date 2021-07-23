@@ -1,5 +1,6 @@
 package ir.sharif.mobile.project.ui.rewards;
 
+import android.animation.ValueAnimator;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -43,8 +44,13 @@ public class RewardViewHandler extends Handler {
                         .show();
                 break;
             case UPDATE_SCORE:
-                String score = String.valueOf((int) msg.obj);
-                ((TextView) rewardFragment.get().getActivity().findViewById(R.id.score)).setText(score);
+                TextView view = ((TextView) rewardFragment.get().getActivity().findViewById(R.id.score));
+                int newScore = (int) msg.obj;
+                int oldScore = Integer.parseInt(view.getText().toString());
+                ValueAnimator valueAnimator = ValueAnimator.ofInt(oldScore, newScore);
+                valueAnimator.setDuration(800);
+                valueAnimator.addUpdateListener(valueAnimator1 -> view.setText(valueAnimator1.getAnimatedValue().toString()));
+                valueAnimator.start();
                 break;
             default:
                 Log.e("Handler", "Unknown Message");
