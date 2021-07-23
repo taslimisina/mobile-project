@@ -10,7 +10,7 @@ public class Daily extends Task {
     private Integer every;
     private Date start;
     private Date lastCheckedDate;
-    private Boolean isChecked;  // todo save and load this field for repository
+    private Boolean isChecked = false;
 
     private List<Reminder> reminders = new ArrayList<>();
     private List<ChecklistItem> checklistItems = new ArrayList<>();
