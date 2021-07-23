@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -50,6 +52,32 @@ public class ReportsFragment extends Fragment {
             }
         });
         getActivity().findViewById(R.id.new_button).setVisibility(INVISIBLE);
+        TextView seekBarValue = root.findViewById(R.id.seek_bar_value);
+        SeekBar scoreSeekBar = root.findViewById(R.id.score_seek_bar);
+        scoreSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                seekBarValue.setText(String.valueOf(progress));
+
+                int width = seekBar.getWidth() - seekBar.getPaddingLeft() - seekBar.getPaddingRight();
+                int thumbPos = seekBar.getPaddingLeft() + width * seekBar.getProgress() / seekBar.getMax();
+                int txtW = seekBarValue.getMeasuredWidth();
+                int delta = txtW / 2;
+                seekBarValue.setX(seekBar.getX() + thumbPos - delta);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                reportsViewModel.setLastDataSize(seekBar.getProgress());
+                chart.setData(reportsViewModel.getData().getValue());
+                chart.invalidate();
+            }
+        });
         return root;
     }
 
