@@ -97,7 +97,7 @@ public class TodoViewAdapter extends RecyclerView.Adapter<TodoViewAdapter.TodoVi
         if (todo.getDueDate() != null) {
             holder.dueDate.setText(DateUtil.formatDate(todo.getDueDate(), DateUtil.SHORT));
             Date today = Calendar.getInstance().getTime();
-            if (todo.getDueDate().after(today)) {
+            if (todo.getDueDate().before(today)) {
                 holder.dueDate.setTextColor(context.getResources().getColor(R.color.red_icon));
             }
         } else {
