@@ -1,8 +1,9 @@
 package ir.sharif.mobile.project.ui.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Reminder {
+public class Reminder implements Serializable {
     private Long id;
     private Date time;
     // Don't set this in code, it will be set automatically

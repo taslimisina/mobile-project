@@ -1,6 +1,8 @@
 package ir.sharif.mobile.project.ui.model;
 
-public class ChecklistItem {
+import java.io.Serializable;
+
+public class ChecklistItem implements Serializable {
     private Long id;
     private String name;
     private boolean checked = false;
