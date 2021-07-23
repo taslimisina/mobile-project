@@ -7,31 +7,31 @@
 
     <fragment
         android:id="@+id/navigation_habits"
-        android:name="ir.sharif.mobile.project.ui.habits.HabitFragment"
+        android:name="ir.sharif.mobile.simple_task_management.ui.habits.HabitFragment"
         android:label="@string/title_habits"
         tools:layout="@layout/fragment_habits" />
 
     <fragment
         android:id="@+id/navigation_dailies"
-        android:name="ir.sharif.mobile.project.ui.dailies.DailiesFragment"
+        android:name="ir.sharif.mobile.simple_task_management.ui.dailies.DailiesFragment"
         android:label="@string/title_dailies"
         tools:layout="@layout/fragment_dailies" />
 
     <fragment
         android:id="@+id/navigation_todo"
-        android:name="ir.sharif.mobile.project.ui.todo.TodoFragment"
+        android:name="ir.sharif.mobile.simple_task_management.ui.todo.TodoFragment"
         android:label="@string/title_todo"
         tools:layout="@layout/fragment_todo" />
 
     <fragment
         android:id="@+id/navigation_rewards"
-        android:name="ir.sharif.mobile.project.ui.rewards.RewardFragment"
+        android:name="ir.sharif.mobile.simple_task_management.ui.rewards.RewardFragment"
         android:label="@string/title_rewards"
         tools:layout="@layout/fragment_rewards" />
 
     <fragment
         android:id="@+id/navigation_reports"
-        android:name="ir.sharif.mobile.project.ui.reports.ReportsFragment"
+        android:name="ir.sharif.mobile.simple_task_management.ui.reports.ReportsFragment"
         android:label="@string/title_reports"
         tools:layout="@layout/fragment_reports" />
 </navigation>

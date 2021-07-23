@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="ir.sharif.mobile.project.MainFragment"
+        android:name="ir.sharif.mobile.simple_task_management.MainFragment"
         android:label="MainFragment" >
         <action
             android:id="@+id/action_mainFragment_to_editHabitFragment"
@@ -41,38 +41,38 @@
 
     <fragment
         android:id="@+id/habitEditFragment"
-        android:name="ir.sharif.mobile.project.ui.habits.EditHabitFragment"
+        android:name="ir.sharif.mobile.simple_task_management.ui.habits.EditHabitFragment"
         android:label="fragment_habit_edit"
         tools:layout="@layout/fragment_edit_habit" >
         <argument
             android:name="habit"
-            app:argType="ir.sharif.mobile.project.model.Habit" />
+            app:argType="ir.sharif.mobile.simple_task_management.model.Habit" />
     </fragment>
     <fragment
         android:id="@+id/editTodoFragment"
-        android:name="ir.sharif.mobile.project.ui.todo.EditTodoFragment"
+        android:name="ir.sharif.mobile.simple_task_management.ui.todo.EditTodoFragment"
         android:label="fragment_edit_todo"
         tools:layout="@layout/fragment_edit_todo" >
         <argument
             android:name="todo"
-            app:argType="ir.sharif.mobile.project.model.Todo" />
+            app:argType="ir.sharif.mobile.simple_task_management.model.Todo" />
     </fragment>
     <fragment
         android:id="@+id/editDailyFragment"
-        android:name="ir.sharif.mobile.project.ui.dailies.EditDailyFragment"
+        android:name="ir.sharif.mobile.simple_task_management.ui.dailies.EditDailyFragment"
         android:label="fragment_edit_daily"
         tools:layout="@layout/fragment_edit_daily" >
         <argument
             android:name="daily"
-            app:argType="ir.sharif.mobile.project.model.Daily" />
+            app:argType="ir.sharif.mobile.simple_task_management.model.Daily" />
     </fragment>
     <fragment
         android:id="@+id/editRewardFragment"
-        android:name="ir.sharif.mobile.project.ui.rewards.EditRewardFragment"
+        android:name="ir.sharif.mobile.simple_task_management.ui.rewards.EditRewardFragment"
         android:label="fragment_edit_reward"
         tools:layout="@layout/fragment_edit_reward" >
         <argument
             android:name="daily"
-            app:argType="ir.sharif.mobile.project.model.Reward" />
+            app:argType="ir.sharif.mobile.simple_task_management.model.Reward" />
     </fragment>
 </navigation>

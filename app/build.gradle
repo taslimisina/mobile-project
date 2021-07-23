@@ -7,7 +7,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "ir.sharif.mobile.project"
+        applicationId "ir.sharif.mobile.simple_task_management"
         minSdkVersion 16
         targetSdkVersion 30
         versionCode 1

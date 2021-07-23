@@ -106,7 +106,7 @@ obj/
 ehthumbs.db
 Thumbs.db
 
-# Legacy Eclipse project files
+# Legacy Eclipse simple_task_management files
 .classpath
 .project
 .cproject
